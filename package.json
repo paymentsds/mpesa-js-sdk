@@ -1,0 +1,22 @@
+{
+  "name": "@paysuite/mpesa",
+  "version": "0.1.0",
+  "description": "MPesa Javascript API Client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paysuite/mpesa-js-sdk.git"
+  },
+  "keywords": [
+    "mpesa"
+  ],
+  "author": "Edson Michaque",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/paysuite/mpesa-js-sdk/issues"
+  },
+  "homepage": "https://github.com/paysuite/mpesa-js-sdk#readme"
+}
