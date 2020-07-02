@@ -1,4 +1,6 @@
-import { Pattern } from './pattern';
+import { Pattern } from './pattern.js';
+import { Environment } from './environment.js';
+import { Operation } from './operation.js';
 
 export class Configuration {
 	static environments = {
@@ -46,17 +48,8 @@ export class Configuration {
 			}
 		}
 		
-		this.configureLogger(); 
 	}
 	
-	configureLogger() {
-		if (this.debugging) {
-			Logger.enable = true;
-		} else {
-			Logger.enable = false;
-		}
-	}
-
 	buildDefaultOperations() {
 		this.defaultOperations = {
 			C2B_PAYMENT: new Operation({

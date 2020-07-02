@@ -1,7 +1,7 @@
-import { Environment } from './environment';
-import { Operation } from './operation';
-import { Configuration } from './configuration';
-import { Client } from '/client';
+import { Environment } from './environment.js';
+import { Operation } from './operation.js';
+import { Configuration } from './configuration.js';
+import { Client } from './client.js';
 
 export { 
 	Environment,
