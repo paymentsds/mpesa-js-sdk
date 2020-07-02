@@ -1,3 +1,7 @@
-import { Environment } from './environment.mjs';
+import { Environment } from './environment';
+import { Operation } from './operation';
 
-export { Environment };
+export { 
+	Environment,
+	Operation
+};
