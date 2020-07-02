@@ -1,6 +1,7 @@
 import { Pattern } from './pattern.js';
 import { Environment } from './environment.js';
 import { Operation } from './operation.js';
+import { AccessToken } from './security.js';
 
 export class Configuration {
 	static environments = {
@@ -33,8 +34,8 @@ export class Configuration {
 
 		this.buildDefaultHeaders();
 		this.buildDefaultOperations();
-		
-		
+
+
 		if (args !== null && args !== undefined) {
 
 			for (let key of Configuration.defaultProperties) {
@@ -47,9 +48,19 @@ export class Configuration {
 				}
 			}
 		}
-		
+
 	}
-	
+
+	buildAccessToken() {
+		if (this.accessToken == undefined) {
+			if (this.apiKey != undefined && this.publicKey != undefined) {
+				let tokenObject = new AccessToken({publicKey: this.publicKey, apiKey: this.apiKey});
+				this.accessToken = tokenObject.toString();
+				console.log('[TOKEN] ' + this.accessToken);
+			}
+		}
+	}
+
 	buildDefaultOperations() {
 		this.defaultOperations = {
 			C2B_PAYMENT: new Operation({
@@ -77,7 +88,7 @@ export class Configuration {
 				},
 
 				outputMapping: {
-				
+
 				}
 			}),
 			QUERY_TRANSACTION_STATUS: new Operation({
@@ -103,7 +114,7 @@ export class Configuration {
 					type: 'query'
 				},				
 				outputMapping: {
-			
+
 				}
 			}),
 			REVERSAL: new Operation({
@@ -192,6 +203,7 @@ export class Configuration {
 	}
 
 	generateAuthorizationHeader() {
+		this.buildAccessToken();
 		if (this.isAuthenticationDataValid()) {
 			return {'Authorization': `Bearer ${this.accessToken}`};
 		}
