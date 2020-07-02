@@ -1,3 +1,5 @@
+import { Pattern } from './pattern';
+
 export class Configuration {
 	static environments = {
 		sandbox: Environment.SANDBOX,
@@ -72,11 +74,11 @@ export class Configuration {
 						reference: 'input_ThirdPartyReference'					
 					},
 					validation: {
-						from: Patterns.PHONE_NUMBER,
-						to: Patterns.SERVICE_PROVIDER_CODE,
-						amount: Patterns.MONEY_AMOUNT,
-						transaction: Patterns.WORD,
-						reference: Patterns.WORD
+						from: Pattern.PHONE_NUMBER,
+						to: Pattern.SERVICE_PROVIDER_CODE,
+						amount: Pattern.MONEY_AMOUNT,
+						transaction: Pattern.WORD,
+						reference: Pattern.WORD
 					},
 					type: 'body',				
 				},
@@ -99,11 +101,11 @@ export class Configuration {
 						system: 'input_ThirdPartyReference'				
 					},				
 					validation: {
-						from: Patterns.PHONE_NUMBER,
-						to: Patterns.SERVICE_PROVIDER_CODE,
-						amount: Patterns.MONEY_AMOUNT,
-						transaction: Patterns.WORD,
-						reference: Patterns.WORD
+						from: Pattern.PHONE_NUMBER,
+						to: Pattern.SERVICE_PROVIDER_CODE,
+						amount: Pattern.MONEY_AMOUNT,
+						transaction: Pattern.WORD,
+						reference: Pattern.WORD
 					},
 					type: 'query'
 				},				
@@ -124,11 +126,11 @@ export class Configuration {
 						reference: 'input_ThirdPartyReference'
 					},
 					validation: {
-						from: Patterns.PHONE_NUMBER,
-						to: Patterns.SERVICE_PROVIDER_CODE,
-						amount: Patterns.MONEY_AMOUNT,
-						transaction: Patterns.WORD,
-						reference: Patterns.WORD
+						from: Pattern.PHONE_NUMBER,
+						to: Pattern.SERVICE_PROVIDER_CODE,
+						amount: Pattern.MONEY_AMOUNT,
+						transaction: Pattern.WORD,
+						reference: Pattern.WORD
 					},
 					type: 'body'
 				},
@@ -150,11 +152,11 @@ export class Configuration {
 						reference: 'input_ThirdPartyReference'
 					},
 					validation: {
-						from: Patterns.SERVICE_PROVIDER_CODE,
-						to: Patterns.SERVICE_PROVIDER_CODE,
-						amount: Patterns.MONEY_AMOUNT,
-						transaction:  Patterns.WORD,
-						reference: Patterns.WORD
+						from: Pattern.SERVICE_PROVIDER_CODE,
+						to: Pattern.SERVICE_PROVIDER_CODE,
+						amount: Pattern.MONEY_AMOUNT,
+						transaction:  Pattern.WORD,
+						reference: Pattern.WORD
 					},
 					type: 'body'
 				},
@@ -175,11 +177,11 @@ export class Configuration {
 						reference: 'input_ThirdPartyReference'
 					},
 					validation: {	
-						to: Patterns.PHONE_NUMBE,
-						from: Patterns.SERVICE_PROVIDER_CODE,
-						amount: Patterns.MONEY_AMOUNT,
-						transaction: Patterns.WORD,
-						reference: Patterns.WORD
+						to: Pattern.PHONE_NUMBE,
+						from: Pattern.SERVICE_PROVIDER_CODE,
+						amount: Pattern.MONEY_AMOUNT,
+						transaction: Pattern.WORD,
+						reference: Pattern.WORD
 					},
 					type: 'body'
 				},
