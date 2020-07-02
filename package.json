@@ -5,7 +5,7 @@
   "description": "MPesa Javascript API Client",
   "main": "src/index.js",
   "exports": {
-  	".": "./src/index.js"
+    ".": "./src/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/paysuite/mpesa-js-sdk/issues"
   },
-  "homepage": "https://github.com/paysuite/mpesa-js-sdk#readme"
+  "homepage": "https://github.com/paysuite/mpesa-js-sdk#readme",
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
 }
