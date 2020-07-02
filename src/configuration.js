@@ -1,218 +1,236 @@
-import { Pattern } from './pattern.js'
-import { Environment } from './environment.js'
-import { Operation } from './operation.js'
+import { Pattern } from './pattern.js';
+import { Environment } from './environment.js';
+import { Operation } from './operation.js';
+import { AccessToken } from './security.js';
 
 export class Configuration {
-  static environments = {
-    sandbox: Environment.SANDBOX,
-    production: Environment.PRODUCTION
-  };
+	static environments = {
+		sandbox: Environment.SANDBOX,
+		production: Environment.PRODUCTION
+	};
 
-  static defaultProperties = [
-    'environment',
-    'apiKey',
-    'publicKey',
-    'accessToken',
-    'verifySSL',
-    'timeout',
-    'debugging',
-    'userAgent',
-    'origin',
-    'securityCode',
-    'serviceProviderCode',
-    'initiatorIdentifier'
-  ];
+	static defaultProperties = [
+		'environment',
+		'apiKey',
+		'publicKey',
+		'accessToken',
+		'verifySSL',
+		'timeout',
+		'debugging',
+		'userAgent',
+		'origin',
+		'securityCode',
+		'serviceProviderCode',
+		'initiatorIdentifier'
+	];
 
-  constructor (args) {
-    this.environment = Configuration.environments.sandbox
-    this.verifySSL = false
-    this.timeout = 0
-    this.debugging = true
-    this.origin = '*'
-    this.userAgent = 'MPesa'
+	constructor(args) {
+		this.environment = Configuration.environments.sandbox;
+		this.verifySSL = false;
+		this.timeout = 0;
+		this.debugging = true;
+		this.origin = '*';
+		this.userAgent = 'MPesa';
 
-    this.buildDefaultHeaders()
-    this.buildDefaultOperations()
+		this.buildDefaultHeaders();
+		this.buildDefaultOperations();
 
-    if (args !== null && args !== undefined) {
-      for (const key of Configuration.defaultProperties) {
-        if (args.hasOwnProperty(key)) {
-          if (key == 'environment') {
-            this.key = Environment.fromURL(args[key])
-          } else {
-            this[key] = args[key]
-          }
-        }
-      }
-    }
-  }
 
-  buildDefaultOperations () {
-    this.defaultOperations = {
-      C2B_PAYMENT: new Operation({
-        name: 'c2bPayment',
-        method: 'POST',
-        port: '18352',
-        path: '/ipg/v1x/c2bPayment/singleStage',
-        input: {
-          mapping: {
-            number: 'input_CustomerMSISDN',
-            from: 'input_CustomerMSISDN',
-            to: 'input_ServiceProviderCode',
-            amount: 'input_Amount',
-            transaction: 'input_TransactionReference',
-            reference: 'input_ThirdPartyReference'
-          },
-          validation: {
-            from: Pattern.PHONE_NUMBER,
-            to: Pattern.SERVICE_PROVIDER_CODE,
-            amount: Pattern.MONEY_AMOUNT,
-            transaction: Pattern.WORD,
-            reference: Pattern.WORD
-          },
-          type: 'body'
-        },
+		if (args !== null && args !== undefined) {
 
-        outputMapping: {}
-      }),
-      QUERY_TRANSACTION_STATUS: new Operation({
-        name: 'queryTransactionStatus',
-        method: 'GET',
-        port: '18353',
-        path: '/ipg/v1x/queryTransactionStatus',
-        input: {
-          mapping: {
-            reference: 'input_QueryReference',
-            conversation: 'input_QueryReference',
-            transaction: 'input_QueryReference',
-            from: 'input_ServiceProviderCode',
-            system: 'input_ThirdPartyReference'
-          },
-          validation: {
-            from: Pattern.PHONE_NUMBER,
-            to: Pattern.SERVICE_PROVIDER_CODE,
-            amount: Pattern.MONEY_AMOUNT,
-            transaction: Pattern.WORD,
-            reference: Pattern.WORD
-          },
-          type: 'query'
-        },
-        outputMapping: {}
-      }),
-      REVERSAL: new Operation({
-        name: 'reversal',
-        method: 'POST',
-        port: '18354',
-        path: '/ipg/v1x/reversal',
-        input: {
-          mapping: {
-            from: 'input_ServiceProviderCode',
-            to: 'input_CustomerMSISDN',
-            amount: 'input_Amount',
-            transaction: 'input_TransactionReference',
-            reference: 'input_ThirdPartyReference'
-          },
-          validation: {
-            from: Pattern.PHONE_NUMBER,
-            to: Pattern.SERVICE_PROVIDER_CODE,
-            amount: Pattern.MONEY_AMOUNT,
-            transaction: Pattern.WORD,
-            reference: Pattern.WORD
-          },
-          type: 'body'
-        },
+			for (let key of Configuration.defaultProperties) {
+				if (args.hasOwnProperty(key)) { 
+					if (key == 'environment') {
+						this.key = Environment.fromURL(args[key]);
+					} else {
+						this[key] = args[key]; 
+					}
+				}
+			}
+		}
 
-        outputMapping: {}
-      }),
-      B2B_PAYMENT: new Operation({
-        name: 'b2bPayment',
-        method: 'GET',
-        port: '18349',
-        path: '/ipg/v1x/b2bPayment',
-        input: {
-          mapping: {
-            from: 'input_PrimaryPartyCode',
-            to: 'input_ReceiverPartyCode',
-            amount: 'input_Amount',
-            transaction: 'input_TransactionReference',
-            reference: 'input_ThirdPartyReference'
-          },
-          validation: {
-            from: Pattern.SERVICE_PROVIDER_CODE,
-            to: Pattern.SERVICE_PROVIDER_CODE,
-            amount: Pattern.MONEY_AMOUNT,
-            transaction: Pattern.WORD,
-            reference: Pattern.WORD
-          },
-          type: 'body'
-        },
-        output: {}
-      }),
-      B2C_PAYMENT: new Operation({
-        name: 'b2cPayment',
-        method: 'GET',
-        port: '18345',
-        path: '/ipg/v1x/b2cPayment',
-        input: {
-          mapping: {
-            from: 'input_ServiceProviderCode',
-            to: 'input_CustomerMSISDN',
-            amount: 'input_Amount',
-            transaction: 'input_TransactionReference',
-            reference: 'input_ThirdPartyReference'
-          },
-          validation: {
-            to: Pattern.PHONE_NUMBE,
-            from: Pattern.SERVICE_PROVIDER_CODE,
-            amount: Pattern.MONEY_AMOUNT,
-            transaction: Pattern.WORD,
-            reference: Pattern.WORD
-          },
-          type: 'body'
-        },
-        outputMapping: {}
-      })
-    }
-  }
+	}
 
-  buildDefaultHeaders () {
-    this.defaultHeaders = {
-      Origin: this.origin,
-      'User-Agent': this.userAgent
-    }
-  }
+	buildAccessToken() {
+		if (this.accessToken == undefined) {
+			if (this.apiKey != undefined && this.publicKey != undefined) {
+				let tokenObject = new AccessToken({publicKey: this.publicKey, apiKey: this.apiKey});
+				this.accessToken = tokenObject.toString();
+				console.log('[TOKEN] ' + this.accessToken);
+			}
+		}
+	}
 
-  generateAuthorizationHeader () {
-    if (this.isAuthenticationDataValid()) {
-      return { Authorization: `Bearer ${this.accessToken}` }
-    }
+	buildDefaultOperations() {
+		this.defaultOperations = {
+			C2B_PAYMENT: new Operation({
+				name: 'c2bPayment', 
+				method: 'POST', 
+				port: '18352', 
+				path: '/ipg/v1x/c2bPayment/singleStage',
+				input: {					
+					mapping: {
+						number: 'input_CustomerMSISDN',
+						from: 'input_CustomerMSISDN', 
+						to: 'input_ServiceProviderCode', 
+						amount: 'input_Amount',
+						transaction: 'input_TransactionReference',
+						reference: 'input_ThirdPartyReference'					
+					},
+					validation: {
+						from: Pattern.PHONE_NUMBER,
+						to: Pattern.SERVICE_PROVIDER_CODE,
+						amount: Pattern.MONEY_AMOUNT,
+						transaction: Pattern.WORD,
+						reference: Pattern.WORD
+					},
+					type: 'body',				
+				},
 
-    throw 'Does not have API Key and Public key or access token'
-  }
+				outputMapping: {
 
-  generateHeaders () {
-    return {
-      ...this.defaultHeaders,
-      ...this.generateAuthorizationHeader()
-    }
-  }
+				}
+			}),
+			QUERY_TRANSACTION_STATUS: new Operation({
+				name: 'queryTransactionStatus', 
+				method: 'GET', 
+				port: '18353', 
+				path: '/ipg/v1x/queryTransactionStatus',
+				input: {
+					mapping: {
+						reference: 'input_QueryReference',
+						conversation: 'input_QueryReference',
+						transaction: 'input_QueryReference',
+						from: 'input_ServiceProviderCode',
+						system: 'input_ThirdPartyReference'				
+					},				
+					validation: {
+						from: Pattern.PHONE_NUMBER,
+						to: Pattern.SERVICE_PROVIDER_CODE,
+						amount: Pattern.MONEY_AMOUNT,
+						transaction: Pattern.WORD,
+						reference: Pattern.WORD
+					},
+					type: 'query'
+				},				
+				outputMapping: {
 
-  generateURL (operation) {
-    return `${this.environment.toURL()}${operation.toURL()}`
-  }
+				}
+			}),
+			REVERSAL: new Operation({
+				name: 'reversal', 
+				method: 'POST', 
+				port: '18354', path: '/ipg/v1x/reversal',
+				input: {
+					mapping: {
+						from: 'input_ServiceProviderCode',
+						to: 'input_CustomerMSISDN', 
+						amount: 'input_Amount',
+						transaction: 'input_TransactionReference',
+						reference: 'input_ThirdPartyReference'
+					},
+					validation: {
+						from: Pattern.PHONE_NUMBER,
+						to: Pattern.SERVICE_PROVIDER_CODE,
+						amount: Pattern.MONEY_AMOUNT,
+						transaction: Pattern.WORD,
+						reference: Pattern.WORD
+					},
+					type: 'body'
+				},
 
-  isAuthenticationDataValid () {
-    return (
-      (this.apiKey != null && this.publicKey != null) ||
-      this.accessToken != null
-    )
-  }
+				outputMapping: {
+				}
+			}),
+			B2B_PAYMENT: new Operation({
+				name: 'b2bPayment', 
+				method: 'GET', 
+				port: '18349', 
+				path: '/ipg/v1x/b2bPayment',
+				input: {
+					mapping: {
+						from: 'input_PrimaryPartyCode',
+						to: 'input_ReceiverPartyCode', 
+						amount: 'input_Amount',
+						transaction: 'input_TransactionReference',
+						reference: 'input_ThirdPartyReference'
+					},
+					validation: {
+						from: Pattern.SERVICE_PROVIDER_CODE,
+						to: Pattern.SERVICE_PROVIDER_CODE,
+						amount: Pattern.MONEY_AMOUNT,
+						transaction:  Pattern.WORD,
+						reference: Pattern.WORD
+					},
+					type: 'body'
+				},
+				output: {
+				}
+			}),
+			B2C_PAYMENT: new Operation({
+				name: 'b2cPayment', 
+				method: 'GET', 
+				port: '18345', 
+				path: '/ipg/v1x/b2cPayment',
+				input: {
+					mapping: {
+						from: 'input_ServiceProviderCode',
+						to: 'input_CustomerMSISDN', 
+						amount: 'input_Amount',
+						transaction: 'input_TransactionReference',
+						reference: 'input_ThirdPartyReference'
+					},
+					validation: {	
+						to: Pattern.PHONE_NUMBE,
+						from: Pattern.SERVICE_PROVIDER_CODE,
+						amount: Pattern.MONEY_AMOUNT,
+						transaction: Pattern.WORD,
+						reference: Pattern.WORD
+					},
+					type: 'body'
+				},
+				outputMapping: {
+				}
+			}),
+		};
+	}
 
-  isValid () {
-    return this.isAuthenticationDataValid()
-  }
+	buildDefaultHeaders() {
+		this.defaultHeaders = {
+			'Origin': this.origin,
+			'User-Agent': this.userAgent
+		};	
+	}
 
-  generateBaseURL (operation) {
-    return `${this.environment.toURL()}:${operation.port}`
-  }
+	generateAuthorizationHeader() {
+		this.buildAccessToken();
+		if (this.isAuthenticationDataValid()) {
+			return {'Authorization': `Bearer ${this.accessToken}`};
+		}
+
+		throw 'Does not have API Key and Public key or access token';
+	}
+
+	generateHeaders() {
+		return {
+			...this.defaultHeaders,
+			...this.generateAuthorizationHeader()
+		};
+	}
+
+	generateURL(operation) {
+		return `${this.environment.toURL()}${operation.toURL()}`;
+	}
+
+	isAuthenticationDataValid() {
+		return (this.apiKey != null && this.publicKey != null) || this.accessToken != null;
+	}
+
+	isValid() {
+		return this.isAuthenticationDataValid();
+	}
+
+	generateBaseURL(operation) {
+		return `${this.environment.toURL()}:${operation.port}`
+	}
 }
