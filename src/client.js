@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-import { Environment } from './environment';
-import { Configuration } from './configuration';
-import { Errors } from './error';
-import { PaymentDirection } from './payment-direction';
+import { Environment } from './environment.js';
+import { Configuration } from './configuration.js';
+import { Errors } from './error.js';
+import { PaymentDirection } from './payment-direction.js';
 
 export class Client {
 	constructor(args) {
