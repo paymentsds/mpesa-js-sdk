@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { Environment } from './environment';
 import { Configuration } from './configuration';
 import { Errors } from './error';
@@ -17,7 +19,7 @@ export class Client {
 	initializeHttpClient() {
 	    if (this.configuration.isValid()) {
 	        let headers = this.configuration.generateHeaders();	        
-	        this.httpClient = /*axios.create*/({
+	        this.httpClient = axios.create({
 	            timeout: this.configuration.timeout,
 	            headers: headers
 	        });
@@ -184,8 +186,6 @@ export class Client {
 	    if (!errors.length) {
 			let requestData = this.buildRequest(operation, formatedData);
 			
-			/*
-			
 			this.httpClient.request(requestData)
 				.then(r => {
 				    return handleResponse(r);
@@ -193,9 +193,6 @@ export class Client {
 				.catch(e => {
 				    return handleResponse(e);
 				});
-			*/
-			
-			return;
 		}
 		
 		return Promise.reject(errors);
