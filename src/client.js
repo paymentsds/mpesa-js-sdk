@@ -1,24 +1,24 @@
-import axios from 'axios'
-import { Service } from './service.js'
+import axios from "axios";
+import { Service } from "./service.js";
 
 export class Client {
-  constructor (args) {
- 	this.service = new Service(args)
+  constructor(args) {
+    this.service = new Service(args);
   }
 
-  send (data) {
- 	this.service.handleSend(data)
+  send(data) {
+    this.service.handleSend(data);
   }
 
-  receive (data) {
-	this.service.handleReceive(data)
+  receive(data) {
+    this.service.handleReceive(data);
   }
 
-  revert (data) {
-	  this.service.handleRevert(data)
+  revert(data) {
+    this.service.handleRevert(data);
   }
 
-  query (data) {
-	  this.service.handleQuery(data)
+  query(data) {
+    this.service.handleQuery(data);
   }
 }

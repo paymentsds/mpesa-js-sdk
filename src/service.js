@@ -1,78 +1,73 @@
-import { axios } from 'axios'
+import { axios } from "axios";
 
-import { Configuration } from './configuration.js'
-import { operations } from './constants.js'
-import { 
-  C2B_PAYMENT, 
-  B2B_PAYMENT, 
-  B2B_PAYMENT, 
-  REVERSAL, 
-  QUERY_TRANSACTION_STATUS 
-} from './constants.js'
+import { Configuration } from "./configuration.js";
+import {
+  operations,
+  PATTERNS,
+  C2B_PAYMENT,
+  B2C_PAYMENT,
+  B2B_PAYMENT,
+  REVERSAL,
+  QUERY_TRANSACTION_STATUS,
+} from "./constants.js";
 
 export class Service {
-	constructor(args) {
-		this.initDefaultConfigs()
-		this.initHttpClient()
+  constructor(args) {
+    this.initDefaultConfigs();
+    this.initHttpClient();
+  }
 
-	}
+  initHttpClient() {
+    this.httpClient = axios({});
+  }
 
-	initHttpClient() {
-		this.httpClient = axios({})
-	}
+  initDefaultConfigs(args) {
+    this.config = new Configuration(args);
+  }
 
-	initDefaultConfigs(args) {
-		this.config = new Configuration(args)
-	}
+  handleSend(intent) {
+    let opcode = this.detectOperation(intent);
+    return this.handleRequest(B2C_PAYMENT, intent);
 
-	handleSend(intent) {
-		operation = this.detectOperation(intent)
-		if (operation == B2C_PAYMENT)
-			return this.handleRequest(B2C_PAYMENT, intent)
-		if (operation == B2B_PAYMENT)
-			return this.handleRequest(B2B_PAYMENT, intent)
-		
-		// Handle error
-	}
+    // Handle error
+  }
 
-	handleReceive(intent){
-		return this.handleRequest(C2B_PAYMENT, intent)
-	}
+  handleReceive(intent) {
+    return this.handleRequest(C2B_PAYMENT, intent);
+  }
 
-	handleRevert(intent) {
-		return this.handleRequest(REVERSAL, intent)
-	}
+  handleRevert(intent) {
+    return this.handleRequest(REVERSAL, intent);
+  }
 
-	handleQuery(intent) {
-		return handleRequest(QUERY_TRANSACTION_STATUS, intent)
-	}
+  handleQuery(intent) {
+    return handleRequest(QUERY_TRANSACTION_STATUS, intent);
+  }
 
-	handleRequest(operation, intent) {
-		data = this.fillOptionalProperties(operation, intent)
-		let missingProperties = this.detectMissingProperties(operation, intent)
+  handleRequest(opcode, intent) {
+    const data = this.fillOptionalProperties(opcode, intent);
+    const missingProperties = this.detectMissingProperties(opcode, intent);
 
-		if (missingProperties.length > 0) {
-			// return missing data errors
-		}
+    if (missingProperties.length > 0) {
+      // return missing data errors
+    }
 
-		let validationErrors = this.detectErrors(operation, data)
+    const validationErrors = this.detectErrors(opcode, data);
 
-		if (validationErrors.length > 0) {
-			// return validation errors
-		}
+    if (validationErrors.length > 0) {
+      // return validation errors
+    }
 
-		// Make request
-	}
+    // Make request
+  }
 
-	detectOperation(data) {
-		
-	}
+  detectOperation(data) {}
 
-	detectErrors(operation, intent) {
-		
-	}
+  detectErrors(opcode, intent) {}
+  
+  detectMissingProperties(opcode, data) {
+  	
+  }
 
-	fillOptionalPproperties(operation, intent) {
-		
-	}
+  fillOptionalPproperties(opcode, intent) {}
 }
