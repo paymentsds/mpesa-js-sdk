@@ -63,10 +63,22 @@ export class Service {
 
   detectOperation(data) {}
 
-  detectErrors(opcode, intent) {}
-  
+  detectErrors(opcode, intent) {
+    let errors = required.filter((e) => {
+      let pattern = operations.validation[e];
+      return !pattern.test(intent[e]);
+    });
+
+    return errors;
+  }
+
   detectMissingProperties(opcode, data) {
-  	
+    let required = operations[opcode].required;
+    let missing = required.filter((e) => {
+      return !data.hasOwnProperty(e);
+    });
+
+    return missing;
   }
 
   fillOptionalPproperties(opcode, intent) {}
