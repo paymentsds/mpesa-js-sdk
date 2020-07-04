@@ -1,37 +1,37 @@
 export class Environment {
-  static defaultProperties = ['name', 'scheme', 'domain'];
+  static defaultProperties = ["name", "scheme", "domain"];
 
   static SANDBOX = new Environment({
-    scheme: 'https',
-    domain: 'api.sandbox.vm.co.mz'
+    scheme: "https",
+    domain: "api.sandbox.vm.co.mz",
   });
 
   static PRODUCTION = new Environment({
-    scheme: 'https',
-    domain: 'api.mpesa.vm.co.mz'
+    scheme: "https",
+    domain: "api.mpesa.vm.co.mz",
   });
 
-  constructor (args) {
+  constructor(args) {
     if (args !== null && args !== undefined) {
       for (const key of Environment.defaultProperties) {
         if (args.hasOwnProperty(key)) {
-          this[key] = args[key]
+          this[key] = args[key];
         }
       }
     }
   }
 
-  toURL () {
+  toURL() {
     if (this.isValid()) {
-      return `${this.scheme}://${this.domain}`
+      return `${this.scheme}://${this.domain}`;
     }
 
-    throw 'Invalid'
+    throw "Invalid";
   }
 
-  static fromURL (url) {}
+  static fromURL(url) {}
 
-  isValid () {
-    return this.scheme != null && this.domain != null
+  isValid() {
+    return this.scheme != null && this.domain != null;
   }
 }

@@ -1,34 +1,34 @@
 export class Operation {
   static defaultProperties = [
-    'name',
-    'method',
-    'port',
-    'path',
-    'inputMapping',
-    'input',
-    'output'
+    "name",
+    "method",
+    "port",
+    "path",
+    "inputMapping",
+    "input",
+    "output",
   ];
 
-  constructor (args) {
+  constructor(args) {
     if (args !== null && args !== undefined) {
       for (const key of Operation.defaultProperties) {
         if (args.hasOwnProperty(key)) {
-          this[key] = args[key]
+          this[key] = args[key];
         }
       }
     }
   }
 
-  toURL () {
+  toURL() {
     if (this.isValid()) {
-      const pathWithoudSlash = this.path.replace(/^\/+/, '')
-      return `:${this.port}/${pathWithoudSlash}`
+      const pathWithoudSlash = this.path.replace(/^\/+/, "");
+      return `:${this.port}/${pathWithoudSlash}`;
     }
 
-    throw 'Uninitialized'
+    throw "Uninitialized";
   }
 
-  isValid () {
-    return this.name != null && this.port != null && this.path != null
+  isValid() {
+    return this.name != null && this.port != null && this.path != null;
   }
 }
