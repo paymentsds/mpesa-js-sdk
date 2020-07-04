@@ -9,7 +9,7 @@ export class Configuration {
 		production: Environment.PRODUCTION
 	};
 
-	static defaultProperties = [
+	static PARAMS = [
 		'environment',
 		'apiKey',
 		'publicKey',
@@ -38,7 +38,7 @@ export class Configuration {
 
 		if (args !== null && args !== undefined) {
 
-			for (let key of Configuration.defaultProperties) {
+			for (let key of Configuration.PARAMS) {
 				if (args.hasOwnProperty(key)) { 
 					if (key == 'environment') {
 						this.key = Environment.fromURL(args[key]);
@@ -56,7 +56,6 @@ export class Configuration {
 			if (this.apiKey != undefined && this.publicKey != undefined) {
 				let tokenObject = new AccessToken({publicKey: this.publicKey, apiKey: this.apiKey});
 				this.accessToken = tokenObject.toString();
-				console.log('[TOKEN] ' + this.accessToken);
 			}
 		}
 	}
