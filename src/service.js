@@ -26,7 +26,7 @@ export class Service {
   }
 
   handleSend(intent) {
-    let opcode = this.detectOperation(intent);
+    const opcode = this.detectOperation(intent);
     return this.handleRequest(B2C_PAYMENT, intent);
 
     // Handle error
@@ -64,8 +64,8 @@ export class Service {
   detectOperation(data) {}
 
   detectErrors(opcode, intent) {
-    let errors = required.filter((e) => {
-      let pattern = operations.validation[e];
+    const errors = required.filter((e) => {
+      const pattern = operations.validation[e];
       return !pattern.test(intent[e]);
     });
 
@@ -73,13 +73,48 @@ export class Service {
   }
 
   detectMissingProperties(opcode, data) {
-    let required = operations[opcode].required;
-    let missing = required.filter((e) => {
+    const required = OPERATIONS[opcode].required;
+    const missing = required.filter((e) => {
       return !data.hasOwnProperty(e);
     });
 
     return missing;
   }
 
-  fillOptionalPproperties(opcode, intent) {}
+  fillOptionalPproperties(opcode, intent) {
+    function map(correspondences) {
+      for (let k in correspondences) {
+        if (
+          !intent.hasOwnProperty(k) &&
+          this.confi.hasOwnProperty(correspondences[k])
+        ) {
+          intent[k] = this.config[correspondeces[k]];
+        }
+      }
+
+      return intent;
+    }
+
+    switch (opcode) {
+      case C2B_PAYMENT:
+      case B2B_PAYMENT:
+        return map({ to: "service_provider_code" });
+
+      case B2C_PAYMENT:
+        return map({ from: "service_provider_code" });
+
+      case REVERSAL:
+        return map({
+          initiator_identifier: "initiator_identifier",
+          security_credential: "security_credential",
+        });
+
+      case QUERY_TRANSACTION_STATUS:
+        return map({
+          to: "service_provider_code",
+        });
+    }
+
+    return intent;
+  }
 }
