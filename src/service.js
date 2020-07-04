@@ -1,6 +1,14 @@
 import { axios } from 'axios'
+
 import { Configuration } from './configuration.js'
 import { operations } from './constants.js'
+import { 
+  C2B_PAYMENT, 
+  B2B_PAYMENT, 
+  B2B_PAYMENT, 
+  REVERSAL, 
+  QUERY_TRANSACTION_STATUS 
+} from './constants.js'
 
 export class Service {
 	constructor(args) {
@@ -10,7 +18,7 @@ export class Service {
 	}
 
 	initHttpClient() {
-		this.httpClient = 
+		this.httpClient = axios({})
 	}
 
 	initDefaultConfigs(args) {
@@ -19,24 +27,24 @@ export class Service {
 
 	handleSend(intent) {
 		operation = this.detectOperation(intent)
-		if (operation == 'B2C_PAYMENT')
-			return this.handleRequest('B2C_PAYMENT', intent)
-		if (operation == 'B2B_PAYMENT')
-			return this.handleRequest('B2B_PAYMENT', intent)
+		if (operation == B2C_PAYMENT)
+			return this.handleRequest(B2C_PAYMENT, intent)
+		if (operation == B2B_PAYMENT)
+			return this.handleRequest(B2B_PAYMENT, intent)
 		
 		// Handle error
 	}
 
 	handleReceive(intent){
-		return this.handleRequest('C2B_PAYMENT', intent)
+		return this.handleRequest(C2B_PAYMENT, intent)
 	}
 
 	handleRevert(intent) {
-		return this.handleRequest('REVERSAL, intent)
+		return this.handleRequest(REVERSAL, intent)
 	}
 
 	handleQuery(intent) {
-		return handleRequest('QUERY_TRANSACTION_STATUS', intent)
+		return handleRequest(QUERY_TRANSACTION_STATUS, intent)
 	}
 
 	handleRequest(operation, intent) {
