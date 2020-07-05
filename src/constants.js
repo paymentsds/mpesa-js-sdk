@@ -7,7 +7,21 @@ const REVERSAL = "C2B_PAYMENT";
 const QUERY_TRANSACTION_STATUS = "C2B_PAYMENT";
 
 const GET = "get";
+
 const POST = "post";
+
+const HTTP = {
+  METHOD: {
+    GET: "get",
+    POST: "post",
+  },
+  HEADER: {
+    USER_AGENT: "User-Agent",
+    CONTENT_TYPE: "Content-Type",
+    ORIGIN: "Origin",
+    AUTHORIZATION: "Authorization",
+  },
+};
 
 const PATTERNS = {
   PHONE_NUMBER: /^((00|\+)?(258))?8[45][0-9]{7}$/,

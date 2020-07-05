@@ -13,7 +13,7 @@ import {
 
 export class Service {
   constructor(args) {
-    this.initDefaultConfigs();
+    this.initDefaultConfigs(args);
     this.initHttpClient();
   }
 
@@ -58,7 +58,7 @@ export class Service {
       // return validation errors
     }
 
-    // Make request
+    return this.performRequest(opcode, intent);
   }
 
   detectOperation(data) {}
@@ -86,7 +86,7 @@ export class Service {
       for (let k in correspondences) {
         if (
           !intent.hasOwnProperty(k) &&
-          this.confi.hasOwnProperty(correspondences[k])
+          this.config.hasOwnProperty(correspondences[k])
         ) {
           intent[k] = this.config[correspondeces[k]];
         }
@@ -117,4 +117,51 @@ export class Service {
 
     return intent;
   }
+
+  buildRequestBody(opcode, intent) {
+    let body = {};
+    for (const oldKey in intent) {
+      const newKey = OPERATIONS[opcode].validation[oldKey];
+      output[newKey] = intent[oldKey];
+    }
+
+    return body;
+  }
+
+  buildRequestHeaders(opcode, intent) {
+	  this.generateAccessToken()
+    let headers = {
+      [HTTP.HEADERS.USER_AGENT]: this.config.userAgent,
+      [HTTP.HEADERS.ORIGIN]: this.config.origin,
+      [HTTP.HEADERS.CONTENT_TYPE]: "application/json",
+      [HTTP.HEADERS.AUTHORIZATION]: `Bearer ${this.config.authentication}`,
+    };
+
+    return headers;
+  }
+
+  performRequest(opcode, intent) {
+    const headers = this.buildRequestHeaders(opcode, intent);
+    const body = this.buildRequestBody(opcode, intent);
+  }
+
+
+	generateAccessToken() {
+		const hasKeys = this.config.hasOwnProperty('apiKey') && this.config.hasOwnproperty('publicKey');
+		const hasAccesToken = this.config.hasOwnProperty('accessToken');
+
+		if (hasKeys) {
+			this.config['authentication'] = this.config.apiKey + this.config.publicKey;
+		}
+
+		if (hasAccessToken) {
+			this.config['authentication'] = this.config.accessToken;
+		}
+
+		if (!(hasKey || hasAccessToken)) {
+			return Promise.reject('Lacks auth data')
+
+		}
+
+	}
 }
