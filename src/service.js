@@ -129,7 +129,7 @@ export class Service {
   }
 
   buildRequestHeaders(opcode, intent) {
-	  this.generateAccessToken()
+    this.generateAccessToken();
     let headers = {
       [HTTP.HEADERS.USER_AGENT]: this.config.userAgent,
       [HTTP.HEADERS.ORIGIN]: this.config.origin,
@@ -141,27 +141,29 @@ export class Service {
   }
 
   performRequest(opcode, intent) {
-    const headers = this.buildRequestHeaders(opcode, intent);
-    const body = this.buildRequestBody(opcode, intent);
+   	if (this.config.hasOwnProperty('authentication')) {
+		const headers = this.buildRequestHeaders(opcode, intent);
+    		const body = this.buildRequestBody(opcode, intent);
+    		
+		//return request
+	}
+
+	return Promise.reject('Lacks auth data')
   }
 
+  generateAccessToken() {
+    const hasKeys =
+      this.config.hasOwnProperty("apiKey") &&
+      this.config.hasOwnproperty("publicKey");
+    const hasAccesToken = this.config.hasOwnProperty("accessToken");
 
-	generateAccessToken() {
-		const hasKeys = this.config.hasOwnProperty('apiKey') && this.config.hasOwnproperty('publicKey');
-		const hasAccesToken = this.config.hasOwnProperty('accessToken');
+    if (hasKeys) {
+      this.config["authentication"] =
+        this.config.apiKey + this.config.publicKey;
+    }
 
-		if (hasKeys) {
-			this.config['authentication'] = this.config.apiKey + this.config.publicKey;
-		}
-
-		if (hasAccessToken) {
-			this.config['authentication'] = this.config.accessToken;
-		}
-
-		if (!(hasKey || hasAccessToken)) {
-			return Promise.reject('Lacks auth data')
-
-		}
-
-	}
+    if (hasAccessToken) {
+      this.config["authentication"] = this.config.accessToken;
+    }
+ }
 }
