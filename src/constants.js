@@ -32,7 +32,7 @@ const PATTERNS = {
 
 const OPERATIONS = {
   [C2B_PAYMENT]: new Operation({
-    method: "get",
+    method: HTTP.METHOD.POST,
     port: "18352",
     path: "/ipg/v1x/",
     mapping: {
@@ -49,7 +49,7 @@ const OPERATIONS = {
   }),
 
   [B2B_PAYMENT]: new Operation({
-    method: POST,
+    method: HTTP.METHOD.POST,
     port: "18352",
     path: "/ipg/v1x/",
     mapping: {
@@ -72,7 +72,7 @@ const OPERATIONS = {
   }),
 
   [B2C_PAYMENT]: new Operation({
-    method: POST,
+    method: HTTP.METHOD.POST,
     port: "18352",
     path: "/ipg/v1x/",
     mapping: {
@@ -89,7 +89,7 @@ const OPERATIONS = {
   }),
 
   [REVERSAL]: new Operation({
-    method: POST,
+    method: HTTP.METHOD.POST,
     port: "18352",
     path: "/ipg/v1x/",
     mapping: {
@@ -106,7 +106,7 @@ const OPERATIONS = {
   }),
 
   [QUERY_TRANSACTION_STATUS]: new Operation({
-    method: GET,
+    method: HTTP.METHOD.GET,
     port: "18352",
     path: "/ipg/v1x/",
     mapping: {
