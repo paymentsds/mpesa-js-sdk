@@ -1,6 +1,5 @@
 import crypto from "crypto";
 
-import { Pattern } from "./pattern.js";
 import { Environment } from "./environment.js";
 import { Operation } from "./operation.js";
 import { PRODUCTION, SANDBOX, USER_AGENT, VERSION } from "./constants.js";
@@ -51,20 +50,31 @@ export class Configuration {
   }
 
   generateAccessToken() {
-    const hasKeys =
-      this.hasOwnProperty("apiKey") && this.hasOwnproperty("publicKey");
-    const hasAccesToken = this.hasOwnProperty("accessToken");
+    const hasKeys = this.hasOwnProperty("apiKey") && this.hasOwnProperty("publicKey");
+    const hasAccessToken = this.hasOwnProperty("accessToken");
 
     if (hasKeys) {
-      this.auth = crypto.publicEncrypt();
-      let buffer = Buffer.from(this.apiKey);
-      let key = crypto.createPublicKey(base64Key);
+      let publicKey = formatPublicKey(this.publicKey);
+      let apiKeyBuffer = Buffer.from(this.apiKey);
 
-      this.auth = crypto.publicEncrypt({ key: key }, buffer);
+      let encryptedApiKey = crypto.publicEncrypt({ 
+	      	key: publicKey, 
+	      	padding: crypto.constants.RSA_PKCS1_PADDING
+      	}, apiKeyBuffer
+      );
+      
+      this.auth = encryptedApiKey.toString('base64');
     }
 
     if (hasAccessToken) {
       this.auth = this.accessToken;
+    }
+    
+    function formatPublicKey(publicKey) {
+    	const header = '-----BEGIN PUBLIC KEY-----';
+    	const footer = '-----END PUBLIC KEY-----';
+	
+	return `${header}\n${publicKey}\n${footer}`;    	
     }
   }
 }

@@ -6,18 +6,18 @@ export class Client {
   }
 
   send(data) {
-    this.service.handleSend(data);
+    return this.service.handleSend(data);
   }
 
   receive(data) {
-    this.service.handleReceive(data);
+    return this.service.handleReceive(data);
   }
 
   revert(data) {
-    this.service.handleRevert(data);
+    return this.service.handleRevert(data);
   }
 
   query(data) {
-    this.service.handleQuery(data);
+    return this.service.handleQuery(data);
   }
 }

@@ -4,9 +4,10 @@ export class Operation {
     "method",
     "port",
     "path",
-    "inputMapping",
-    "input",
-    "output",
+    "mapping",
+    "validation",
+    "required",
+    "optional"
   ];
 
   constructor(args) {

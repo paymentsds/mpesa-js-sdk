@@ -1,12 +1,13 @@
 import { Operation } from "./operation.js";
 import { Version } from "./version.js";
+import { Environment } from './environment.js';
 
 const USER_AGENT = "MPesa";
 const C2B_PAYMENT = "C2B_PAYMENT";
-const B2B_PAYMENT = "C2B_PAYMENT";
-const B2C_PAYMENT = "C2B_PAYMENT";
-const REVERSAL = "C2B_PAYMENT";
-const QUERY_TRANSACTION_STATUS = "C2B_PAYMENT";
+const B2B_PAYMENT = "B2B_PAYMENT";
+const B2C_PAYMENT = "B2C_PAYMENT";
+const REVERSAL = "REVERSAL";
+const QUERY_TRANSACTION_STATUS = "QUERY_TRANSACTION_STATUS";
 
 const VERSION = new Version(0, 1, 0);
 
@@ -46,16 +47,29 @@ const OPERATIONS = {
     port: "18352",
     path: "/ipg/v1x/",
     mapping: {
-      number: "input_CustomerMSISDN",
       from: "input_CustomerMSISDN",
       to: "input_ServiceProviderCode",
       amount: "input_Amount",
       transaction: "input_TransactionReference",
       reference: "input_ThirdPartyReference",
     },
-    validation: {},
-    required: [],
-    optional: [],
+    validation: {
+      from: PATTERNS.PHONE_NUMBER,
+      to: PATTERNS.SERVICE_PROVIDER_CODE,
+      amount: PATTERNS.MONEY_AMOUNT,
+      transaction: PATTERNS.WORD,
+      reference: PATTERNS.WORD,    
+    },
+    required: [
+    	'to',
+    	'from',
+    	'amount',
+    	'transaction',
+    	'reference'
+    ],
+    optional: [
+    	'from'
+    ],
   }),
 
   [B2B_PAYMENT]: new Operation({
@@ -71,14 +85,22 @@ const OPERATIONS = {
       reference: "input_ThirdPartyReference",
     },
     validation: {
-      from: PATTERNS.PHONE_NUMBER,
+      from: PATTERNS.SERVICE_PROVIDER_CODE,
       to: PATTERNS.SERVICE_PROVIDER_CODE,
       amount: PATTERNS.MONEY_AMOUNT,
       transaction: PATTERNS.WORD,
       reference: PATTERNS.WORD,
     },
-    required: [],
-    optional: [],
+    required: [
+	'to',
+    	'from',
+    	'amount',
+    	'transaction',
+    	'reference'    
+    ],
+    optional: [
+    	'from'
+    ],
   }),
 
   [B2C_PAYMENT]: new Operation({
@@ -93,9 +115,23 @@ const OPERATIONS = {
       transaction: "input_TransactionReference",
       reference: "input_ThirdPartyReference",
     },
-    validation: {},
-    required: [],
-    optional: [],
+    validation: {
+      from: PATTERNS.SERVICE_PROVIDER_CODE,
+      to: PATTERNS.PHONE_NUMBER,
+      amount: PATTERNS.MONEY_AMOUNT,
+      transaction: PATTERNS.WORD,
+      reference: PATTERNS.WORD    
+    },
+    required: [
+    	'to',
+    	'from',
+    	'amount',
+    	'transaction',
+    	'reference'    
+    ],
+    optional: [
+    	'to'
+    ],
   }),
 
   [REVERSAL]: new Operation({
@@ -103,8 +139,7 @@ const OPERATIONS = {
     port: "18352",
     path: "/ipg/v1x/",
     mapping: {
-      number: "input_CustomerMSISDN",
-      from: "input_CustomerMSISDN",
+      from: PATTERNS.PHONE_NUMBER,
       to: "input_ServiceProviderCode",
       amount: "input_Amount",
       transaction: "input_TransactionReference",
@@ -141,4 +176,8 @@ export {
   REVERSAL,
   QUERY_TRANSACTION_STATUS,
   OPERATIONS,
+  PRODUCTION,
+  SANDBOX,
+  VERSION,
+  USER_AGENT
 };

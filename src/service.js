@@ -1,8 +1,8 @@
-import { axios } from "axios";
+import axios from "axios";
 
 import { Configuration } from "./configuration.js";
 import {
-  operations,
+  OPERATIONS,
   PATTERNS,
   C2B_PAYMENT,
   B2C_PAYMENT,
@@ -18,7 +18,7 @@ export class Service {
   }
 
   initHttpClient() {
-    this.httpClient = axios({});
+    //this.httpClient = axios({});
   }
 
   initDefaultConfigs(args) {
@@ -27,14 +27,13 @@ export class Service {
 
   handleSend(intent) {
     const opcode = this.detectOperation(intent);
-    if (opcode == null) {
+    if (opcode == undefined) {
       return Promise.reject({
         error: "Doesn't have to",
       });
     }
-    return this.handleRequest(opcode, intent);
 
-    // Handle error
+    return this.handleRequest(opcode, intent);
   }
 
   handleReceive(intent) {
@@ -51,8 +50,8 @@ export class Service {
 
   handleRequest(opcode, intent) {
     const data = this.fillOptionalProperties(opcode, intent);
+    
     const missingProperties = this.detectMissingProperties(opcode, intent);
-
     if (missingProperties.length > 0) {
       return Promise.reject(missingProperties);
     }
@@ -63,7 +62,8 @@ export class Service {
       return Promise.reject(validationErrors);
     }
 
-    return this.performRequest(opcode, intent);
+    //return this.performRequest(opcode, intent);
+  	return Promise.reject(validationErrors);
   }
 
   detectOperation(intent) {
@@ -81,7 +81,9 @@ export class Service {
   }
 
   detectErrors(opcode, intent) {
-    const errors = required.filter((e) => {
+    const operations = OPERATIONS[opcode];
+    
+    const errors = operations.required.filter((e) => {
       const pattern = operations.validation[e];
       return !pattern.test(intent[e]);
     });
@@ -91,6 +93,7 @@ export class Service {
 
   detectMissingProperties(opcode, data) {
     const required = OPERATIONS[opcode].required;
+
     const missing = required.filter((e) => {
       return !data.hasOwnProperty(e);
     });
@@ -98,7 +101,7 @@ export class Service {
     return missing;
   }
 
-  fillOptionalPproperties(opcode, intent) {
+  fillOptionalProperties(opcode, intent) {
     function map(correspondences) {
       for (let k in correspondences) {
         if (
