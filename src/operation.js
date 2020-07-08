@@ -7,7 +7,7 @@ export class Operation {
     "mapping",
     "validation",
     "required",
-    "optional"
+    "optional",
   ];
 
   constructor(args) {

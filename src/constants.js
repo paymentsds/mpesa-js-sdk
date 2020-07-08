@@ -1,6 +1,6 @@
 import { Operation } from "./operation.js";
 import { Version } from "./version.js";
-import { Environment } from './environment.js';
+import { Environment } from "./environment.js";
 
 const USER_AGENT = "MPesa";
 const C2B_PAYMENT = "C2B_PAYMENT";
@@ -58,18 +58,10 @@ const OPERATIONS = {
       to: PATTERNS.SERVICE_PROVIDER_CODE,
       amount: PATTERNS.MONEY_AMOUNT,
       transaction: PATTERNS.WORD,
-      reference: PATTERNS.WORD,    
+      reference: PATTERNS.WORD,
     },
-    required: [
-    	'to',
-    	'from',
-    	'amount',
-    	'transaction',
-    	'reference'
-    ],
-    optional: [
-    	'from'
-    ],
+    required: ["to", "from", "amount", "transaction", "reference"],
+    optional: ["from"],
   }),
 
   [B2B_PAYMENT]: new Operation({
@@ -91,16 +83,8 @@ const OPERATIONS = {
       transaction: PATTERNS.WORD,
       reference: PATTERNS.WORD,
     },
-    required: [
-	'to',
-    	'from',
-    	'amount',
-    	'transaction',
-    	'reference'    
-    ],
-    optional: [
-    	'from'
-    ],
+    required: ["to", "from", "amount", "transaction", "reference"],
+    optional: ["from"],
   }),
 
   [B2C_PAYMENT]: new Operation({
@@ -120,18 +104,10 @@ const OPERATIONS = {
       to: PATTERNS.PHONE_NUMBER,
       amount: PATTERNS.MONEY_AMOUNT,
       transaction: PATTERNS.WORD,
-      reference: PATTERNS.WORD    
+      reference: PATTERNS.WORD,
     },
-    required: [
-    	'to',
-    	'from',
-    	'amount',
-    	'transaction',
-    	'reference'    
-    ],
-    optional: [
-    	'to'
-    ],
+    required: ["to", "from", "amount", "transaction", "reference"],
+    optional: ["to"],
   }),
 
   [REVERSAL]: new Operation({
@@ -179,5 +155,5 @@ export {
   PRODUCTION,
   SANDBOX,
   VERSION,
-  USER_AGENT
+  USER_AGENT,
 };

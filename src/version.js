@@ -4,7 +4,7 @@ export class Version {
     this.minor = minor;
     this.patch = patch;
   }
-  
+
   toString() {
     return `${this.major}.${this.minor}.${this.patch}`;
   }

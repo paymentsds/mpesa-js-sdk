@@ -50,7 +50,7 @@ export class Service {
 
   handleRequest(opcode, intent) {
     const data = this.fillOptionalProperties(opcode, intent);
-    
+
     const missingProperties = this.detectMissingProperties(opcode, intent);
     if (missingProperties.length > 0) {
       return Promise.reject(missingProperties);
@@ -63,7 +63,7 @@ export class Service {
     }
 
     //return this.performRequest(opcode, intent);
-  	return Promise.reject(validationErrors);
+    return Promise.reject(validationErrors);
   }
 
   detectOperation(intent) {
@@ -82,7 +82,7 @@ export class Service {
 
   detectErrors(opcode, intent) {
     const operations = OPERATIONS[opcode];
-    
+
     const errors = operations.required.filter((e) => {
       const pattern = operations.validation[e];
       return !pattern.test(intent[e]);
