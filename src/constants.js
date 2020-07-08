@@ -1,5 +1,5 @@
 import { Operation } from "./operation.js";
-import { Version } from './version.js';
+import { Version } from "./version.js";
 
 const USER_AGENT = "MPesa";
 const C2B_PAYMENT = "C2B_PAYMENT";
@@ -8,7 +8,7 @@ const B2C_PAYMENT = "C2B_PAYMENT";
 const REVERSAL = "C2B_PAYMENT";
 const QUERY_TRANSACTION_STATUS = "C2B_PAYMENT";
 
-const VERSION = new Version(0,1,0);
+const VERSION = new Version(0, 1, 0);
 
 const HTTP = {
   METHOD: {

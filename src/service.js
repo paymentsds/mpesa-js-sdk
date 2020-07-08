@@ -151,7 +151,7 @@ export class Service {
       [HTTP.HEADERS.USER_AGENT]: this.config.userAgent,
       [HTTP.HEADERS.ORIGIN]: this.config.origin,
       [HTTP.HEADERS.CONTENT_TYPE]: "application/json",
-      [HTTP.HEADERS.AUTHORIZATION]: `Bearer ${this.config.authentication}`,
+      [HTTP.HEADERS.AUTHORIZATION]: `Bearer ${this.config.auth}`,
     };
 
     return headers;
@@ -162,7 +162,10 @@ export class Service {
       const headers = this.buildRequestHeaders(opcode, intent);
       const body = this.buildRequestBody(opcode, intent);
 
-      //return request
+      return Promise.resolve({
+        ...headers,
+        ...body,
+      });
     }
 
     return Promise.reject("Lacks auth data");
