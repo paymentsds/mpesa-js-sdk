@@ -1,6 +1,8 @@
 import axios from "axios";
 
 import { Configuration } from "./configuration.js";
+import { Response } from "./Response.js";
+
 import {
   OPERATIONS,
   PATTERNS,
@@ -9,6 +11,8 @@ import {
   B2B_PAYMENT,
   REVERSAL,
   QUERY_TRANSACTION_STATUS,
+  ERRORS,
+  HTTP,
 } from "./constants.js";
 
 export class Service {
@@ -18,7 +22,7 @@ export class Service {
   }
 
   initHttpClient() {
-    //this.httpClient = axios({});
+    // this.httpClient = axios({});
   }
 
   initDefaultConfigs(args) {
@@ -27,10 +31,14 @@ export class Service {
 
   handleSend(intent) {
     const opcode = this.detectOperation(intent);
-    if (opcode == undefined) {
-      return Promise.reject({
-        error: "Doesn't have to",
-      });
+    if (opcode === undefined) {
+      const error = new Response(
+        ERRORS.INVALID_OPERATION.code,
+        ERRORS.INVALID_OPERATION.description,
+        []
+      );
+
+      return Promise.reject(error);
     }
 
     return this.handleRequest(opcode, intent);
@@ -45,7 +53,7 @@ export class Service {
   }
 
   handleQuery(intent) {
-    return handleRequest(QUERY_TRANSACTION_STATUS, intent);
+    return this.handleRequest(QUERY_TRANSACTION_STATUS, intent);
   }
 
   handleRequest(opcode, intent) {
@@ -53,26 +61,43 @@ export class Service {
 
     const missingProperties = this.detectMissingProperties(opcode, intent);
     if (missingProperties.length > 0) {
-      return Promise.reject(missingProperties);
+      const error = new Response(
+        ERRORS.MISSING.code,
+        ERRORS.MISSING.description,
+        missingProperties
+      );
+
+      return Promise.reject(error);
     }
 
     const validationErrors = this.detectErrors(opcode, data);
 
     if (validationErrors.length > 0) {
-      return Promise.reject(validationErrors);
+      const error = new Response(
+        ERRORS.VALIDATION.code,
+        ERRORS.VALIDATION.description,
+        missingProperties
+      );
+
+      return Promise.reject(error);
     }
 
-    //return this.performRequest(opcode, intent);
-    return Promise.reject(validationErrors);
+    // return this.performRequest(opcode, intent);
+    const error = new Response(
+      ERRORS.VALIDATION.code,
+      ERRORS.VALIDATION.description,
+      missingProperties
+    );
+    return Promise.reject(error);
   }
 
   detectOperation(intent) {
     if (intent.hasOwnProperty("to")) {
-      if (PATTERNS.PHONE_NUMBER.test(intent["to"])) {
+      if (PATTERNS.PHONE_NUMBER.test(intent.to)) {
         return B2C_PAYMENT;
       }
 
-      if (PATTERNS.SERVICE_PROVIDER_CODE.test(intent["to"])) {
+      if (PATTERNS.SERVICE_PROVIDER_CODE.test(intent.to)) {
         return B2B_PAYMENT;
       }
     }
@@ -103,12 +128,12 @@ export class Service {
 
   fillOptionalProperties(opcode, intent) {
     function map(correspondences) {
-      for (let k in correspondences) {
+      for (const k in correspondences) {
         if (
           !intent.hasOwnProperty(k) &&
           this.config.hasOwnProperty(correspondences[k])
         ) {
-          intent[k] = this.config[correspondeces[k]];
+          intent[k] = this.config[correspondences[k]];
         }
       }
 
@@ -139,10 +164,10 @@ export class Service {
   }
 
   buildRequestBody(opcode, intent) {
-    let body = {};
+    const body = {};
     for (const oldKey in intent) {
       const newKey = OPERATIONS[opcode].validation[oldKey];
-      output[newKey] = intent[oldKey];
+      body[newKey] = intent[oldKey];
     }
 
     return body;
@@ -150,7 +175,7 @@ export class Service {
 
   buildRequestHeaders(opcode, intent) {
     this.generateAccessToken();
-    let headers = {
+    const headers = {
       [HTTP.HEADERS.USER_AGENT]: this.config.userAgent,
       [HTTP.HEADERS.ORIGIN]: this.config.origin,
       [HTTP.HEADERS.CONTENT_TYPE]: "application/json",
@@ -161,7 +186,7 @@ export class Service {
   }
 
   performRequest(opcode, intent) {
-    if (this.config.hasOwnProperty("authentication")) {
+    if (this.config.hasOwnProperty("auth")) {
       const headers = this.buildRequestHeaders(opcode, intent);
       const body = this.buildRequestBody(opcode, intent);
 
@@ -171,7 +196,13 @@ export class Service {
       });
     }
 
-    return Promise.reject("Lacks auth data");
+    const error = new Response(
+      ERRORS.AUTHENTICATION.code,
+      ERRORS.AUTHENTICATION.description,
+      []
+    );
+
+    return Promise.reject(error);
   }
 
   generateAccessToken() {
