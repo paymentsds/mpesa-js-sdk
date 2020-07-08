@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 import { Pattern } from "./pattern.js";
 import { Environment } from "./environment.js";
 import { Operation } from "./operation.js";
@@ -44,18 +46,6 @@ export class Configuration {
             this[key] = args[key];
           }
         }
-      }
-    }
-  }
-
-  buildAccessToken() {
-    if (this.accessToken == undefined) {
-      if (this.apiKey != undefined && this.publicKey != undefined) {
-        let tokenObject = new AccessToken({
-          publicKey: this.publicKey,
-          apiKey: this.apiKey,
-        });
-        this.accessToken = tokenObject.toString();
       }
     }
   }
@@ -195,15 +185,6 @@ export class Configuration {
     };
   }
 
-  generateAuthorizationHeader() {
-    this.buildAccessToken();
-    if (this.isAuthenticationDataValid()) {
-      return { Authorization: `Bearer ${this.accessToken}` };
-    }
-
-    throw "Does not have API Key and Public key or access token";
-  }
-
   generateHeaders() {
     return {
       ...this.defaultHeaders,
@@ -215,18 +196,26 @@ export class Configuration {
     return `${this.environment.toURL()}${operation.toURL()}`;
   }
 
-  isAuthenticationDataValid() {
-    return (
-      (this.apiKey != null && this.publicKey != null) ||
-      this.accessToken != null
-    );
-  }
-
-  isValid() {
-    return this.isAuthenticationDataValid();
-  }
-
   generateBaseURL(operation) {
     return `${this.environment.toURL()}:${operation.port}`;
+  }
+
+  generateAccessToken() {
+    const hasKeys =
+      this.hasOwnProperty("apiKey") && this.hasOwnproperty("publicKey");
+    const hasAccesToken = this.hasOwnProperty("accessToken");
+
+    if (hasKeys) {
+      this.auth = crypto.publicEncrypt();
+      let buffer = Buffer.from(this.apiKey);
+      let base64Key = `-----BEGIN PUBLIC KEY-----\n${this.publicKey}\n-----END PUBLIC KEY-----`;
+      let key = crypto.createPublicKey(base64Key);
+
+      this.auth = crypto.publicEncrypt({ key: key }, buffer);
+    }
+
+    if (hasAccessToken) {
+      this.auth = this.accessToken;
+    }
   }
 }
