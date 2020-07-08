@@ -27,6 +27,11 @@ export class Service {
 
   handleSend(intent) {
     const opcode = this.detectOperation(intent);
+	  if (opcode == null) {
+    return Promise.reject({
+      error: "Doesn't have to",
+    });
+	  }
     return this.handleRequest(opcode, intent);
 
     // Handle error
@@ -72,9 +77,7 @@ export class Service {
       }
     }
 
-    return Promise.reject({
-      error: "Doesn't have to",
-    });
+return null;
   }
 
   detectErrors(opcode, intent) {
