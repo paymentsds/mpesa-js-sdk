@@ -27,7 +27,7 @@ export class Service {
 
   handleSend(intent) {
     const opcode = this.detectOperation(intent);
-    return this.handleRequest(B2C_PAYMENT, intent);
+    return this.handleRequest(opcode, intent);
 
     // Handle error
   }
@@ -61,7 +61,21 @@ export class Service {
     return this.performRequest(opcode, intent);
   }
 
-  detectOperation(data) {}
+  detectOperation(intent) {
+    if (intent.hasOwnProperty("to")) {
+      if (PATTERNS.PHONE_NUMBER.test(intent["to"])) {
+        return B2C_PAYMENT;
+      }
+
+      if (PATTERNS.SERVICE_PROVIDER_CODE.test(intent["to"])) {
+        return B2B_PAYMENT;
+      }
+    }
+
+    return Promise.reject({
+      error: "Doesn't have to",
+    });
+  }
 
   detectErrors(opcode, intent) {
     const errors = required.filter((e) => {
@@ -141,29 +155,17 @@ export class Service {
   }
 
   performRequest(opcode, intent) {
-   	if (this.config.hasOwnProperty('authentication')) {
-		const headers = this.buildRequestHeaders(opcode, intent);
-    		const body = this.buildRequestBody(opcode, intent);
-    		
-		//return request
-	}
+    if (this.config.hasOwnProperty("authentication")) {
+      const headers = this.buildRequestHeaders(opcode, intent);
+      const body = this.buildRequestBody(opcode, intent);
 
-	return Promise.reject('Lacks auth data')
+      //return request
+    }
+
+    return Promise.reject("Lacks auth data");
   }
 
   generateAccessToken() {
-    const hasKeys =
-      this.config.hasOwnProperty("apiKey") &&
-      this.config.hasOwnproperty("publicKey");
-    const hasAccesToken = this.config.hasOwnProperty("accessToken");
-
-    if (hasKeys) {
-      this.config["authentication"] =
-        this.config.apiKey + this.config.publicKey;
-    }
-
-    if (hasAccessToken) {
-      this.config["authentication"] = this.config.accessToken;
-    }
- }
+    this.config.generateAccessToken();
+  }
 }
