@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { Configuration } from "./configuration.js";
-import { Response } from "./Response.js";
+import { Response } from "./response.js";
 
 import {
   OPERATIONS,
@@ -18,11 +18,6 @@ import {
 export class Service {
   constructor(args) {
     this.initDefaultConfigs(args);
-    this.initHttpClient();
-  }
-
-  initHttpClient() {
-    // this.httpClient = axios({});
   }
 
   initDefaultConfigs(args) {
@@ -82,13 +77,13 @@ export class Service {
       return Promise.reject(error);
     }
 
-    // return this.performRequest(opcode, intent);
-    const error = new Response(
+    return this.performRequest(opcode, intent);
+    /*const error = new Response(
       ERRORS.VALIDATION.code,
       ERRORS.VALIDATION.description,
       missingProperties
-    );
-    return Promise.reject(error);
+    );*/
+    //return Promise.reject(error);
   }
 
   detectOperation(intent) {
@@ -166,7 +161,7 @@ export class Service {
   buildRequestBody(opcode, intent) {
     const body = {};
     for (const oldKey in intent) {
-      const newKey = OPERATIONS[opcode].validation[oldKey];
+      const newKey = OPERATIONS[opcode].mapping[oldKey];
       body[newKey] = intent[oldKey];
     }
 
@@ -174,7 +169,6 @@ export class Service {
   }
 
   buildRequestHeaders(opcode, intent) {
-    this.generateAccessToken();
     const headers = {
       [HTTP.HEADERS.USER_AGENT]: this.config.userAgent,
       [HTTP.HEADERS.ORIGIN]: this.config.origin,
@@ -186,23 +180,67 @@ export class Service {
   }
 
   performRequest(opcode, intent) {
-    if (this.config.hasOwnProperty("auth")) {
-      const headers = this.buildRequestHeaders(opcode, intent);
-      const body = this.buildRequestBody(opcode, intent);
+    this.generateAccessToken();
 
-      return Promise.resolve({
-        ...headers,
-        ...body,
-      });
+    if (this.config.hasOwnProperty("environment")) {
+      if (this.config.hasOwnProperty("auth")) {
+        const operation = OPERATIONS[opcode];
+        const headers = this.buildRequestHeaders(opcode, intent);
+        const body = this.buildRequestBody(opcode, intent);
+
+        let requestData = {
+          baseURL: `${this.config.environment.scheme}://${this.config.environment.domain}:${operation.port}`,
+          url: operation.path,
+          method: operation.method,
+          path: operation.path,
+          headers: headers,
+        };
+
+        if (operation.method == HTTP.METHOD.POST) {
+          requestData.data = body;
+        } else {
+          requestData.params = body;
+        }
+
+        let self = this;
+        return axios(requestData)
+          .then((r) => {
+            return Promise.resolve(self.buildResponse(r));
+          })
+          .catch((e) => {
+            return Promise.reject(self.buildResponse(e.response));
+          });
+      }
+
+      const error = new Response(
+        ERRORS.INVALID_ENV.code,
+        ERRORS.AUTHENTICATION.description,
+        []
+      );
+
+      return Promise.reject(error);
+    } else {
+      const error = new Response(
+        ERRORS.AUTHENTICATION.code,
+        ERRORS.AUTHENTICATION.description,
+        []
+      );
+
+      return Promise.reject(error);
     }
+  }
 
-    const error = new Response(
-      ERRORS.AUTHENTICATION.code,
-      ERRORS.AUTHENTICATION.description,
-      []
-    );
-
-    return Promise.reject(error);
+  buildResponse(result) {
+    return {
+      response: {
+        status: result.status,
+        code: result.data.output_ResponseCode,
+        desc: result.data.output_ResponseDesc,
+      },
+      conversation: result.data.output_ConversationID,
+      transaction: result.data.output_TransactionID,
+      reference: result.data.output_ThirdPartyReference,
+    };
   }
 
   generateAccessToken() {

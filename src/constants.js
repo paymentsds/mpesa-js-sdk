@@ -16,7 +16,7 @@ const HTTP = {
     GET: "get",
     POST: "post",
   },
-  HEADER: {
+  HEADERS: {
     USER_AGENT: "User-Agent",
     CONTENT_TYPE: "Content-Type",
     ORIGIN: "Origin",
@@ -45,7 +45,7 @@ const OPERATIONS = {
   [C2B_PAYMENT]: new Operation({
     method: HTTP.METHOD.POST,
     port: "18352",
-    path: "/ipg/v1x/",
+    path: "/ipg/v1x/c2bPayment/singleStage/",
     mapping: {
       from: "input_CustomerMSISDN",
       to: "input_ServiceProviderCode",
@@ -66,8 +66,8 @@ const OPERATIONS = {
 
   [B2B_PAYMENT]: new Operation({
     method: HTTP.METHOD.POST,
-    port: "18352",
-    path: "/ipg/v1x/",
+    port: "18349",
+    path: "/ipg/v1x/b2bPayment/",
     mapping: {
       number: "input_CustomerMSISDN",
       from: "input_CustomerMSISDN",
@@ -89,12 +89,12 @@ const OPERATIONS = {
 
   [B2C_PAYMENT]: new Operation({
     method: HTTP.METHOD.POST,
-    port: "18352",
-    path: "/ipg/v1x/",
+    port: "18345",
+    path: "/ipg/v1x/b2cPayment/",
     mapping: {
       number: "input_CustomerMSISDN",
-      from: "input_CustomerMSISDN",
-      to: "input_ServiceProviderCode",
+      to: "input_CustomerMSISDN",
+      from: "input_ServiceProviderCode",
       amount: "input_Amount",
       transaction: "input_TransactionReference",
       reference: "input_ThirdPartyReference",
@@ -161,6 +161,10 @@ const ERRORS = {
     code: 3003,
     descrition: "Unable to detect the operation from the destination number",
   },
+  INVALID_ENV: {
+    code: 3003,
+    descrition: "Unable to detect the base URL",
+  },
 };
 
 export {
@@ -176,4 +180,5 @@ export {
   SANDBOX,
   VERSION,
   USER_AGENT,
+  HTTP,
 };
