@@ -49,13 +49,13 @@ export class Service {
     const missingProperties = this.detectMissingProperties(opcode, intent);
 
     if (missingProperties.length > 0) {
-      // return missing data errors
+      return Promise.reject(missingProperties);
     }
 
     const validationErrors = this.detectErrors(opcode, data);
 
     if (validationErrors.length > 0) {
-      // return validation errors
+      return Promise.reject(validationErrors);
     }
 
     return this.performRequest(opcode, intent);
