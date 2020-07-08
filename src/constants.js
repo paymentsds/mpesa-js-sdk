@@ -144,7 +144,27 @@ const OPERATIONS = {
   }),
 };
 
+const ERRORS = {
+  VALIDATION: {
+    code: 3000,
+    description: "The data provider is not valid",
+  },
+  MISSING: {
+    code: 3001,
+    description: "There are attributes missing to complete the transaction",
+  },
+  AUTHENTICATION: {
+    code: 3002,
+    description: "There is not a public key and API key or access token set",
+  },
+  INVALID_OPERATION: {
+    code: 3003,
+    descrition: "Unable to detect the operation from the destination number",
+  },
+};
+
 export {
+  ERRORS,
   PATTERNS,
   C2B_PAYMENT,
   B2B_PAYMENT,
