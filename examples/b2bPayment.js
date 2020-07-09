@@ -1,4 +1,4 @@
-import { Service } from "@paysuite/mpesa";
+import { Service, SANDBOX } from "@paysuite/mpesa";
 import dotenv from "dontenv";
 
 dotenv.config();
@@ -17,6 +17,9 @@ const client = new Client({
   origin: ORIGIN,
   host: HOST,
   serviceProviderCode: SERVICE_PROVIDER_CODE,
+  verifySSL: false,
+  debugging: true,
+  environment: SANDBOX,
 });
 
 client
