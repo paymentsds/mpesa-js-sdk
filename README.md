@@ -1,6 +1,6 @@
 # MPesa Javascript SDK
 
-Javascript client for the [Vodacom M-Pesa API](https://developers.mpesa.vm.co.mz). This library can be used in browser as well with Node.JS
+Javascript client for the [Vodacom M-Pesa API](https://developers.mpesa.vm.co.mz).
 
 ## Contents
 
@@ -172,10 +172,10 @@ let data = {
 };
 
 client.revert(data)
-.then(e => {
-	// Handle the success
+.then(r => {
+	console.log(r);
 }).catch(e => {
-	// Handle the error
+	console.log(e);
 });
 ```
 
