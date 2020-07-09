@@ -78,12 +78,12 @@ export class Service {
     }
 
     return this.performRequest(opcode, intent);
-    /*const error = new Response(
+    /* const error = new Response(
       ERRORS.VALIDATION.code,
       ERRORS.VALIDATION.description,
       missingProperties
-    );*/
-    //return Promise.reject(error);
+    ); */
+    // return Promise.reject(error);
   }
 
   detectOperation(intent) {
@@ -188,7 +188,7 @@ export class Service {
         const headers = this.buildRequestHeaders(opcode, intent);
         const body = this.buildRequestBody(opcode, intent);
 
-        let requestData = {
+        const requestData = {
           baseURL: `${this.config.environment.scheme}://${this.config.environment.domain}:${operation.port}`,
           url: operation.path,
           method: operation.method,
@@ -196,13 +196,13 @@ export class Service {
           headers: headers,
         };
 
-        if (operation.method == HTTP.METHOD.POST) {
+        if (operation.method === HTTP.METHOD.POST) {
           requestData.data = body;
         } else {
           requestData.params = body;
         }
 
-        let self = this;
+        const self = this;
         return axios(requestData)
           .then((r) => {
             return Promise.resolve(self.buildResponse(r));
