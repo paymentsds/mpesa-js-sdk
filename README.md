@@ -1,19 +1,19 @@
 # MPesa Javascript SDK
 
-Javascript client for the [Vodacom M-Pesa API](https://developers.mpesa.vm.co.mz)
+Javascript client for the [Vodacom M-Pesa API](https://developers.mpesa.vm.co.mz). This library can be used in browser as well with Node.JS
 
 ## Contents
 
 1. [Features](#features)
 1. [Requirements](#requirements)
-1. [Installation](#installation)
-   1. [Using NPM](#installation-npm)
-   1. [Using Yarn](#installation-yarn)
-   1. [Manual Installation](#installation-manual)
 1. [Configuration](#configuration)
 1. [Usage](#usage)
    1. [Quickstart](#contributing)
    1. [Examples](#contributing)
+1. [Installation](#installation)
+   1. [Using NPM](#installation-npm)
+   1. [Using Yarn](#installation-yarn)
+   1. [Manual Installation](#installation-manual)
 1. [Related Projects](#related)
    1. [Dependencies](#contributing)
    1. [Friends](#contributing)
@@ -25,16 +25,17 @@ Javascript client for the [Vodacom M-Pesa API](https://developers.mpesa.vm.co.mz
 1. [License](#license)
 
 ## Features <a name="features"></a>
-
-- [Make C2B transaction](examples/c2bPayment.js)
-- [Make B2C transaction](examples/b2cPayment.js)
-- [Make B2B transaction](examples/b2bPayment.js)
-- [Revert a transaction](examples/reversal.js)
-- [Query transaction status](examples/queryTransactionStatus.js)
+- Make C2B transaction
+- Make B2C transaction
+- Make B2B transaction
+- Revert a transaction
+- Query transaction status
 
 ## Requirements <a name="requirements"></a>
 
-- Node >= 6.0.0
+- [Node.js](https://nodejs.org/en/) v6.0.0 or later
+- [NPM](https://www.npmjs.com/)
+- [Yarn](https://yarnpkg.com)
 
 ## Usage <a name="usage"></a>
 ### Quickstart <a name="usage-quickstart"></a>
@@ -63,26 +64,18 @@ client.receive(data)
 	});
 ```
 
+### Receive money from a mobile wallet
+
 ```javascript
-import { Client, Environment } from '@paysuite/mpesa';
+import { Client, SANDBOX } from '@paysuite/mpesa';
 
 let client = new Client({
 	apiKey: '<YOUR API KEY HERE>',
 	publicKey: '<YOUR PUBLIC KEY HERE>',
 	debugging: false,
 	verifySSL: false,
-	serviceProviderCode: '<YOUR SERVICE PROVIDER CODE HERE>'
-	environment: Environment.SANDBOX
-});
-```
-
-### Receive money from a mobile wallet
-
-```javascript
-import { Client, Environment } from '@paysuite/mpesa';
-
-let client = new Client({
-	...
+	serviceProviderCode: '<YOUR SERVICE PROVIDER CODE HERE>',
+	environment: SANDBOX
 });
 
 let form = {
@@ -103,10 +96,15 @@ client.receive(form)
 ### Send money to a mobile wallet
 
 ```javascript
-import { Client, Environment } from '@paysuite/mpesa';
+import { Client, SANDBOX } from '@paysuite/mpesa';
 
 let client = new Client({
-	...
+	apiKey: '<YOUR API KEY HERE>',
+	publicKey: '<YOUR PUBLIC KEY HERE>',
+	debugging: false,
+	verifySSL: false,
+	serviceProviderCode: '<YOUR SERVICE PROVIDER CODE HERE>',
+	environment: SANDBOX
 });
 
 let data = {
@@ -127,10 +125,15 @@ client.send(data)
 ### Send money to a business wallet
 
 ```javascript
-import { Client, Environment } from '@paysuite/mpesa';
+import { Client, SANDBOX } from '@paysuite/mpesa';
 
 let client = new Client({
-	...
+	apiKey: '<YOUR API KEY HERE>',
+	publicKey: '<YOUR PUBLIC KEY HERE>',
+	debugging: false,
+	verifySSL: false,
+	serviceProviderCode: '<YOUR SERVICE PROVIDER CODE HERE>',
+	environment: SANDBOX
 });
 
 let form = {
@@ -151,10 +154,15 @@ client.send(form)
 ### Revert a transaction
 
 ```javascript
-import { Client, Environment } from '@paysuite/mpesa';
+import { Client, SANDBOX } from '@paysuite/mpesa';
 
 let client = new Client({
-	...
+	apiKey: '<YOUR API KEY HERE>',
+	publicKey: '<YOUR PUBLIC KEY HERE>',
+	debugging: false,
+	verifySSL: false,
+	serviceProviderCode: '<YOUR SERVICE PROVIDER CODE HERE>',
+	environment: SANDBOX,
 	securityCode: '<YOUR SECURITY CODE>',
 	initiatorIdentifier: '<YOUR INITIATOR IDENTIFIER>'
 });
@@ -174,10 +182,15 @@ client.revert(data)
 ### Query the status of a transaction
 
 ```javascript
-import { Client, Environment } from '@paysuite/mpesa';
+import { Client, SANDBOX } from '@paysuite/mpesa';
 
 let client = new Client({
-	...
+	apiKey: '<YOUR API KEY HERE>',
+	publicKey: '<YOUR PUBLIC KEY HERE>',
+	debugging: false,
+	verifySSL: false,
+	serviceProviderCode: '<YOUR SERVICE PROVIDER CODE HERE>',
+	environment: SANDBOX
 });
 
 let data = {
@@ -195,6 +208,12 @@ client.query(data)
 ```
 
 ### Examples <a name="usage-examples"></a>
+- [Make C2B transaction](examples/c2bPayment.js)
+- [Make B2C transaction](examples/b2cPayment.js)
+- [Make B2B transaction](examples/b2bPayment.js)
+- [Revert a transaction](examples/reversal.js)
+- [Query transaction status](examples/queryTransactionStatus.js)
+
 ## Installation <a name="installation"></a>
 ### Using NPM <a name="installation-npm"></a>
 ```bash
@@ -241,7 +260,7 @@ $ npm link
 The complete set of configurations looks like this:
 
 ```javascript
-import { Client, Environment } from '@paysuite/mpesa';
+import { Client, SANDBOX } from '@paysuite/mpesa';
 
 let client = new Client({
 	apiKey: <REPLACE>,
@@ -285,6 +304,14 @@ let client = new Client({
 ### Friends <a name="related-friends"></a>
 
 ### Alternatives <a name="related-alternatives"></a>
+- [mpesa-node-api](https://github.com/rosariopfernandes/mpesa-node-api)
+
+### Inspiration
+- [rosariopfernandes/mpesa-node-api](https://github.com/abdulmueid/mpesa-php-api)
+- [karson/mpesa-php-sdk](https://github.com/karson/mpesa-php-sdk)
+- [codeonweekends/mpesa-php-sdk](https://github.com/codeonweekends/mpesa-php-sdk)
+- [abdulmueid/mpesa-php-api](https://github.com/abdulmueid/mpesa-php-api)
+- [realdm/mpesasdk](https://github.com/realdm/mpesasdk)
 
 ## Contributing <a name="contributing"></a>
 
@@ -299,7 +326,7 @@ let client = new Client({
 
 ## License <a name="license"></a>
 
-Copyright 2020 Edson Michaque, Nélio Macombo
+Copyright 2020 Edson Michaque and Nélio Macombo
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
