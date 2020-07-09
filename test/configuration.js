@@ -4,7 +4,7 @@ import { Configuration } from '../src/configuration.js';
 describe('Configuration', function() {
 	describe('#toURL()', function() {
 
-		let config = new Configuration({
+		const config = new Configuration({
 			apiKey: '123456789',
 			publicKey: '123456789',
 			origin: '*',

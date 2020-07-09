@@ -8,7 +8,9 @@
     ".": "./src/index.js"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint --fix src/*.js examples/*.js test/*.js",
+    "precommit": "npm run lint"
   },
   "repository": {
     "type": "git",
