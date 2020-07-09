@@ -12,14 +12,19 @@ export class Environment {
   }
 
   toURL() {
-    if (this.isValid()) {
       return `${this.scheme}://${this.domain}`;
-    }
-
-    throw "Invalid";
   }
 
-  static fromURL(url) {}
+  static fromURL(url) {
+	let parts;
+	if (/^https:\/\//.test(url) || /^http:\/\//.test(url)) {
+		parts = url.split('://');
+  	} else {
+		parts = ['https', url];
+	}
+
+	return new Environment({scheme: parts[0], domain: parts[1]})
+  }
 
   isValid() {
     return this.scheme != null && this.domain != null;
