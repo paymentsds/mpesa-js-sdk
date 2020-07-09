@@ -19,6 +19,9 @@ const client = new Client({
   origin: ORIGIN,
   host: HOST,
   serviceProviderCode: SERVICE_PROVIDER_CODE,
+  verifySSL: false,
+  debugging: true,
+  environment: SANDBOX,
   initiatorIdentifier: INITIATOR_IDENTIFIER,
   securityCredential: SECURITY_CREDENTIAL,
 });

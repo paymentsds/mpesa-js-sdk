@@ -21,6 +21,9 @@ const client = new Client({
   serviceProviderCode: SERVICE_PROVIDER_CODE,
   initiatorIdentifier: INITIATOR_IDENTIFIER,
   securityCredential: SECURITY_CREDENTIAL,
+  verifySSL: false,
+  debugging: true,
+  environment: SANDBOX,
 });
 
 // Replace subject with tranaction, reference ou conversation returned from a successful transaction
