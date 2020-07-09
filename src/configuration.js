@@ -6,7 +6,7 @@ import { PRODUCTION, SANDBOX, USER_AGENT, VERSION } from "./constants.js";
 
 export class Configuration {
   static PARAMS = [
-    "environment",
+    "host",
     "apiKey",
     "publicKey",
     "accessToken",
@@ -31,8 +31,8 @@ export class Configuration {
     if (args !== null && args !== undefined) {
       for (let key of Configuration.PARAMS) {
         if (args.hasOwnProperty(key)) {
-          if (key == "environment") {
-            this.key = Environment.fromURL(args[key]);
+          if (key === "host") {
+            this.environment = Environment.fromURL(args[key]);
           } else {
             this[key] = args[key];
           }
