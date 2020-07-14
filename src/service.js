@@ -87,7 +87,7 @@ export class Service {
   }
 
   detectOperation(intent) {
-    if (intent.hasOwnProperty("to")) {
+    if (Object.prototype.hasOwnProperty.call(intent, "to")) {
       if (PATTERNS.PHONE_NUMBER.test(intent.to)) {
         return B2C_PAYMENT;
       }
@@ -115,7 +115,7 @@ export class Service {
     const required = OPERATIONS[opcode].required;
 
     const missing = required.filter((e) => {
-      return !data.hasOwnProperty(e);
+      return !Object.prototype.hasOwnProperty.call(data, e);
     });
 
     return missing;
@@ -125,8 +125,8 @@ export class Service {
     function map(correspondences) {
       for (const k in correspondences) {
         if (
-          !intent.hasOwnProperty(k) &&
-          this.config.hasOwnProperty(correspondences[k])
+          !Object.prototype.hasOwnProperty.call(intent, k) &&
+          Object.prototype.hasOwnProperty.call(this.config, correspondences[k])
         ) {
           intent[k] = this.config[correspondences[k]];
         }
@@ -182,8 +182,8 @@ export class Service {
   performRequest(opcode, intent) {
     this.generateAccessToken();
 
-    if (this.config.hasOwnProperty("environment")) {
-      if (this.config.hasOwnProperty("auth")) {
+    if (Object.prototype.hasOwnProperty.call(this.config, "environment")) {
+      if (Object.prototype.hasOwnProperty.call(this.config, "auth")) {
         const operation = OPERATIONS[opcode];
         const headers = this.buildRequestHeaders(opcode, intent);
         const body = this.buildRequestBody(opcode, intent);

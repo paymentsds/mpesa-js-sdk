@@ -1,19 +1,8 @@
-export class Operation {
-  static defaultProperties = [
-    "name",
-    "method",
-    "port",
-    "path",
-    "mapping",
-    "validation",
-    "required",
-    "optional",
-  ];
-
+class Operation {
   constructor(args) {
     if (args !== null && args !== undefined) {
       for (const key of Operation.defaultProperties) {
-        if (args.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(args, key)) {
           this[key] = args[key];
         }
       }
@@ -25,11 +14,22 @@ export class Operation {
       const pathWithoudSlash = this.path.replace(/^\/+/, "");
       return `:${this.port}/${pathWithoudSlash}`;
     }
-
-    throw "Uninitialized";
   }
 
   isValid() {
     return this.name != null && this.port != null && this.path != null;
   }
 }
+
+Operation.defaultProperties = [
+  "name",
+  "method",
+  "port",
+  "path",
+  "mapping",
+  "validation",
+  "required",
+  "optional",
+];
+
+export { Operation };

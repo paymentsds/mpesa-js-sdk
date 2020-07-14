@@ -1,25 +1,9 @@
 import crypto from "crypto";
 
 import { Environment } from "./environment.js";
-import { Operation } from "./operation.js";
-import { PRODUCTION, SANDBOX, USER_AGENT, VERSION } from "./constants.js";
+import { SANDBOX, USER_AGENT, VERSION } from "./constants.js";
 
-export class Configuration {
-  static PARAMS = [
-    "host",
-    "apiKey",
-    "publicKey",
-    "accessToken",
-    "verifySSL",
-    "timeout",
-    "debugging",
-    "userAgent",
-    "origin",
-    "securityCode",
-    "serviceProviderCode",
-    "initiatorIdentifier",
-  ];
-
+class Configuration {
   constructor(args) {
     this.environment = SANDBOX;
     this.verifySSL = false;
@@ -29,8 +13,8 @@ export class Configuration {
     this.userAgent = `${USER_AGENT}/${VERSION}`;
 
     if (args !== null && args !== undefined) {
-      for (let key of Configuration.PARAMS) {
-        if (args.hasOwnProperty(key)) {
+      for (const key of Configuration.PARAMS) {
+        if (Object.prototype.hasOwnProperty.call(args, key)) {
           if (key === "host") {
             this.environment = Environment.fromURL(args[key]);
           } else {
@@ -51,14 +35,18 @@ export class Configuration {
 
   generateAccessToken() {
     const hasKeys =
-      this.hasOwnProperty("apiKey") && this.hasOwnProperty("publicKey");
-    const hasAccessToken = this.hasOwnProperty("accessToken");
+      Object.prototype.hasOwnProperty.call(this, "apiKey") &&
+      Object.prototype.hasOwnProperty.call(this, "publicKey");
+    const hasAccessToken = Object.prototype.hasOwnProperty.call(
+      this,
+      "accessToken"
+    );
 
     if (hasKeys) {
-      let publicKey = formatPublicKey(this.publicKey);
-      let apiKeyBuffer = Buffer.from(this.apiKey);
+      const publicKey = formatPublicKey(this.publicKey);
+      const apiKeyBuffer = Buffer.from(this.apiKey);
 
-      let encryptedApiKey = crypto.publicEncrypt(
+      const encryptedApiKey = crypto.publicEncrypt(
         {
           key: publicKey,
           padding: crypto.constants.RSA_PKCS1_PADDING,
@@ -81,3 +69,20 @@ export class Configuration {
     }
   }
 }
+
+Configuration.PARAMS = [
+  "host",
+  "apiKey",
+  "publicKey",
+  "accessToken",
+  "verifySSL",
+  "timeout",
+  "debugging",
+  "userAgent",
+  "origin",
+  "securityCode",
+  "serviceProviderCode",
+  "initiatorIdentifier",
+];
+
+export { Configuration };
