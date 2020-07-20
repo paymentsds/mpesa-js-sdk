@@ -25,11 +25,11 @@ MPesa JS SDK is an unofficial library to help developers integrating every [MPes
 1. [License](#license)
 
 ## Features <a name="features"></a>
-- Make C2B transaction
-- Make B2C transaction
-- Make B2B transaction
-- Revert a transaction
-- Query transaction status
+- Receive money from a mobile account to a business account (C2B)
+- Send money from a business account to a mobile account (B2C)
+- Send money from a business account to a another business account (B2B)
+- Revert a transaction (Reversal)
+- Query the status of a transaction (Query transaction status)
 
 ## Requirements <a name="requirements"></a>
 
