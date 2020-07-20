@@ -1,23 +1,33 @@
-# MPesa SDK for Javascript
+# M-Pesa SDK for JavaScript
 
-MPesa JS SDK is an unofficial library to help developers integrating every [MPesa](https://developer.mpesa.vm.co.mz) operations to their Javascript (browsers and Node.JS environments) applications.
+M-Pesa SDK for JavaScript is an unofficial library aiming to help businesses integrating every [M-Pesa](https://developer.mpesa.vm.co.mz) operations to their JavaScript applications.
 
 ## Contents
 
 1. [Features](#features)
-1. [Requirements](#requirements)
-1. [Configuration](#configuration)
 1. [Usage](#usage)
-   1. [Quickstart](#contributing)
-   1. [Examples](#contributing)
+   1. [Quickstart](#usage/scenario-1)
+   1. [Receive Money from a Mobile Account](#usage/scenario-1)
+   1. [Send Money to a Mobile Account](#usage/scenario-2)
+   1. [Send Money to a Business Account](#usage/scenario-3)
+   1. [Revert a Transaction](#usage/scenario-4)
+   1. [Query the Status of a Transaction](#usage/scenario-5)
+   1. [Examples](#usage/scenario-6)
+1. [Prerequisites](#prerequisites)
 1. [Installation](#installation)
-   1. [Using NPM](#installation-npm)
-   1. [Using Yarn](#installation-yarn)
-   1. [Manual Installation](#installation-manual)
-1. [Related Projects](#related)
-   1. [Dependencies](#contributing)
-   1. [Friends](#contributing)
-   1. [Alternatives](#contributing)
+   1. [Installation Scenario 1](#installation/scenario-1)
+   1. [Installation Scenario 2](#installation/scenario-2)
+   1. [Installation Scenario 3](#installation/scenario-3)
+   1. [Installation Scenario 4](#installation/scenario-4)
+1. [Configuration](#configuration)
+   1. [Configuration Scenario 1](#configuration/scenario-1)
+   1. [Configuration Scenario 2](#configuration/scenario-2)
+   1. [Configuration Scenario 3](#configuration/scenario-3)
+   1. [Configuration Scenario 4](#configuration/scenario-4)
+1. [Related Projects](#related-projects)
+   1. [Dependencies](#related-projects/dependencies)
+   1. [Friends](#related-projects/friends)
+   1. [Alternatives](#related-projects/alternatives)
 1. [Contributing](#contributing)
 1. [Changelog](#changelog)
 1. [Authors](#authors)
@@ -25,293 +35,88 @@ MPesa JS SDK is an unofficial library to help developers integrating every [MPes
 1. [License](#license)
 
 ## Features <a name="features"></a>
-- Receive money from a mobile account to a business account (C2B)
-- Send money from a business account to a mobile account (B2C)
-- Send money from a business account to a another business account (B2B)
-- Revert a transaction (Reversal)
-- Query the status of a transaction (Query transaction status)
 
-## Requirements <a name="requirements"></a>
-
-- [Node.js](https://nodejs.org/en/) v6.0.0 or later
-- [NPM](https://www.npmjs.com/)
-- [Yarn](https://yarnpkg.com)
+- Receive money from a mobile account to a business account
+- Send money from a business account to a mobile account
+- Send money from a business account to a another business account
+- Revert a transaction
+- Query the status of a transaction
 
 ## Usage <a name="usage"></a>
-### Quickstart <a name="usage-quickstart"></a>
-```javascript
-import { Client } from '@paysuite/mpesa';
 
-let client = new Client({
-	apiKey: <REPLACE>,
-	publicKey: <REPLACE>,
-	serviceProviderCode: <REPLACE>
-});
+### Quickstart <a name="#usage/scenario-1"></a>
 
-let data = {
-	from: '84XXXXXXX',
-	amount: '10',
-	transaction: 'TX', 
-	reference: 'REF'
-};
+### Receive Money from a Mobile Account <a name="#usage/scenario-2"></a>
 
-client.receive(data)
-	.then(result => {
-		console.log(result);
-	})
-	.catch(error => {
-		console.log(error);
-	});
-```
+### Send Money to a Mobile Account <a name="#usage/scenario-3"></a>
 
-### Receive money from a mobile wallet
+### Send Money to a Business Account <a name="#usage/scenario-4"></a>
 
-```javascript
-import { Client, SANDBOX } from '@paysuite/mpesa';
+### Revert a Transaction <a name="#usage/scenario-5"></a>
 
-let client = new Client({
-	apiKey: '<YOUR API KEY HERE>',
-	publicKey: '<YOUR PUBLIC KEY HERE>',
-	debugging: false,
-	verifySSL: false,
-	serviceProviderCode: '<YOUR SERVICE PROVIDER CODE HERE>',
-	environment: SANDBOX
-});
+### Query the Status of a Transaction <a name="#usage/scenario-6"></a>
 
-let form = {
-	from: '258843330333',
-	transaction: '123456789',
-	reference: '123456789',
-	amount: '1000'
-};
+### Examples <a name="usage/scenario-7"></a>
 
-client.receive(form)
-.then(r => {
-	console.log(r);
-}).catch(e => {
-	console.log(e);
-});
-```
-
-### Send money to a mobile wallet
-
-```javascript
-import { Client, SANDBOX } from '@paysuite/mpesa';
-
-let client = new Client({
-	apiKey: '<YOUR API KEY HERE>',
-	publicKey: '<YOUR PUBLIC KEY HERE>',
-	debugging: false,
-	verifySSL: false,
-	serviceProviderCode: '<YOUR SERVICE PROVIDER CODE HERE>',
-	environment: SANDBOX
-});
-
-let data = {
-	to: '258843330333',
-	transaction: '123456789',
-	reference: '123456789',
-	amount: '1000'
-};
-
-client.send(data)
-.then(e => {
-	// Handle the success
-}).catch(e => {
-	// Handle the error
-});
-```
-
-### Send money to a business wallet
-
-```javascript
-import { Client, SANDBOX } from '@paysuite/mpesa';
-
-let client = new Client({
-	apiKey: '<YOUR API KEY HERE>',
-	publicKey: '<YOUR PUBLIC KEY HERE>',
-	debugging: false,
-	verifySSL: false,
-	serviceProviderCode: '<YOUR SERVICE PROVIDER CODE HERE>',
-	environment: SANDBOX
-});
-
-let form = {
-	to: '171717',
-	transaction: '123456789',
-	reference: '123456789',
-	amount: '1000'
-};
-
-client.send(form)
-.then(r => {
-	console.log(r);
-}).catch(e => {
-	console.log(e);
-});
-```
-
-### Revert a transaction
-
-```javascript
-import { Client, SANDBOX } from '@paysuite/mpesa';
-
-let client = new Client({
-	apiKey: '<YOUR API KEY HERE>',
-	publicKey: '<YOUR PUBLIC KEY HERE>',
-	debugging: false,
-	verifySSL: false,
-	serviceProviderCode: '<YOUR SERVICE PROVIDER CODE HERE>',
-	environment: SANDBOX,
-	securityCode: '<YOUR SECURITY CODE>',
-	initiatorIdentifier: '<YOUR INITIATOR IDENTIFIER>'
-});
-
-let data = {
-	reference: 'REF'
-};
-
-client.revert(data)
-.then(r => {
-	console.log(r);
-}).catch(e => {
-	console.log(e);
-});
-```
-
-### Query the status of a transaction
-
-```javascript
-import { Client, SANDBOX } from '@paysuite/mpesa';
-
-let client = new Client({
-	apiKey: '<YOUR API KEY HERE>',
-	publicKey: '<YOUR PUBLIC KEY HERE>',
-	debugging: false,
-	verifySSL: false,
-	serviceProviderCode: '<YOUR SERVICE PROVIDER CODE HERE>',
-	environment: SANDBOX
-});
-
-let data = {
-	to: '84XXXXXXX',
-	transaction: '123456789',
-	reference: '123456789'
-};
-
-client.query(data)
-.then(r => {
-	console.log(r);
-}).catch(e => {
-	console.log(e);
-});
-```
-
-### Examples <a name="usage-examples"></a>
-- [Make C2B transaction](examples/c2bPayment.js)
-- [Make B2C transaction](examples/b2cPayment.js)
-- [Make B2B transaction](examples/b2bPayment.js)
-- [Revert a transaction](examples/reversal.js)
-- [Query transaction status](examples/queryTransactionStatus.js)
+## Prerequisites <a name="prerequisites"></a>
 
 ## Installation <a name="installation"></a>
-### Using NPM <a name="installation-npm"></a>
-```bash
-$ npm install @paysuite/mpesa --save
-```
 
-```json
-{
-	"dependencies": {
-		"@paysuite/mpesa"
-	}
-}
-```
-```bash
-$ npm update
-```
+### Installation Scenario 1 <a name="installation/scenario-1"></a>
 
-### Using Yarn <a name="installation-yarn"></a>
-```bash
-yarn add @paysuite/mpesa
-```
+### Installation Scenario 2 <a name="installation/scenario-2"></a>
 
-```json
-{
-	"dependencies": {
-		"@paysuite/mpesa"
-	}
-}
-```
-
-```bash
-$ yarn update
-```
-
-### Manual Installation <a name="installation-manual"></a>
-```bash
-$ git clone https://github.com/paysuite/mpesa-js-sdk.git
-$ npm install ./mpesa-js-sdk
-$ cd mpesa-js-sdk
-$ npm link
-```
+### Installation Scenario 3 <a name="installation/scenario-3"></a>
 
 ## Configuration <a name="configuration"></a>
-The complete set of configurations looks like this:
 
-```javascript
-import { Client, SANDBOX } from '@paysuite/mpesa';
+### Configuration Scenario 1 <a name="configuration/scenario-1"></a>
 
-let client = new Client({
-	apiKey: <REPLACE>,
-	publicKey: <REPLACE>,
-	debugging: <REPLACE>,
-	verifySSL: <REPLACE>,
-	serviceProviderCode: <REPLACE>,
-	initiatorIdentifier: <REPLACE>,
-	origin: <REPLACE>,
-	userAgent: <REPLACE>,
-	timeout: <REPLACE>,
-	environment: <REPLACE>
-});
-```
+### Configuration Scenario 2 <a name="configuration/scenario-2"></a>
 
-The minimal configuration is:
-```javascript
-import { Client } from '@paysuite/mpesa';
+### Configuration Scenario 3 <a name="configuration/scenario-3"></a>
 
-let client = new Client({
-	apiKey: <REPLACE>,
-	publicKey: <REPLACE>
-})
-```
+## Related Projects <a name="related-projects"></a>
 
-Or if you have pre-calculated the access token offline:
+### Dependencies <a name="related-projects/dependencies"></a>
 
-```javascript
-import { Client } from '@paysuite/mpesa';
+#### Production Dependencies
 
-let client = new Client({
-	accessToken: <REPLACE>,
-})
-```
+- [Dependency 1](https://github.com/<username>/<project>)
+- [Dependency 2](https://github.com/<username>/<project>)
+- [Dependency 3](https://github.com/<username>/<project>)
+- [Dependency 4](https://github.com/<username>/<project>)
 
-## Related Projects <a name="related"></a>
+#### Development Dependencies
 
-### Dependencies <a name="related-dependencies"></a>
-- [Axios](https://github.com/axios/axios)
+- [Dependency 1](https://github.com/<username>/<project>)
+- [Dependency 2](https://github.com/<username>/<project>)
+- [Dependency 3](https://github.com/<username>/<project>)
+- [Dependency 4](https://github.com/<username>/<project>)
 
-### Friends <a name="related-friends"></a>
+### Friends <a name="related-projects/friends"></a>
 
-### Alternatives <a name="related-alternatives"></a>
-- [mpesa-node-api](https://github.com/rosariopfernandes/mpesa-node-api)
+- [M-Pesa SDK for Javascript](https://github.com/paymentsds/mpesa-js-sdk)
+- [M-Pesa SDK for PHP](https://github.com/paymentsds/mpesa-php-sdk)
+- [M-Pesa SDK for Ruby](https://github.com/paymentsds/mpesa-ruby-sdk)
+- [M-Pesa SDK for Python](https://github.com/paymentsds/mpesa-python-sdk)
+
+### Alternatives <a name="related-projects/alternatives"></a>
+
+- [Alternative 1](https://github.com/<username>/<project>)
+- [Alternative 2](https://github.com/<username>/<project>)
+- [Alternative 3](https://github.com/<username>/<project>)
+- [Alternative 4](https://github.com/<username>/<project>)
+
 
 ### Inspiration
+
 - [rosariopfernandes/mpesa-node-api](https://github.com/abdulmueid/mpesa-php-api)
 - [karson/mpesa-php-sdk](https://github.com/karson/mpesa-php-sdk)
 - [codeonweekends/mpesa-php-sdk](https://github.com/codeonweekends/mpesa-php-sdk)
 - [abdulmueid/mpesa-php-api](https://github.com/abdulmueid/mpesa-php-api)
 - [realdm/mpesasdk](https://github.com/realdm/mpesasdk)
+
 
 ## Contributing <a name="contributing"></a>
 
@@ -333,3 +138,4 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
