@@ -1,4 +1,4 @@
-# MPesa Javascript SDK
+# PaymentsDS MPesa SDK for Javascript
 
 MPesa JS SDK is an unofficial library to help developers integrating every [MPesa](https://developer.mpesa.vm.co.mz) operations to their Javascript (browsers and Node.JS environments) applications.
 
