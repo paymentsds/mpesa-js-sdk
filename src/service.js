@@ -2,6 +2,13 @@ import axios from "axios";
 
 import { Configuration } from "./configuration.js";
 import { Response } from "./response.js";
+import { 
+  ValidationError,
+  AuthenticationError,
+  InvalidReceiverError,
+  MissingPropertiesError,
+  InvalidHostError
+}  from './errors.js';
 
 import {
   OPERATIONS,
@@ -26,15 +33,6 @@ export class Service {
 
   handleSend(intent) {
     const opcode = this.detectOperation(intent);
-    if (opcode === undefined) {
-      const error = new Response(
-        ERRORS.INVALID_OPERATION.code,
-        ERRORS.INVALID_OPERATION.description,
-        []
-      );
-
-      return Promise.reject(error);
-    }
 
     return this.handleRequest(opcode, intent);
   }
@@ -56,34 +54,16 @@ export class Service {
 
     const missingProperties = this.detectMissingProperties(opcode, intent);
     if (missingProperties.length > 0) {
-      const error = new Response(
-        ERRORS.MISSING.code,
-        ERRORS.MISSING.description,
-        missingProperties
-      );
-
-      return Promise.reject(error);
+      throw new MissingPropertiesError();
     }
 
     const validationErrors = this.detectErrors(opcode, data);
 
     if (validationErrors.length > 0) {
-      const error = new Response(
-        ERRORS.VALIDATION.code,
-        ERRORS.VALIDATION.description,
-        missingProperties
-      );
-
-      return Promise.reject(error);
+      throw new ValidationError();
     }
 
     return this.performRequest(opcode, intent);
-    /* const error = new Response(
-      ERRORS.VALIDATION.code,
-      ERRORS.VALIDATION.description,
-      missingProperties
-    ); */
-    // return Promise.reject(error);
   }
 
   detectOperation(intent) {
@@ -97,7 +77,7 @@ export class Service {
       }
     }
 
-    return null;
+    throw new InvalidReceiverError();
   }
 
   detectErrors(opcode, intent) {
@@ -212,21 +192,9 @@ export class Service {
           });
       }
 
-      const error = new Response(
-        ERRORS.INVALID_ENV.code,
-        ERRORS.AUTHENTICATION.description,
-        []
-      );
-
-      return Promise.reject(error);
+      throw new AuthenticationError();
     } else {
-      const error = new Response(
-        ERRORS.AUTHENTICATION.code,
-        ERRORS.AUTHENTICATION.description,
-        []
-      );
-
-      return Promise.reject(error);
+      throw new InvalidHostError();
     }
   }
 
