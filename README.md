@@ -64,7 +64,7 @@ const paymentData = {
    amount: '10'                     // input_Amount
 };
 
-client.receive(paymentDate).then(r => {
+client.receive(paymentData).then(r => {
    console.log(r.data);
 }).catch(e =>{
    console.log(e);
