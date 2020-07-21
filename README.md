@@ -98,6 +98,29 @@ client.send(paymentData).then(r => {
 
 ### Send Money to a Business Account <a name="#usage/scenario-4"></a>
 
+```javascript
+import { Client } from '@paymentsds/mpesa'
+
+const client = new Client({
+   apiKey: '<REPLACE>',             // API Key
+   publicKey: '<REPLACE>',          // Public Key
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode
+});
+
+const paymentData = {
+   to: '979797',                 // input_ReceiverPartyCode
+   reference: '11114',              // input_ThirdPartyReference
+   transation: 'T12344CC',          // input_TransactionReference
+   amount: '10'                     // input_Amount
+};
+
+client.send(paymentData).then(r => {
+   console.log(r.data);
+}).catch(e =>{
+   console.log(e);
+});
+```
+
 ### Revert a Transaction <a name="#usage/scenario-5"></a>
 
 ### Query the Status of a Transaction <a name="#usage/scenario-6"></a>
