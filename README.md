@@ -65,6 +65,31 @@ client.receive(paymentData).then(r => {
 });
 ```
 
+#### Using CommonJS
+
+```javascript
+var Client = require("@paymentsds/mpesa").Client;
+
+var client = new Client({
+   apiKey: '<REPLACE>',             // API Key
+   publicKey: '<REPLACE>',          // Public Key
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode
+});
+
+var paymentData = {
+   from: '841234567',               // input_CustomerMSISDN
+   reference: '11114',              // input_ThirdPartyReference
+   transation: 'T12344CC',          // input_TransactionReference
+   amount: '10'                     // input_Amount
+};
+
+client.receive(paymentData).then(function(r) {
+   console.log(r.data);
+}).catch(function(e) {
+   console.log(e);
+});
+```
+
 ### Send Money to a Mobile Account <a name="#usage/scenario-3"></a>
 
 ```javascript
