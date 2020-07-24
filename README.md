@@ -42,7 +42,7 @@ M-Pesa SDK for JavaScript is an unofficial library aiming to help businesses int
 
 ### Receive Money from a Mobile Account <a name="#usage/scenario-2"></a>
 
-#### Using ES6 Modules
+#### ES6 Modules
 ```javascript
 import { Client } from '@paymentsds/mpesa'
 
@@ -60,13 +60,13 @@ const paymentData = {
 };
 
 client.receive(paymentData).then(r => {
-   console.log(r.data);
+   // Handle success scenario
 }).catch(e =>{
-   console.log(e);
+   // Handle success scenario
 });
 ```
 
-#### Using CommonJS
+####  CommonJS
 
 ```javascript
 var Client = require("@paymentsds/mpesa").Client;
@@ -85,13 +85,15 @@ var paymentData = {
 };
 
 client.receive(paymentData).then(function(r) {
-   console.log(r.data);
+   // Handle success scenario
 }).catch(function(e) {
-   console.log(e);
+   // Handle success scenario
 });
 ```
 
 ### Send Money to a Mobile Account <a name="#usage/scenario-3"></a>
+
+#### ES6 Module
 
 ```javascript
 import { Client } from '@paymentsds/mpesa'
@@ -109,15 +111,42 @@ const paymentData = {
    amount: '10'                     // input_Amount
 };
 
-client.send(paymentData).then(r => {
-   console.log(r.data);
-}).catch(e =>{
-   console.log(e);
+client.send(paymentData).then(function(r) {
+   // Handle success scenario
+}).catch(function(e) {
+   // Handle failure scenario
 });
 ```
 
+#### CommonJS
+
+```javascript
+var Client = require("@paymentsds/mpesa").Client;
+
+var client = new Client({
+   apiKey: '<REPLACE>',             // API Key
+   publicKey: '<REPLACE>',          // Public Key
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode
+});
+
+var paymentData = {
+   to: '841234567',               // input_CustomerMSISDN
+   reference: '11114',              // input_ThirdPartyReference
+   transation: 'T12344CC',          // input_TransactionReference
+   amount: '10'                     // input_Amount
+};
+
+client.send(paymentData).then(r => {
+   // Handle success scenario
+}).catch(e =>{
+   // Handle failure scenario
+});
+```
+
+
 ### Send Money to a Business Account <a name="#usage/scenario-4"></a>
 
+#### ES6 Modules
 ```javascript
 import { Client } from '@paymentsds/mpesa'
 
@@ -135,13 +164,40 @@ const paymentData = {
 };
 
 client.send(paymentData).then(r => {
-   console.log(r.data);
+   // Handle success scenario
 }).catch(e =>{
-   console.log(e);
+   // Handle failure scenario
+});
+```
+
+#### CommonJS Modules
+
+```javascript
+import { Client } from '@paymentsds/mpesa'
+
+const client = new Client({
+   apiKey: '<REPLACE>',             // API Key
+   publicKey: '<REPLACE>',          // Public Key
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode
+});
+
+const paymentData = {
+   to: '979797',                 // input_ReceiverPartyCode
+   reference: '11114',              // input_ThirdPartyReference
+   transation: 'T12344CC',          // input_TransactionReference
+   amount: '10'                     // input_Amount
+};
+
+client.send(paymentData).then(function(r) {
+   // Handle success scenario
+}).catch(function(e) {
+   // Handle failure scenario
 });
 ```
 
 ### Revert a Transaction <a name="#usage/scenario-5"></a>
+
+#### ES6 Module
 
 ```javascript
 import { Client } from '@paymentsds/mpesa'
@@ -163,6 +219,32 @@ const reversionData = {
 client.revert(reversionData).then(r => {
    // Handle success scenario
 }).catch(e =>{
+   // Handle failure scenario
+});
+```
+
+#### CommonJS Modules
+
+```javascript
+import { Client } from '@paymentsds/mpesa'
+
+const client = new Client({
+   apiKey: '<REPLACE>',             // API Key
+   publicKey: '<REPLACE>',          // Public Key
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
+});
+
+const reversionData = {
+   reference: '11114',           // input_ThirdPartyReference
+   transation: 'T12344CC',       // input_TransactionID
+   amount: '10'                  // input_ReversalAmount
+};
+
+client.revert(reversionData).then(function(r) {
+   // Handle success scenario
+}).catch(function(e) {
    // Handle failure scenario
 });
 ```
