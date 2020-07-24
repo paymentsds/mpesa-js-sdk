@@ -153,6 +153,9 @@ client.revert(reversionData).then(r => {
 
 ## Prerequisites <a name="prerequisites"></a>
 
+- [Node.JS 10+](https://nodejs.org) 
+- [NPM](https://www.npmjs.com) or [Yarn](https://yarnpkg.com)
+
 ## Installation <a name="installation"></a>
 
 ### Installation Scenario 1 <a name="installation/scenario-1"></a>
