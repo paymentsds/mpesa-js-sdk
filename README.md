@@ -186,10 +186,7 @@ yarn add @paymentsds/mpesa
 
 #### Production Dependencies
 
-- [Dependency 1](https://github.com/<username>/<project>)
-- [Dependency 2](https://github.com/<username>/<project>)
-- [Dependency 3](https://github.com/<username>/<project>)
-- [Dependency 4](https://github.com/<username>/<project>)
+- [Axios](https://github.com/axios/axios/)
 
 #### Development Dependencies
 
