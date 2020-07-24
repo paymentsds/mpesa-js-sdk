@@ -20,14 +20,9 @@ M-Pesa SDK for JavaScript is an unofficial library aiming to help businesses int
    - [Installation Scenario 3](#installation/scenario-3)
    - [Installation Scenario 4](#installation/scenario-4)
 - [Configuration](#configuration)
-   - [Configuration Scenario 1](#configuration/scenario-1)
-   - [Configuration Scenario 2](#configuration/scenario-2)
-   - [Configuration Scenario 3](#configuration/scenario-3)
-   - [Configuration Scenario 4](#configuration/scenario-4)
 - [Related Projects](#related-projects)
    - [Dependencies](#related-projects/dependencies)
    - [Friends](#related-projects/friends)
-   - [Alternatives](#related-projects/alternatives)
 - [Contributing](#contributing)
 - [Changelog](#changelog)
 - [Authors](#authors)
@@ -169,6 +164,9 @@ npm install --save @paymentsds/mpesa
 ```bash
 yarn add @paymentsds/mpesa
 ```
+
+### Manual Installation <a name="installation/scenario-3"></a>
+
 
 ## Configuration <a name="configuration"></a>
 
