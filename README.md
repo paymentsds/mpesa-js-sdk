@@ -123,6 +123,30 @@ client.send(paymentData).then(r => {
 
 ### Revert a Transaction <a name="#usage/scenario-5"></a>
 
+```javascript
+import { Client } from '@paymentsds/mpesa'
+
+const client = new Client({
+   apiKey: '<REPLACE>',             // API Key
+   publicKey: '<REPLACE>',          // Public Key
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
+});
+
+const reversionData = {
+   reference: '11114',           // input_ThirdPartyReference
+   transation: 'T12344CC',       // input_TransactionID
+   amount: '10'                  // input_ReversalAmount
+};
+
+client.revert(reversionData).then(r => {
+   // Handle success scenario
+}).catch(e =>{
+   // Handle failure scenario
+});
+```
+
 ### Query the Status of a Transaction <a name="#usage/scenario-6"></a>
 
 ### Examples <a name="usage/scenario-7"></a>
