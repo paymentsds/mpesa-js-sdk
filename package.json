@@ -26,5 +26,7 @@
   "dependencies": {
     "axios": "^0.19.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^7.5.0"
+  }
 }
