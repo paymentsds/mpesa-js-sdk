@@ -190,10 +190,10 @@ yarn add @paymentsds/mpesa
 
 #### Development Dependencies
 
-- [Dependency 1](https://github.com/<username>/<project>)
-- [Dependency 2](https://github.com/<username>/<project>)
-- [Dependency 3](https://github.com/<username>/<project>)
-- [Dependency 4](https://github.com/<username>/<project>)
+- [Babel](babeljs.io)
+- [ESLint](https://eslint.org)
+- [Mocha](https://mochajs.org)
+- [Prettier](https://prettier.io/)
 
 ### Friends <a name="related-projects/friends"></a>
 
