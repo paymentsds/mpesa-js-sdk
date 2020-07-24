@@ -4,11 +4,13 @@
   "version": "0.1.0-alpha2",
   "description": "MPesa Javascript API Client",
   "exports": {
-    ".": "./src/index.js"
+    "import": "./src/index.js",
+    "require": "./dist/index.cjs"
   },
   "scripts": {
     "test": "mocha",
-    "lint": "eslint --fix src/*.js"
+    "lint": "eslint --fix src/*.js",
+    "build": "babel src -d dist -w --out-file-extension .cjs"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,9 @@
     "axios": "^0.19.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
     "eslint": "^7.5.0"
   }
 }
