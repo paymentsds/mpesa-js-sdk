@@ -1,7 +1,7 @@
 {
   "name": "@paymentsds/mpesa",
   "type": "module",
-  "version": "0.1.0-alpha-3",
+  "version": "0.1.0-alpha-4",
   "description": "MPesa Javascript API Client",
   "exports": {
     "import": "./src/index.js",
