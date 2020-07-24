@@ -1,5 +1,5 @@
 {
-  "name": "@paysuite/mpesa",
+  "name": "@paymentsds/mpesa",
   "type": "module",
   "version": "0.1.0",
   "description": "MPesa Javascript API Client",
