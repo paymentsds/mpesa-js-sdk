@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paysuite/mpesa-js-sdk.git"
+    "url": "git+https://github.com/paymentsds/mpesa-js-sdk.git"
   },
   "keywords": [
     "mpesa"
@@ -20,9 +20,9 @@
   "author": "Edson Michaque",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/paysuite/mpesa-js-sdk/issues"
+    "url": "https://github.com/paymentsds/mpesa-js-sdk/issues"
   },
-  "homepage": "https://github.com/paysuite/mpesa-js-sdk#readme",
+  "homepage": "https://github.com/paymentsds/mpesa-js-sdk#readme",
   "dependencies": {
     "axios": "^0.19.2"
   },

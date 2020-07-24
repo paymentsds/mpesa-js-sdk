@@ -1,11 +1,14 @@
 export class Response {
-  constructor(code, description, data) {
+  constructor(status, code, description, data) {
+    this.status = status;
     this.code = code;
     this.description = description;
     this.data = data;
-  }
 
-  push(error) {
-    this.data.push(error);
+    if (this.status >= 100 && this.status < 300) {
+      this.success = true;
+    } else {
+      this.success = false;
+    }
   }
 }
