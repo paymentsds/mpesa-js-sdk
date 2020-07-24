@@ -42,6 +42,7 @@ M-Pesa SDK for JavaScript is an unofficial library aiming to help businesses int
 
 ### Receive Money from a Mobile Account <a name="#usage/scenario-2"></a>
 
+#### Using ES6 Modules
 ```javascript
 import { Client } from '@paymentsds/mpesa'
 
