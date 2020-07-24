@@ -170,15 +170,38 @@ npm install --save @paymentsds/mpesa
 yarn add @paymentsds/mpesa
 ```
 
-### Installation Scenario 3 <a name="installation/scenario-3"></a>
-
 ## Configuration <a name="configuration"></a>
 
-### Configuration Scenario 1 <a name="configuration/scenario-1"></a>
+```javascript
+import { Client } from '@paymentsds/mpesa'
 
-### Configuration Scenario 2 <a name="configuration/scenario-2"></a>
+const client = new Client({
+   apiKey: '<REPLACE>',             // API Key
+   publicKey: '<REPLACE>',          // Public Key
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
+   timeout: '<REPLACE>',            // time in seconds
+   debugging: true,                 
+   verifySSL: false,
+   userAgent: '<REPLACE>' 
+});
+```
 
-### Configuration Scenario 3 <a name="configuration/scenario-3"></a>
+```javascript
+import { Client } from '@paymentsds/mpesa'
+
+const client = new Client({
+   accessToken: '<REPLACE>'         // Precomputed access token
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
+   timeout: '<REPLACE>',            // time in seconds
+   debugging: true,                 
+   verifySSL: false,
+   userAgent: '<REPLACE>' 
+});
+```
 
 ## Related Projects <a name="related-projects"></a>
 
