@@ -174,6 +174,7 @@ export class Service {
           method: operation.method,
           path: operation.path,
           headers: headers,
+          timeout: this.config.timeout * 1000
         };
 
         if (operation.method === HTTP.METHOD.POST) {
