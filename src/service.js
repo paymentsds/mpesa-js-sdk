@@ -200,16 +200,28 @@ export class Service {
   }
 
   buildResponse(result) {
-    return {
-      response: {
-        status: result.status,
-        code: result.data.output_ResponseCode,
-        desc: result.data.output_ResponseDesc,
-      },
-      conversation: result.data.output_ConversationID,
-      transaction: result.data.output_TransactionID,
-      reference: result.data.output_ThirdPartyReference,
-    };
+    if (result.response) {
+      if (result.response.status >= 200 && result.response.status < 300) {
+        return {
+          response: {
+            status: result.status,
+            code: result.data.output_ResponseCode,
+            desc: result.data.output_ResponseDesc,
+          },
+          conversation: result.data.output_ConversationID,
+          transaction: result.data.output_TransactionID,
+          reference: result.data.output_ThirdPartyReference,
+        };
+      }
+
+      return Promise.reject(result);
+    } else if (result.request) {
+      return Promise.reject(new TimeoutError());
+    } else {
+      return Promise.reject('Unable to make request');
+    }
+
+    return Promise.reject(result);
   }
 
   generateAccessToken() {
