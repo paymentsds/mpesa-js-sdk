@@ -189,7 +189,7 @@ export class Service {
             return Promise.resolve(self.buildResponse(r));
           })
           .catch((e) => {
-            return Promise.reject(self.buildResponse(e.response));
+            return Promise.reject(e);
           });
       }
 
