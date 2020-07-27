@@ -7,7 +7,8 @@ import {
   AuthenticationError,
   InvalidReceiverError,
   MissingPropertiesError,
-  InvalidHostError
+  InvalidHostError,
+  TimeoutError
 }  from './errors.js';
 
 import {
