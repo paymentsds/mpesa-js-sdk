@@ -9,6 +9,14 @@ const client = new Client({
     publicKey: '<REPLACE>',          // Public Key
     serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode
  });
+
+ const client = new Client({
+    apiKey: '<REPLACE>',              // API Key
+    publicKey: '<REPLACE>',           // Public Key
+    serviceProviderCode: '<REPLACE>', // input_ServiceProviderCode,
+    initiatorIdentifier: '<REPLACE>', // input_InitiatorIdentifier,
+    securityIdentifier: '<REPLACE>'   // input_SecurityCredential
+ });
  
 const paymentDataReceive = {
    from: '850669801',                // input_CustomerMSISDN
@@ -23,6 +31,12 @@ const paymentDataSend = {
     transation: 'T12344CC',           // input_TransactionReference
     amount: '10'                      // input_Amount
 };
+
+const reversionData = {
+    reference: '11114',           // input_ThirdPartyReference
+    transation: 'T12344CC',       // input_TransactionID
+    amount: '10'                  // input_ReversalAmount
+ };
 
 describe("Receive Money from a Mobile Account", function(){
     it("Receive Money successful", function(){
@@ -41,6 +55,16 @@ describe("Send Money to a Mobile Account", function(){
             expect(r.response.status).to.be.within(200, 201);
             done();
          }).catch(e =>{
+            done(new Error("test case failed: " + e));
+         });
+    });
+});
+
+describe("Revert a Transaction ", function(){
+    it("Revert a Transaction successful", function(){
+        client.revert(reversionData).then(function(r) {
+            expect(r.response.status).to.be.within(200, 201);
+         }).catch(function(e) {
             done(new Error("test case failed: " + e));
          });
     });
