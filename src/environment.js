@@ -13,6 +13,10 @@ class Environment {
     return `${this.scheme}://${this.domain}`;
   }
 
+  /**
+   * Creates environment object from a given URL
+   * @param {string} url 
+   */
   static fromURL(url) {
     let parts;
     if (/^https:\/\//.test(url) || /^http:\/\//.test(url)) {

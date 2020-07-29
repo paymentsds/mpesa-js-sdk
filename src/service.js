@@ -28,10 +28,18 @@ export class Service {
     this.initDefaultConfigs(args);
   }
 
+  /**
+   * Initializes default configurations
+   * @param {Object} args 
+   */
   initDefaultConfigs(args) {
     this.config = new Configuration(args);
   }
 
+  /**
+   * 
+   * @param {Object} intent 
+   */
   handleSend(intent) {
     const opcode = this.detectOperation(intent);
 
@@ -50,6 +58,11 @@ export class Service {
     return this.handleRequest(QUERY_TRANSACTION_STATUS, intent);
   }
 
+  /**
+   * Validates transaction data and performs performs the needed HTTP request
+   * @param {string} opcode 
+   * @param {Object.<string, string>} intent 
+   */
   handleRequest(opcode, intent) {
     const data = this.fillOptionalProperties(opcode, intent);
 
@@ -67,6 +80,10 @@ export class Service {
     return this.performRequest(opcode, intent);
   }
 
+  /**
+   * Detects the operation from the transaction data
+   * @param {Object.<string, string>} intent 
+   */
   detectOperation(intent) {
     if (Object.prototype.hasOwnProperty.call(intent, "to")) {
       if (PATTERNS.PHONE_NUMBER.test(intent.to)) {
@@ -81,6 +98,11 @@ export class Service {
     throw new InvalidReceiverError();
   }
 
+  /**
+   * Detect validation errors from thransaction data
+   * @param {string} opcode 
+   * @param {Object.<string, string>} intent 
+   */
   detectErrors(opcode, intent) {
     const operations = OPERATIONS[opcode];
 
@@ -92,6 +114,11 @@ export class Service {
     return errors;
   }
 
+  /**
+   * Detects missing properties from transaction data
+   * @param {string} opcode 
+   * @param {Object.<string, string>} data 
+   */
   detectMissingProperties(opcode, data) {
     const required = OPERATIONS[opcode].required;
 
@@ -102,6 +129,11 @@ export class Service {
     return missing;
   }
 
+  /**
+   * Complete transaction data from configuration data if it is not already provided  
+   * @param {string} opcode 
+   * @param {Object.<string,string>} intent 
+   */
   fillOptionalProperties(opcode, intent) {
     function map(correspondences) {
       for (const k in correspondences) {
@@ -139,6 +171,11 @@ export class Service {
     return intent;
   }
 
+  /**
+   * Formats transaction data to the format required by M-Pesa API
+   * @param {string} opcode 
+   * @param {Object.<string,string>} intent 
+   */
   buildRequestBody(opcode, intent) {
     const body = {};
     for (const oldKey in intent) {
@@ -149,6 +186,11 @@ export class Service {
     return body;
   }
 
+  /**
+   * Generates HTTP headers required to perform the request
+   * @param {string} opcode 
+   * @param {Object.<string,string>} intent 
+   */
   buildRequestHeaders(opcode, intent) {
     const headers = {
       [HTTP.HEADERS.USER_AGENT]: this.config.userAgent,
@@ -200,6 +242,10 @@ export class Service {
     }
   }
 
+  /**
+   * Formats the result
+   * @param {*} result 
+   */
   buildResponse(result) {
     if (result.response) {
       if (result.response.status >= 200 && result.response.status < 300) {
@@ -225,6 +271,9 @@ export class Service {
     return Promise.reject(result);
   }
 
+  /**
+   * Generates access token from public key and API key pair
+   */
   generateAccessToken() {
     this.config.generateAccessToken();
   }
