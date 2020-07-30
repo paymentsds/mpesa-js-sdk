@@ -113,10 +113,12 @@ var Service = /*#__PURE__*/function () {
   }, {
     key: "fillOptionalProperties",
     value: function fillOptionalProperties(opcode, intent) {
+      var self = this;
+
       function map(correspondences) {
         for (var k in correspondences) {
-          if (!Object.prototype.hasOwnProperty.call(intent, k) && Object.prototype.hasOwnProperty.call(this.config, correspondences[k])) {
-            intent[k] = this.config[correspondences[k]];
+          if (!Object.prototype.hasOwnProperty.call(intent, k) && Object.prototype.hasOwnProperty.call(self.config, correspondences[k])) {
+            intent[k] = self.config[correspondences[k]];
           }
         }
 
