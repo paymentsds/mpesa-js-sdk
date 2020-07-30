@@ -251,6 +251,56 @@ client.revert(reversionData).then(function(r) {
 
 ### Query the Status of a Transaction <a name="#usage/scenario-6"></a>
 
+#### CommonJS Modules
+
+```javascript
+import { Client } from '@paymentsds/mpesa'
+
+const client = new Client({
+   apiKey: '<REPLACE>',             // API Key
+   publicKey: '<REPLACE>',          // Public Key
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
+});
+
+const reversionData = {
+   reference: '11114', // input_ThirdPartyReference
+   subject: '5C1400CVRO', // input_QueryReference
+};
+
+client.query(reversionData).then(r => {
+   // Handle success scenario
+}).catch(e => {
+   // Handle failure scenario
+});
+```
+
+#### CommonJS Modules
+
+```javascript
+var Client = require('@paymentsds/mpesa');
+
+const client = new Client({
+   apiKey: '<REPLACE>',             // API Key
+   publicKey: '<REPLACE>',          // Public Key
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
+});
+
+var reversionData = {
+   reference: '11114', // input_ThirdPartyReference
+   subject: '5C1400CVRO', // input_QueryReference
+};
+
+client.query(reversionData).then(function(r) {
+   // Handle success scenario
+}).catch(function(e) {
+   // Handle failure scenario
+});
+```
+
 ### Examples <a name="usage/scenario-7"></a>
 
 ## Prerequisites <a name="prerequisites"></a>
