@@ -385,7 +385,9 @@ const client = new Client({
 
 ## Authors <a name="authors"></a>
 
+- [Anísio Mandlate](https://github.com/AnisioMandlate)
 - [Edson Michaque](https://github.com/edsonmichaque)
+- [Elton Laice](https://github.com/eltonlaice)
 - [Nélio Macombo](https://github.com/neliomacombo)
 
 ## Credits <a name="credits"></a>
