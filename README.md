@@ -394,7 +394,7 @@ const client = new Client({
 
 ## License <a name="license"></a>
 
-Copyright 2020 Edson Michaque and Nélio Macombo
+Copyright 2020 Anísio Mandlate, Edson Michaque, Elton Laice and Nélio Macombo
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
