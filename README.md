@@ -251,7 +251,7 @@ client.revert(reversionData).then(function(r) {
 
 ### Query the Status of a Transaction <a name="#usage/scenario-6"></a>
 
-#### CommonJS Modules
+#### ES6 Module
 
 ```javascript
 import { Client } from '@paymentsds/mpesa'
