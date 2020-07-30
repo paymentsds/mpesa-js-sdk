@@ -135,13 +135,15 @@ export class Service {
    * @param {Object.<string,string>} intent 
    */
   fillOptionalProperties(opcode, intent) {
+    const self = this;
+
     function map(correspondences) {
       for (const k in correspondences) {
         if (
           !Object.prototype.hasOwnProperty.call(intent, k) &&
-          Object.prototype.hasOwnProperty.call(this.config, correspondences[k])
+          Object.prototype.hasOwnProperty.call(self.config, correspondences[k])
         ) {
-          intent[k] = this.config[correspondences[k]];
+          intent[k] = self.config[correspondences[k]];
         }
       }
 
@@ -151,20 +153,21 @@ export class Service {
     switch (opcode) {
       case C2B_PAYMENT:
       case B2B_PAYMENT:
-        return map({ to: "service_provider_code" });
+        return map({ to: "serviceProviderCode" });
 
       case B2C_PAYMENT:
-        return map({ from: "service_provider_code" });
+        return map({ from: "serviceProviderCode" });
 
       case REVERSAL:
         return map({
-          initiator_identifier: "initiator_identifier",
-          security_credential: "security_credential",
+          initiatorIdentifier: "initiatorIdentifier",
+          securityCredential: "securityCredential",
+          to: "serviceProviderCode",
         });
 
       case QUERY_TRANSACTION_STATUS:
         return map({
-          to: "service_provider_code",
+          from: "serviceProviderCode",
         });
     }
 
@@ -220,10 +223,10 @@ export class Service {
           timeout: this.config.timeout * 1000
         };
 
-        if (operation.method === HTTP.METHOD.POST) {
-          requestData.data = body;
-        } else {
+        if (operation.method === HTTP.METHOD.GET) {
           requestData.params = body;
+        } else {
+          requestData.data = body;
         }
 
         const self = this;
@@ -261,7 +264,7 @@ export class Service {
         };
       }
 
-      return Promise.reject(result);
+      return Promise.resolve(result);
     } else if (result.request) {
       return Promise.reject(new TimeoutError());
     } else {

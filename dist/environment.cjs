@@ -46,6 +46,11 @@ var Environment = /*#__PURE__*/function () {
     value: function toURL() {
       return "".concat(this.scheme, "://").concat(this.domain);
     }
+    /**
+     * Creates environment object from a given URL
+     * @param {string} url 
+     */
+
   }, {
     key: "isValid",
     value: function isValid() {

@@ -80,7 +80,7 @@ Configuration.PARAMS = [
   "debugging",
   "userAgent",
   "origin",
-  "securityCode",
+  "securityCredential",
   "serviceProviderCode",
   "initiatorIdentifier",
 ];

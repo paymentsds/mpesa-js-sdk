@@ -31,12 +31,22 @@ var Service = /*#__PURE__*/function () {
 
     this.initDefaultConfigs(args);
   }
+  /**
+   * Initializes default configurations
+   * @param {Object} args 
+   */
+
 
   _createClass(Service, [{
     key: "initDefaultConfigs",
     value: function initDefaultConfigs(args) {
       this.config = new _configuration.Configuration(args);
     }
+    /**
+     * 
+     * @param {Object} intent 
+     */
+
   }, {
     key: "handleSend",
     value: function handleSend(intent) {
@@ -58,6 +68,12 @@ var Service = /*#__PURE__*/function () {
     value: function handleQuery(intent) {
       return this.handleRequest(_constants.QUERY_TRANSACTION_STATUS, intent);
     }
+    /**
+     * Validates transaction data and performs performs the needed HTTP request
+     * @param {string} opcode 
+     * @param {Object.<string, string>} intent 
+     */
+
   }, {
     key: "handleRequest",
     value: function handleRequest(opcode, intent) {
@@ -76,6 +92,11 @@ var Service = /*#__PURE__*/function () {
 
       return this.performRequest(opcode, intent);
     }
+    /**
+     * Detects the operation from the transaction data
+     * @param {Object.<string, string>} intent 
+     */
+
   }, {
     key: "detectOperation",
     value: function detectOperation(intent) {
@@ -91,6 +112,12 @@ var Service = /*#__PURE__*/function () {
 
       throw new _errors.InvalidReceiverError();
     }
+    /**
+     * Detect validation errors from thransaction data
+     * @param {string} opcode 
+     * @param {Object.<string, string>} intent 
+     */
+
   }, {
     key: "detectErrors",
     value: function detectErrors(opcode, intent) {
@@ -101,6 +128,12 @@ var Service = /*#__PURE__*/function () {
       });
       return errors;
     }
+    /**
+     * Detects missing properties from transaction data
+     * @param {string} opcode 
+     * @param {Object.<string, string>} data 
+     */
+
   }, {
     key: "detectMissingProperties",
     value: function detectMissingProperties(opcode, data) {
@@ -110,13 +143,21 @@ var Service = /*#__PURE__*/function () {
       });
       return missing;
     }
+    /**
+     * Complete transaction data from configuration data if it is not already provided  
+     * @param {string} opcode 
+     * @param {Object.<string,string>} intent 
+     */
+
   }, {
     key: "fillOptionalProperties",
     value: function fillOptionalProperties(opcode, intent) {
+      var self = this;
+
       function map(correspondences) {
         for (var k in correspondences) {
-          if (!Object.prototype.hasOwnProperty.call(intent, k) && Object.prototype.hasOwnProperty.call(this.config, correspondences[k])) {
-            intent[k] = this.config[correspondences[k]];
+          if (!Object.prototype.hasOwnProperty.call(intent, k) && Object.prototype.hasOwnProperty.call(self.config, correspondences[k])) {
+            intent[k] = self.config[correspondences[k]];
           }
         }
 
@@ -127,28 +168,35 @@ var Service = /*#__PURE__*/function () {
         case _constants.C2B_PAYMENT:
         case _constants.B2B_PAYMENT:
           return map({
-            to: "service_provider_code"
+            to: "serviceProviderCode"
           });
 
         case _constants.B2C_PAYMENT:
           return map({
-            from: "service_provider_code"
+            from: "serviceProviderCode"
           });
 
         case _constants.REVERSAL:
           return map({
-            initiator_identifier: "initiator_identifier",
-            security_credential: "security_credential"
+            initiatorIdentifier: "initiatorIdentifier",
+            securityCredential: "securityCredential",
+            to: "serviceProviderCode"
           });
 
         case _constants.QUERY_TRANSACTION_STATUS:
           return map({
-            to: "service_provider_code"
+            from: "serviceProviderCode"
           });
       }
 
       return intent;
     }
+    /**
+     * Formats transaction data to the format required by M-Pesa API
+     * @param {string} opcode 
+     * @param {Object.<string,string>} intent 
+     */
+
   }, {
     key: "buildRequestBody",
     value: function buildRequestBody(opcode, intent) {
@@ -161,12 +209,18 @@ var Service = /*#__PURE__*/function () {
 
       return body;
     }
+    /**
+     * Generates HTTP headers required to perform the request
+     * @param {string} opcode 
+     * @param {Object.<string,string>} intent 
+     */
+
   }, {
     key: "buildRequestHeaders",
     value: function buildRequestHeaders(opcode, intent) {
       var _headers;
 
-      var headers = (_headers = {}, _defineProperty(_headers, _constants.HTTP.HEADERS.USER_AGENT, this.config.userAgent), _defineProperty(_headers, _constants.HTTP.HEADERS.ORIGIN, this.config.origin), _defineProperty(_headers, _constants.HTTP.HEADERS.CONTENT_TYPE, "application/json"), _defineProperty(_headers, _constants.HTTP.HEADERS.AUTHORIZATION, "Bearer ".concat(this.config.auth)), _headers);
+      var headers = (_headers = {}, _defineProperty(_headers, _constants.HTTP.HEADERS.USER_AGENT, this.config.userAgent), _defineProperty(_headers, _constants.HTTP.HEADERS.ORIGIN, this.config.origin), _defineProperty(_headers, _constants.HTTP.HEADERS.CONTENT_TYPE, "application.cjson"), _defineProperty(_headers, _constants.HTTP.HEADERS.AUTHORIZATION, "Bearer ".concat(this.config.auth)), _headers);
       return headers;
     }
   }, {
@@ -184,20 +238,21 @@ var Service = /*#__PURE__*/function () {
             url: operation.path,
             method: operation.method,
             path: operation.path,
-            headers: headers
+            headers: headers,
+            timeout: this.config.timeout * 1000
           };
 
-          if (operation.method === _constants.HTTP.METHOD.POST) {
-            requestData.data = body;
-          } else {
+          if (operation.method === _constants.HTTP.METHOD.GET) {
             requestData.params = body;
+          } else {
+            requestData.data = body;
           }
 
           var self = this;
           return (0, _axios["default"])(requestData).then(function (r) {
             return Promise.resolve(self.buildResponse(r));
           })["catch"](function (e) {
-            return Promise.reject(self.buildResponse(e.response));
+            return Promise.reject(e);
           });
         }
 
@@ -206,20 +261,41 @@ var Service = /*#__PURE__*/function () {
         throw new _errors.InvalidHostError();
       }
     }
+    /**
+     * Formats the result
+     * @param {*} result 
+     */
+
   }, {
     key: "buildResponse",
     value: function buildResponse(result) {
-      return {
-        response: {
-          status: result.status,
-          code: result.data.output_ResponseCode,
-          desc: result.data.output_ResponseDesc
-        },
-        conversation: result.data.output_ConversationID,
-        transaction: result.data.output_TransactionID,
-        reference: result.data.output_ThirdPartyReference
-      };
+      if (result.response) {
+        if (result.response.status >= 200 && result.response.status < 300) {
+          return {
+            response: {
+              status: result.status,
+              code: result.data.output_ResponseCode,
+              desc: result.data.output_ResponseDesc
+            },
+            conversation: result.data.output_ConversationID,
+            transaction: result.data.output_TransactionID,
+            reference: result.data.output_ThirdPartyReference
+          };
+        }
+
+        return Promise.resolve(result);
+      } else if (result.request) {
+        return Promise.reject(new _errors.TimeoutError());
+      } else {
+        return Promise.reject('Unable to make request');
+      }
+
+      return Promise.reject(result);
     }
+    /**
+     * Generates access token from public key and API key pair
+     */
+
   }, {
     key: "generateAccessToken",
     value: function generateAccessToken() {

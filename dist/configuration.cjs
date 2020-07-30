@@ -104,4 +104,4 @@ var Configuration = /*#__PURE__*/function () {
 }();
 
 exports.Configuration = Configuration;
-Configuration.PARAMS = ["host", "apiKey", "publicKey", "accessToken", "verifySSL", "timeout", "debugging", "userAgent", "origin", "securityCode", "serviceProviderCode", "initiatorIdentifier"];
+Configuration.PARAMS = ["host", "apiKey", "publicKey", "accessToken", "verifySSL", "timeout", "debugging", "userAgent", "origin", "securityCredential", "serviceProviderCode", "initiatorIdentifier"];

@@ -14,6 +14,7 @@ const VERSION = new Version(0, 1, 0);
 const HTTP = {
   METHOD: {
     GET: "get",
+    PUT: "put",
     POST: "post",
   },
   HEADERS: {
@@ -111,36 +112,62 @@ const OPERATIONS = {
   }),
 
   [REVERSAL]: new Operation({
-    method: HTTP.METHOD.POST,
-    port: "18352",
-    path: "/ipg/v1x/",
+    method: HTTP.METHOD.PUT,
+    port: "18354",
+    path: "/ipg/v1x/reversal/",
     mapping: {
-      from: PATTERNS.PHONE_NUMBER,
       to: "input_ServiceProviderCode",
       amount: "input_Amount",
-      transaction: "input_TransactionReference",
       reference: "input_ThirdPartyReference",
+      transaction: "input_TransactionID",
+      securityCredential: "input_SecurityCredential",
+      initiatorIdentifier: "input_InitiatorIdentifier"
     },
-    validation: {},
-    required: [],
-    optional: [],
+    validation: {
+      to: PATTERNS.SERVICE_PROVIDER_CODE,
+      amount: PATTERNS.MONEY_AMOUNT,
+      reference: PATTERNS.WORD,
+      transaction: PATTERNS.WORD,
+      securityCredential: PATTERNS.WORD,
+      initiatorIdentifier: PATTERNS.WORD,
+    },
+    required: [
+      'to',
+      'amount',
+      'reference',
+      'transaction',
+      'securityCredential',
+      'initiatorIdentifier' 
+    ],
+    optional: [
+      'to',
+      'securityCredential',
+      'initiatorIdentifier' 
+    ],
   }),
 
   [QUERY_TRANSACTION_STATUS]: new Operation({
     method: HTTP.METHOD.GET,
-    port: "18352",
-    path: "/ipg/v1x/",
+    port: "18353",
+    path: "/ipg/v1x/queryTransactionStatus/",
     mapping: {
-      number: "input_CustomerMSISDN",
-      from: "input_CustomerMSISDN",
-      to: "input_ServiceProviderCode",
-      amount: "input_Amount",
-      transaction: "input_TransactionReference",
+      from: "input_ServiceProviderCode",
+      subject: "input_QueryReference",
       reference: "input_ThirdPartyReference",
     },
-    validation: {},
-    required: [],
-    optional: [],
+    validation: {
+      from: PATTERNS.SERVICE_PROVIDER_CODE,
+      subject: PATTERNS.WORD,
+      reference: PATTERNS.WORD,
+    },
+    required: [
+      'from',
+      'subject',
+      'reference',
+    ],
+    optional: [
+      'from'
+    ],
   }),
 };
 

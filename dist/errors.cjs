@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.InvalidHostError = exports.ValidationError = exports.InvalidReceiverError = exports.AuthenticationError = exports.MissingPropertiesError = void 0;
+exports.TimeoutError = exports.InvalidHostError = exports.ValidationError = exports.InvalidReceiverError = exports.AuthenticationError = exports.MissingPropertiesError = void 0;
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -133,3 +133,24 @@ var InvalidHostError = /*#__PURE__*/function (_Error5) {
 }( /*#__PURE__*/_wrapNativeSuper(Error));
 
 exports.InvalidHostError = InvalidHostError;
+
+var TimeoutError = /*#__PURE__*/function (_Error6) {
+  _inherits(TimeoutError, _Error6);
+
+  var _super6 = _createSuper(TimeoutError);
+
+  function TimeoutError(name, message) {
+    var _this6;
+
+    _classCallCheck(this, TimeoutError);
+
+    _this6 = _super6.call(this);
+    _this6.name = name || 'TimeoutError';
+    _this6.message = message || 'The request has taken more time than allowed';
+    return _this6;
+  }
+
+  return TimeoutError;
+}( /*#__PURE__*/_wrapNativeSuper(Error));
+
+exports.TimeoutError = TimeoutError;
