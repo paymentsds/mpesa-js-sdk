@@ -103,13 +103,14 @@ export class Service {
   }
 
   fillOptionalProperties(opcode, intent) {
+    const self = this;
     function map(correspondences) {
       for (const k in correspondences) {
         if (
           !Object.prototype.hasOwnProperty.call(intent, k) &&
-          Object.prototype.hasOwnProperty.call(this.config, correspondences[k])
+          Object.prototype.hasOwnProperty.call(self.config, correspondences[k])
         ) {
-          intent[k] = this.config[correspondences[k]];
+          intent[k] = this.self[correspondences[k]];
         }
       }
 
