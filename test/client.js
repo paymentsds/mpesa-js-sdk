@@ -19,30 +19,30 @@ const client = new Client({
  });
  
 const paymentDataReceive = {
-   from: '850669801',                // input_CustomerMSISDN
-   reference: '11114',               // input_ThirdPartyReference
-   transation: 'T12344CC',           // input_TransactionReference
-   amount: '10'                      // input_Amount
+   from: '258850669801',                                                    // input_CustomerMSISDN
+   reference: '11114' +  Math.floor(Math.random()*100),                     // input_ThirdPartyReference
+   transation: 'T12344CC',                                                  // input_TransactionReference
+   amount: '10'                                                             // input_Amount
 };
 
 const paymentDataSend = {
-    to: "850669801",                  // input_CustomerMSISDN
-    reference: '11114',               // input_ThirdPartyReference
-    transation: 'T12344CC',           // input_TransactionReference
-    amount: '10'                      // input_Amount
+    to: "258850669801",                                                     // input_CustomerMSISDN
+    reference: '11114' + Math.floor(Math.random()*100),                     // input_ThirdPartyReference
+    transation: 'T12344CC',                                                 // input_TransactionReference
+    amount: '10'                                                            // input_Amount
 };
 
 const reversionData = {
-    reference: '11114',               // input_ThirdPartyReference
-    transation: 'T12344CC',           // input_TransactionID
-    amount: '10'                      // input_ReversalAmount
+    reference: '11114' + Math.floor(Math.random()*100),                     // input_ThirdPartyReference
+    transation: 'T12344CC',                                                 // input_TransactionID
+    amount: '10'                                                            // input_ReversalAmount
  };
 
  const paymentDataBusiness = {
-    to: '979797',                    // input_ReceiverPartyCode
-    reference: '11114',              // input_ThirdPartyReference
-    transation: 'T12344CC',          // input_TransactionReference
-    amount: '10'                     // input_Amount
+    to: '979797',                                                           // input_ReceiverPartyCode
+    reference: '11114' + Math.floor(Math.random()*100),                     // input_ThirdPartyReference
+    transation: 'T12344CC',                                                 // input_TransactionReference
+    amount: '10'                                                            // input_Amount
  };
 
 describe("Receive Money from a Mobile Account", function(){
@@ -90,9 +90,10 @@ describe("Send Money to a Business Account ", function(done){
 });
 
 describe("Revert a Transaction ", function(){
-    it("Revert a Transaction successful", function(){
+    it("Revert a Transaction successful", function(done){
         clientRevert.revert(reversionData).then(function(r) {
             expect(r.response.status).to.be.within(200, 201);
+            done();
          }).catch(function(e) {
             done(new Error("test case failed: " + e));
          });
