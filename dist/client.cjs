@@ -19,22 +19,42 @@ var Client = /*#__PURE__*/function () {
 
     this.service = new _service.Service(args);
   }
+  /**
+   * Sends money to mobile or business wallet
+   * @param {Object.<string, string>} data 
+   */
+
 
   _createClass(Client, [{
     key: "send",
     value: function send(data) {
       return this.service.handleSend(data);
     }
+    /**
+     * Receives money from a mobile wallet
+     * @param {Object.<string, string>} data 
+     */
+
   }, {
     key: "receive",
     value: function receive(data) {
       return this.service.handleReceive(data);
     }
+    /**
+     * Reverts a successful transaction
+     * @param {Object.<string, string>} data 
+     */
+
   }, {
     key: "revert",
     value: function revert(data) {
       return this.service.handleRevert(data);
     }
+    /**
+     * Queries the status of a given transaction
+     * @param {Object.<string, string>} data 
+     */
+
   }, {
     key: "query",
     value: function query(data) {

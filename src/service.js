@@ -28,10 +28,18 @@ export class Service {
     this.initDefaultConfigs(args);
   }
 
+  /**
+   * Initializes default configurations
+   * @param {Object} args 
+   */
   initDefaultConfigs(args) {
     this.config = new Configuration(args);
   }
 
+  /**
+   * 
+   * @param {Object} intent 
+   */
   handleSend(intent) {
     const opcode = this.detectOperation(intent);
 
@@ -50,6 +58,11 @@ export class Service {
     return this.handleRequest(QUERY_TRANSACTION_STATUS, intent);
   }
 
+  /**
+   * Validates transaction data and performs performs the needed HTTP request
+   * @param {string} opcode 
+   * @param {Object.<string, string>} intent 
+   */
   handleRequest(opcode, intent) {
     const data = this.fillOptionalProperties(opcode, intent);
 
@@ -67,6 +80,10 @@ export class Service {
     return this.performRequest(opcode, intent);
   }
 
+  /**
+   * Detects the operation from the transaction data
+   * @param {Object.<string, string>} intent 
+   */
   detectOperation(intent) {
     if (Object.prototype.hasOwnProperty.call(intent, "to")) {
       if (PATTERNS.PHONE_NUMBER.test(intent.to)) {
@@ -81,6 +98,11 @@ export class Service {
     throw new InvalidReceiverError();
   }
 
+  /**
+   * Detect validation errors from thransaction data
+   * @param {string} opcode 
+   * @param {Object.<string, string>} intent 
+   */
   detectErrors(opcode, intent) {
     const operations = OPERATIONS[opcode];
 
@@ -92,6 +114,11 @@ export class Service {
     return errors;
   }
 
+  /**
+   * Detects missing properties from transaction data
+   * @param {string} opcode 
+   * @param {Object.<string, string>} data 
+   */
   detectMissingProperties(opcode, data) {
     const required = OPERATIONS[opcode].required;
 
@@ -102,15 +129,21 @@ export class Service {
     return missing;
   }
 
+  /**
+   * Complete transaction data from configuration data if it is not already provided  
+   * @param {string} opcode 
+   * @param {Object.<string,string>} intent 
+   */
   fillOptionalProperties(opcode, intent) {
     const self = this;
+
     function map(correspondences) {
       for (const k in correspondences) {
         if (
           !Object.prototype.hasOwnProperty.call(intent, k) &&
           Object.prototype.hasOwnProperty.call(self.config, correspondences[k])
         ) {
-          intent[k] = this.self[correspondences[k]];
+          intent[k] = self.config[correspondences[k]];
         }
       }
 
@@ -120,26 +153,32 @@ export class Service {
     switch (opcode) {
       case C2B_PAYMENT:
       case B2B_PAYMENT:
-        return map({ to: "service_provider_code" });
+        return map({ to: "serviceProviderCode" });
 
       case B2C_PAYMENT:
-        return map({ from: "service_provider_code" });
+        return map({ from: "serviceProviderCode" });
 
       case REVERSAL:
         return map({
-          initiator_identifier: "initiator_identifier",
-          security_credential: "security_credential",
+          initiatorIdentifier: "initiatorIdentifier",
+          securityCredential: "securityCredential",
+          to: "serviceProviderCode",
         });
 
       case QUERY_TRANSACTION_STATUS:
         return map({
-          to: "service_provider_code",
+          from: "serviceProviderCode",
         });
     }
 
     return intent;
   }
 
+  /**
+   * Formats transaction data to the format required by M-Pesa API
+   * @param {string} opcode 
+   * @param {Object.<string,string>} intent 
+   */
   buildRequestBody(opcode, intent) {
     const body = {};
     for (const oldKey in intent) {
@@ -150,6 +189,11 @@ export class Service {
     return body;
   }
 
+  /**
+   * Generates HTTP headers required to perform the request
+   * @param {string} opcode 
+   * @param {Object.<string,string>} intent 
+   */
   buildRequestHeaders(opcode, intent) {
     const headers = {
       [HTTP.HEADERS.USER_AGENT]: this.config.userAgent,
@@ -179,10 +223,10 @@ export class Service {
           timeout: this.config.timeout * 1000
         };
 
-        if (operation.method === HTTP.METHOD.POST) {
-          requestData.data = body;
-        } else {
+        if (operation.method === HTTP.METHOD.GET) {
           requestData.params = body;
+        } else {
+          requestData.data = body;
         }
 
         const self = this;
@@ -201,6 +245,10 @@ export class Service {
     }
   }
 
+  /**
+   * Formats the result
+   * @param {*} result 
+   */
   buildResponse(result) {
     if (result.response) {
       if (result.response.status >= 200 && result.response.status < 300) {
@@ -216,7 +264,7 @@ export class Service {
         };
       }
 
-      return Promise.reject(result);
+      return Promise.resolve(result);
     } else if (result.request) {
       return Promise.reject(new TimeoutError());
     } else {
@@ -226,6 +274,9 @@ export class Service {
     return Promise.reject(result);
   }
 
+  /**
+   * Generates access token from public key and API key pair
+   */
   generateAccessToken() {
     this.config.generateAccessToken();
   }

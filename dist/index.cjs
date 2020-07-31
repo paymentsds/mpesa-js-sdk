@@ -33,6 +33,12 @@ Object.defineProperty(exports, "Service", {
     return _service.Service;
   }
 });
+Object.defineProperty(exports, "TimeoutError", {
+  enumerable: true,
+  get: function get() {
+    return _errors.TimeoutError;
+  }
+});
 
 var _environment = require("./environment.cjs");
 
@@ -43,3 +49,5 @@ var _configuration = require("./configuration.cjs");
 var _client = require("./client.cjs");
 
 var _service = require("./service.cjs");
+
+var _errors = require("./errors.cjs");

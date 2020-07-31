@@ -251,11 +251,61 @@ client.revert(reversionData).then(function(r) {
 
 ### Query the Status of a Transaction <a name="#usage/scenario-6"></a>
 
+#### ES6 Module
+
+```javascript
+import { Client } from '@paymentsds/mpesa'
+
+const client = new Client({
+   apiKey: '<REPLACE>',             // API Key
+   publicKey: '<REPLACE>',          // Public Key
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
+});
+
+const reversionData = {
+   reference: '11114', // input_ThirdPartyReference
+   subject: '5C1400CVRO', // input_QueryReference
+};
+
+client.query(reversionData).then(r => {
+   // Handle success scenario
+}).catch(e => {
+   // Handle failure scenario
+});
+```
+
+#### CommonJS Modules
+
+```javascript
+var Client = require('@paymentsds/mpesa');
+
+const client = new Client({
+   apiKey: '<REPLACE>',             // API Key
+   publicKey: '<REPLACE>',          // Public Key
+   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
+});
+
+var reversionData = {
+   reference: '11114', // input_ThirdPartyReference
+   subject: '5C1400CVRO', // input_QueryReference
+};
+
+client.query(reversionData).then(function(r) {
+   // Handle success scenario
+}).catch(function(e) {
+   // Handle failure scenario
+});
+```
+
 ### Examples <a name="usage/scenario-7"></a>
 
 ## Prerequisites <a name="prerequisites"></a>
 
-- [Node.JS 10+](https://nodejs.org) 
+- [Node.JS 12+](https://nodejs.org) for production and lastest version for development 
 - [NPM](https://www.npmjs.com) or [Yarn](https://yarnpkg.com)
 
 ## Installation <a name="installation"></a>
@@ -325,7 +375,6 @@ const client = new Client({
 
 ### Friends <a name="related-projects/friends"></a>
 
-- [M-Pesa SDK for Javascript](https://github.com/paymentsds/mpesa-js-sdk)
 - [M-Pesa SDK for PHP](https://github.com/paymentsds/mpesa-php-sdk)
 - [M-Pesa SDK for Ruby](https://github.com/paymentsds/mpesa-ruby-sdk)
 - [M-Pesa SDK for Python](https://github.com/paymentsds/mpesa-python-sdk)
@@ -336,14 +385,16 @@ const client = new Client({
 
 ## Authors <a name="authors"></a>
 
+- [Anísio Mandlate](https://github.com/AnisioMandlate)
 - [Edson Michaque](https://github.com/edsonmichaque)
+- [Elton Laice](https://github.com/eltonlaice)
 - [Nélio Macombo](https://github.com/neliomacombo)
 
 ## Credits <a name="credits"></a>
 
 ## License <a name="license"></a>
 
-Copyright 2020 Edson Michaque and Nélio Macombo
+Copyright 2020 Anísio Mandlate, Edson Michaque, Elton Laice and Nélio Macombo
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
