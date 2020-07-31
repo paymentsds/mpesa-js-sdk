@@ -173,16 +173,16 @@ client.send(paymentData).then(r => {
 #### CommonJS Modules
 
 ```javascript
-import { Client } from '@paymentsds/mpesa'
+var Client = require("@paymentsds/mpesa").Client;
 
-const client = new Client({
+var client = new Client({
    apiKey: '<REPLACE>',             // API Key
    publicKey: '<REPLACE>',          // Public Key
    serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode
 });
 
-const paymentData = {
-   to: '979797',                 // input_ReceiverPartyCode
+var paymentData = {
+   to: '979797',                    // input_ReceiverPartyCode
    reference: '11114',              // input_ThirdPartyReference
    transation: 'T12344CC',          // input_TransactionReference
    amount: '10'                     // input_Amount
@@ -205,8 +205,8 @@ import { Client } from '@paymentsds/mpesa'
 const client = new Client({
    apiKey: '<REPLACE>',             // API Key
    publicKey: '<REPLACE>',          // Public Key
-   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
-   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   serviceProviderCode: '<REPLACE>', // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>', // input_InitiatorIdentifier,
    securityIdentifier: '<REPLACE>'  // input_SecurityCredential
 });
 
@@ -226,17 +226,17 @@ client.revert(reversionData).then(r => {
 #### CommonJS Modules
 
 ```javascript
-import { Client } from '@paymentsds/mpesa'
+var Client = require("@paymentsds/mpesa").Client;
 
-const client = new Client({
+var client = new Client({
    apiKey: '<REPLACE>',             // API Key
    publicKey: '<REPLACE>',          // Public Key
-   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
-   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   serviceProviderCode: '<REPLACE>', // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>', // input_InitiatorIdentifier,
    securityIdentifier: '<REPLACE>'  // input_SecurityCredential
 });
 
-const reversionData = {
+var reversionData = {
    reference: '11114',           // input_ThirdPartyReference
    transation: 'T12344CC',       // input_TransactionID
    amount: '10'                  // input_ReversalAmount
@@ -259,8 +259,8 @@ import { Client } from '@paymentsds/mpesa'
 const client = new Client({
    apiKey: '<REPLACE>',             // API Key
    publicKey: '<REPLACE>',          // Public Key
-   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
-   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   serviceProviderCode: '<REPLACE>', // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>', // input_InitiatorIdentifier,
    securityIdentifier: '<REPLACE>'  // input_SecurityCredential
 });
 
@@ -281,11 +281,11 @@ client.query(reversionData).then(r => {
 ```javascript
 var Client = require('@paymentsds/mpesa');
 
-const client = new Client({
+var client = new Client({
    apiKey: '<REPLACE>',             // API Key
    publicKey: '<REPLACE>',          // Public Key
-   serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode,
-   initiatorIdentifier: '<REPLACE>' // input_InitiatorIdentifier,
+   serviceProviderCode: '<REPLACE>', // input_ServiceProviderCode,
+   initiatorIdentifier: '<REPLACE>', // input_InitiatorIdentifier,
    securityIdentifier: '<REPLACE>'  // input_SecurityCredential
 });
 
