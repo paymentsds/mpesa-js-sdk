@@ -67,16 +67,6 @@ describe("Send Money to a Mobile Account", function(){
     });
 });
 
-describe("Send Money to a Mobile Account", function(){
-    it("Send Money successful", function(done){
-        client.send(paymentDataSend).then(r => {
-            expect(r.response.status).to.be.within(200, 201);
-            done();
-         }).catch(e =>{
-            done(new Error("test case failed: " + e));
-         });
-    });
-});
 
 describe("Send Money to a Business Account ", function(done){
     it("Send Money successful", function(done){
