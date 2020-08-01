@@ -207,7 +207,7 @@ const client = new Client({
    publicKey: '<REPLACE>',          // Public Key
    serviceProviderCode: '<REPLACE>', // input_ServiceProviderCode,
    initiatorIdentifier: '<REPLACE>', // input_InitiatorIdentifier,
-   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
+   securityCredential: '<REPLACE>'  // input_SecurityCredential
 });
 
 const reversionData = {
@@ -233,7 +233,7 @@ var client = new Client({
    publicKey: '<REPLACE>',          // Public Key
    serviceProviderCode: '<REPLACE>', // input_ServiceProviderCode,
    initiatorIdentifier: '<REPLACE>', // input_InitiatorIdentifier,
-   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
+   securityCredential: '<REPLACE>'  // input_SecurityCredential
 });
 
 var reversionData = {
@@ -260,8 +260,6 @@ const client = new Client({
    apiKey: '<REPLACE>',             // API Key
    publicKey: '<REPLACE>',          // Public Key
    serviceProviderCode: '<REPLACE>', // input_ServiceProviderCode,
-   initiatorIdentifier: '<REPLACE>', // input_InitiatorIdentifier,
-   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
 });
 
 const reversionData = {
@@ -285,8 +283,6 @@ var client = new Client({
    apiKey: '<REPLACE>',             // API Key
    publicKey: '<REPLACE>',          // Public Key
    serviceProviderCode: '<REPLACE>', // input_ServiceProviderCode,
-   initiatorIdentifier: '<REPLACE>', // input_InitiatorIdentifier,
-   securityIdentifier: '<REPLACE>'  // input_SecurityCredential
 });
 
 var reversionData = {

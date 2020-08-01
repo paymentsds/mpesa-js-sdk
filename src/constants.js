@@ -70,9 +70,8 @@ const OPERATIONS = {
     port: "18349",
     path: "/ipg/v1x/b2bPayment/",
     mapping: {
-      number: "input_CustomerMSISDN",
-      from: "input_CustomerMSISDN",
-      to: "input_ServiceProviderCode",
+      from: "input_PrimaryPartyCode",
+      to: "input_ReceiverPartyCode",
       amount: "input_Amount",
       transaction: "input_TransactionReference",
       reference: "input_ThirdPartyReference",
