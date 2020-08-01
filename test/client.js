@@ -21,27 +21,27 @@ const client = new Client({
 const paymentDataReceive = {
    from: '258850669801',                                                    // input_CustomerMSISDN
    reference: '11114' +  Math.floor(Math.random()*100),                     // input_ThirdPartyReference
-   transation: 'T12344CC',                                                  // input_TransactionReference
+   transaction: 'T12344CC',                                                  // input_TransactionReference
    amount: '10'                                                             // input_Amount
 };
 
 const paymentDataSend = {
     to: "258850669801",                                                     // input_CustomerMSISDN
     reference: '11114' + Math.floor(Math.random()*100),                     // input_ThirdPartyReference
-    transation: 'T12344CC',                                                 // input_TransactionReference
+    transaction: 'T12344CC',                                                 // input_TransactionReference
     amount: '10'                                                            // input_Amount
 };
 
 const reversionData = {
     reference: '11114' + Math.floor(Math.random()*100),                     // input_ThirdPartyReference
-    transation: 'T12344CC',                                                 // input_TransactionID
+    transaction: 'T12344CC',                                                 // input_TransactionID
     amount: '10'                                                            // input_ReversalAmount
  };
 
  const paymentDataBusiness = {
     to: '979797',                                                           // input_ReceiverPartyCode
     reference: '11114' + Math.floor(Math.random()*100),                     // input_ThirdPartyReference
-    transation: 'T12344CC',                                                 // input_TransactionReference
+    transaction: 'T12344CC',                                                 // input_TransactionReference
     amount: '10'                                                            // input_Amount
  };
 
