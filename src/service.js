@@ -152,10 +152,10 @@ export class Service {
 
     switch (opcode) {
       case C2B_PAYMENT:
-      case B2B_PAYMENT:
         return map({ to: "serviceProviderCode" });
 
       case B2C_PAYMENT:
+      case B2B_PAYMENT:
         return map({ from: "serviceProviderCode" });
 
       case REVERSAL:
