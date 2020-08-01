@@ -55,7 +55,7 @@ const client = new Client({
 const paymentData = {
    from: '841234567',               // input_CustomerMSISDN
    reference: '11114',              // input_ThirdPartyReference
-   transation: 'T12344CC',          // input_TransactionReference
+   transaction: 'T12344CC',          // input_TransactionReference
    amount: '10'                     // input_Amount
 };
 
@@ -80,7 +80,7 @@ var client = new Client({
 var paymentData = {
    from: '841234567',               // input_CustomerMSISDN
    reference: '11114',              // input_ThirdPartyReference
-   transation: 'T12344CC',          // input_TransactionReference
+   transaction: 'T12344CC',          // input_TransactionReference
    amount: '10'                     // input_Amount
 };
 
@@ -107,7 +107,7 @@ const client = new Client({
 const paymentData = {
    to: '841234567',               // input_CustomerMSISDN
    reference: '11114',              // input_ThirdPartyReference
-   transation: 'T12344CC',          // input_TransactionReference
+   transaction: 'T12344CC',          // input_TransactionReference
    amount: '10'                     // input_Amount
 };
 
@@ -132,7 +132,7 @@ var client = new Client({
 var paymentData = {
    to: '841234567',               // input_CustomerMSISDN
    reference: '11114',              // input_ThirdPartyReference
-   transation: 'T12344CC',          // input_TransactionReference
+   transaction: 'T12344CC',          // input_TransactionReference
    amount: '10'                     // input_Amount
 };
 
@@ -159,7 +159,7 @@ const client = new Client({
 const paymentData = {
    to: '979797',                 // input_ReceiverPartyCode
    reference: '11114',              // input_ThirdPartyReference
-   transation: 'T12344CC',          // input_TransactionReference
+   transaction: 'T12344CC',          // input_TransactionReference
    amount: '10'                     // input_Amount
 };
 
@@ -184,7 +184,7 @@ var client = new Client({
 var paymentData = {
    to: '979797',                    // input_ReceiverPartyCode
    reference: '11114',              // input_ThirdPartyReference
-   transation: 'T12344CC',          // input_TransactionReference
+   transaction: 'T12344CC',          // input_TransactionReference
    amount: '10'                     // input_Amount
 };
 
@@ -212,7 +212,7 @@ const client = new Client({
 
 const reversionData = {
    reference: '11114',           // input_ThirdPartyReference
-   transation: 'T12344CC',       // input_TransactionID
+   transaction: 'T12344CC',       // input_TransactionID
    amount: '10'                  // input_ReversalAmount
 };
 
@@ -238,7 +238,7 @@ var client = new Client({
 
 var reversionData = {
    reference: '11114',           // input_ThirdPartyReference
-   transation: 'T12344CC',       // input_TransactionID
+   transaction: 'T12344CC',       // input_TransactionID
    amount: '10'                  // input_ReversalAmount
 };
 
@@ -391,6 +391,8 @@ const client = new Client({
 - [Nélio Macombo](https://github.com/neliomacombo)
 
 ## Credits <a name="credits"></a>
+
+- [All Contributors](../../contributors)
 
 ## License <a name="license"></a>
 
