@@ -183,7 +183,11 @@ export class Service {
     const body = {};
     for (const oldKey in intent) {
       const newKey = OPERATIONS[opcode].mapping[oldKey];
-      body[newKey] = intent[oldKey];
+      if ((opcode === C2B_PAYMENT) && (oldKey === 'from') || (opcode === B2C_PAYMENT) && (oldKey == 'to')) {
+        body[newKey] = this.normalizePhoneNumber(intent[oldKey]);
+      } else {
+        body[newKey] = intent[oldKey];
+      }
     }
 
     return body;
@@ -279,5 +283,11 @@ export class Service {
    */
   generateAccessToken() {
     this.config.generateAccessToken();
+  }
+
+  normalizePhoneNumber(phoneNumber) {
+    const phoneNumberCountryCode = /^((?<prefix>(00?|\+)?258)?)(?<localNumber>8[54][0-9]{7})$/;   
+
+    return `258${phoneNumber.match(phoneNumberCountryCode).groups.localNumber}`;
   }
 }
