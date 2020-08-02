@@ -1,48 +1,51 @@
 import { Client } from '../src/client.js'
 import chai from 'chai'
 import sinon from 'sinon'
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const expect = chai.expect;
 
 const client = new Client({
-    apiKey: '<REPLACE>',             // API Key
-    publicKey: '<REPLACE>',          // Public Key
-    serviceProviderCode: '<REPLACE>' // input_ServiceProviderCode
+    apiKey: process.env.API_KEY,                                // API Key
+    publicKey: process.env.PUBLIC_KEY,                          // Public Key
+    serviceProviderCode: process.env.SERVICE_PROVIDER_CODE      // input_ServiceProviderCode
  });
 
  const clientRevert = new Client({
-    apiKey: '<REPLACE>',              // API Key
-    publicKey: '<REPLACE>',           // Public Key
-    serviceProviderCode: '<REPLACE>', // input_ServiceProviderCode,
-    initiatorIdentifier: '<REPLACE>', // input_InitiatorIdentifier,
-    securityIdentifier: '<REPLACE>'   // input_SecurityCredential
+    apiKey: process.env.API_KEY,                                // API Key
+    publicKey: process.env.PUBLIC_KEY,                          // Public Key
+    serviceProviderCode: process.env.SERVICE_PROVIDER_CODE,     // input_ServiceProviderCode,
+    initiatorIdentifier: process.env.INITIATOR_IDENTIFIER,      // input_InitiatorIdentifier,
+    securityCredential: process.env.SECURITY_CREDENTIAL         // input_SecurityCredential
  });
  
 const paymentDataReceive = {
-   from: '258850669801',                                                    // input_CustomerMSISDN
-   reference: '11114' +  Math.floor(Math.random()*100),                     // input_ThirdPartyReference
-   transaction: 'T12344CC',                                                  // input_TransactionReference
-   amount: '10'                                                             // input_Amount
+   from: process.env.PHONE_NUMBER,                              // input_CustomerMSISDN
+   reference: '11114' +  Math.floor(Math.random()*100),         // input_ThirdPartyReference
+   transaction: 'T12344CC',                                     // input_TransactionReference
+   amount: '10'                                                 // input_Amount
 };
 
 const paymentDataSend = {
-    to: "258850669801",                                                     // input_CustomerMSISDN
-    reference: '11114' + Math.floor(Math.random()*100),                     // input_ThirdPartyReference
-    transaction: 'T12344CC',                                                 // input_TransactionReference
-    amount: '10'                                                            // input_Amount
+    to: process.env.PHONE_NUMBER,                               // input_CustomerMSISDN
+    reference: '11114' + Math.floor(Math.random()*100),         // input_ThirdPartyReference
+    transaction: 'T12344CC',                                    // input_TransactionReference
+    amount: '10'                                                // input_Amount
 };
 
 const reversionData = {
-    reference: '11114' + Math.floor(Math.random()*100),                     // input_ThirdPartyReference
-    transaction: 'T12344CC',                                                 // input_TransactionID
-    amount: '10'                                                            // input_ReversalAmount
+    reference: '11114' + Math.floor(Math.random()*100),         // input_ThirdPartyReference
+    transaction: 'T12344CC',                                    // input_TransactionID
+    amount: '10'                                                // input_ReversalAmount
  };
 
  const paymentDataBusiness = {
-    to: '979797',                                                           // input_ReceiverPartyCode
-    reference: '11114' + Math.floor(Math.random()*100),                     // input_ThirdPartyReference
-    transaction: 'T12344CC',                                                 // input_TransactionReference
-    amount: '10'                                                            // input_Amount
+    to: '979797',                                               // input_ReceiverPartyCode
+    reference: '11114' + Math.floor(Math.random()*100),         // input_ThirdPartyReference
+    transaction: 'T12344CC',                                    // input_TransactionReference
+    amount: '10'                                                // input_Amount
  };
 
 describe("Receive Money from a Mobile Account", function(){
