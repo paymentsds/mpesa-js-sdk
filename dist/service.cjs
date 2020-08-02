@@ -279,7 +279,7 @@ var Service = /*#__PURE__*/function () {
           return (0, _axios["default"])(requestData).then(function (r) {
             return Promise.resolve(self.buildResponse(r));
           })["catch"](function (e) {
-            return Promise.reject(e);
+            return Promise.reject(self.buildResponse(e));
           });
         }
 
@@ -296,28 +296,16 @@ var Service = /*#__PURE__*/function () {
   }, {
     key: "buildResponse",
     value: function buildResponse(result) {
-      if (result.response) {
-        if (result.response.status >= 200 && result.response.status < 300) {
-          return {
-            response: {
-              status: result.status,
-              code: result.data.output_ResponseCode,
-              desc: result.data.output_ResponseDesc
-            },
-            conversation: result.data.output_ConversationID,
-            transaction: result.data.output_TransactionID,
-            reference: result.data.output_ThirdPartyReference
-          };
-        }
-
-        return Promise.resolve(result);
-      } else if (result.request) {
-        return Promise.reject(new _errors.TimeoutError());
-      } else {
-        return Promise.reject('Unable to make request');
-      }
-
-      return Promise.reject(result);
+      return {
+        response: {
+          status: result.status,
+          code: result.data.output_ResponseCode,
+          desc: result.data.output_ResponseDesc
+        },
+        conversation: result.data.output_ConversationID,
+        transaction: result.data.output_TransactionID,
+        reference: result.data.output_ThirdPartyReference
+      };
     }
     /**
      * Generates access token from public key and API key pair
