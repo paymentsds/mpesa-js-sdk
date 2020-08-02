@@ -25,6 +25,11 @@
   "bugs": {
     "url": "https://github.com/paymentsds/mpesa-js-sdk/issues"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run-script build"
+    }
+  },
   "homepage": "https://github.com/paymentsds/mpesa-js-sdk#readme",
   "dependencies": {
     "axios": "^0.19.2"
@@ -36,6 +41,7 @@
     "chai": "^4.2.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.5.0",
+    "husky": "^4.2.5",
     "sinon": "^9.0.2"
   }
 }
