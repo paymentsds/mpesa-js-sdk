@@ -49,6 +49,7 @@ const reversionData = {
  };
 
 describe("Receive Money from a Mobile Account", function(){
+    this.timeout(30000);
     it("Receive Money successful", function(done){
         client.receive(paymentDataReceive).then(r => {
             expect(r.response.status).to.be.within(200, 201);
