@@ -296,15 +296,25 @@ var Service = /*#__PURE__*/function () {
   }, {
     key: "buildResponse",
     value: function buildResponse(result) {
+      if (result.status >= 200 && result.status < 300) {
+        return {
+          response: {
+            status: result.status,
+            code: result.data.output_ResponseCode,
+            desc: result.data.output_ResponseDesc
+          },
+          conversation: result.data.output_ConversationID,
+          transaction: result.data.output_TransactionID,
+          reference: result.data.output_ThirdPartyReference
+        };
+      }
+
       return {
         response: {
-          status: result.status,
-          code: result.data.output_ResponseCode,
-          desc: result.data.output_ResponseDesc
-        },
-        conversation: result.data.output_ConversationID,
-        transaction: result.data.output_TransactionID,
-        reference: result.data.output_ThirdPartyReference
+          status: result.response.status,
+          statusText: result.response.statusText,
+          outputError: result.response.data.output_error
+        }
       };
     }
     /**
