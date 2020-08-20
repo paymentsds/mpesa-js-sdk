@@ -61,6 +61,7 @@ describe("Receive Money from a Mobile Account", function(){
 });
 
 describe("Send Money to a Mobile Account", function(){
+    this.timeout(30000);
     it("Send Money successful", function(done){
         client.send(paymentDataSend).then(r => {
             expect(r.response.status).to.be.within(200, 201);
@@ -73,6 +74,7 @@ describe("Send Money to a Mobile Account", function(){
 
 
 describe("Send Money to a Business Account ", function(done){
+    this.timeout(30000);
     it("Send Money successful", function(done){
         client.send(paymentDataBusiness).then(r => {
             expect(r.response.status).to.be.within(200, 201);
