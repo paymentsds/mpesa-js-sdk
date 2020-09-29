@@ -278,10 +278,8 @@ var Service = /*#__PURE__*/function () {
 
           var self = this;
           return (0, _axios["default"])(requestData).then(function (r) {
-            console.log(r);
             return Promise.resolve(self.buildResponse(r));
           })["catch"](function (e) {
-            console.log(e);
             return Promise.reject(self.buildResponse(e));
           });
         }
