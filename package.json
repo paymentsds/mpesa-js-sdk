@@ -11,7 +11,7 @@
   "scripts": {
     "test": "mocha",
     "lint": "eslint --fix src/*.js",
-    "build": "babel src -d dist --out-file-extension .cjs && find ./dist -type f -exec sed -i -e 's/.js/.cjs/g' {} \\;"
+    "build": "rm dist/* && babel src -d dist --out-file-extension .cjs && find ./dist -type f -exec sed -i -e 's/\\.js/\\.cjs/g' {} \\;"
   },
   "repository": {
     "type": "git",
