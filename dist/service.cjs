@@ -247,7 +247,7 @@ var Service = /*#__PURE__*/function () {
     value: function buildRequestHeaders(opcode, intent) {
       var _headers;
 
-      var headers = (_headers = {}, _defineProperty(_headers, _constants.HTTP.HEADERS.USER_AGENT, this.config.userAgent), _defineProperty(_headers, _constants.HTTP.HEADERS.ORIGIN, this.config.origin), _defineProperty(_headers, _constants.HTTP.HEADERS.CONTENT_TYPE, "application.cjson"), _defineProperty(_headers, _constants.HTTP.HEADERS.AUTHORIZATION, "Bearer ".concat(this.config.auth)), _headers);
+      var headers = (_headers = {}, _defineProperty(_headers, _constants.HTTP.HEADERS.USER_AGENT, this.config.userAgent), _defineProperty(_headers, _constants.HTTP.HEADERS.ORIGIN, this.config.origin), _defineProperty(_headers, _constants.HTTP.HEADERS.CONTENT_TYPE, "application/json"), _defineProperty(_headers, _constants.HTTP.HEADERS.AUTHORIZATION, "Bearer ".concat(this.config.auth)), _headers);
       return headers;
     }
   }, {
@@ -266,7 +266,8 @@ var Service = /*#__PURE__*/function () {
             method: operation.method,
             path: operation.path,
             headers: headers,
-            timeout: this.config.timeout * 1000
+            timeout: this.config.timeout * 1000,
+            maxRedirects: 0
           };
 
           if (operation.method === _constants.HTTP.METHOD.GET) {
@@ -277,8 +278,10 @@ var Service = /*#__PURE__*/function () {
 
           var self = this;
           return (0, _axios["default"])(requestData).then(function (r) {
+            console.log(r);
             return Promise.resolve(self.buildResponse(r));
           })["catch"](function (e) {
+            console.log(e);
             return Promise.reject(self.buildResponse(e));
           });
         }
