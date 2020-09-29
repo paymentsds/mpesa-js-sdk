@@ -224,7 +224,8 @@ export class Service {
           method: operation.method,
           path: operation.path,
           headers: headers,
-          timeout: this.config.timeout * 1000
+          timeout: this.config.timeout * 1000,
+	  maxRedirects: 0,
         };
 
         if (operation.method === HTTP.METHOD.GET) {
@@ -236,7 +237,7 @@ export class Service {
         const self = this;
         return axios(requestData)
           .then((r) => {
-            return Promise.resolve(self.buildResponse(r));
+	    return Promise.resolve(self.buildResponse(r));
           })
           .catch((e) => {
             return Promise.reject(self.buildResponse(e));
