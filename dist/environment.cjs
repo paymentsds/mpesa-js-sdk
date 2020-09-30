@@ -48,7 +48,7 @@ var Environment = /*#__PURE__*/function () {
     }
     /**
      * Creates environment object from a given URL
-     * @param {string} url 
+     * @param {string} url
      */
 
   }, {

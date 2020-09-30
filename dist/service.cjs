@@ -9,8 +9,6 @@ var _axios = _interopRequireDefault(require("axios"));
 
 var _configuration = require("./configuration.cjs");
 
-var _response = require("./response.cjs");
-
 var _errors = require("./errors.cjs");
 
 var _constants = require("./constants.cjs");
@@ -55,7 +53,7 @@ var Service = /*#__PURE__*/function () {
   }
   /**
    * Initializes default configurations
-   * @param {Object} args 
+   * @param {Object} args
    */
 
 
@@ -65,8 +63,8 @@ var Service = /*#__PURE__*/function () {
       this.config = new _configuration.Configuration(args);
     }
     /**
-     * 
-     * @param {Object} intent 
+     *
+     * @param {Object} intent
      */
 
   }, {
@@ -92,8 +90,8 @@ var Service = /*#__PURE__*/function () {
     }
     /**
      * Validates transaction data and performs performs the needed HTTP request
-     * @param {string} opcode 
-     * @param {Object.<string, string>} intent 
+     * @param {string} opcode
+     * @param {Object.<string, string>} intent
      */
 
   }, {
@@ -116,7 +114,7 @@ var Service = /*#__PURE__*/function () {
     }
     /**
      * Detects the operation from the transaction data
-     * @param {Object.<string, string>} intent 
+     * @param {Object.<string, string>} intent
      */
 
   }, {
@@ -136,8 +134,8 @@ var Service = /*#__PURE__*/function () {
     }
     /**
      * Detect validation errors from thransaction data
-     * @param {string} opcode 
-     * @param {Object.<string, string>} intent 
+     * @param {string} opcode
+     * @param {Object.<string, string>} intent
      */
 
   }, {
@@ -152,8 +150,8 @@ var Service = /*#__PURE__*/function () {
     }
     /**
      * Detects missing properties from transaction data
-     * @param {string} opcode 
-     * @param {Object.<string, string>} data 
+     * @param {string} opcode
+     * @param {Object.<string, string>} data
      */
 
   }, {
@@ -166,9 +164,9 @@ var Service = /*#__PURE__*/function () {
       return missing;
     }
     /**
-     * Complete transaction data from configuration data if it is not already provided  
-     * @param {string} opcode 
-     * @param {Object.<string,string>} intent 
+     * Complete transaction data from configuration data if it is not already provided
+     * @param {string} opcode
+     * @param {Object.<string,string>} intent
      */
 
   }, {
@@ -215,8 +213,8 @@ var Service = /*#__PURE__*/function () {
     }
     /**
      * Formats transaction data to the format required by M-Pesa API
-     * @param {string} opcode 
-     * @param {Object.<string,string>} intent 
+     * @param {string} opcode
+     * @param {Object.<string,string>} intent
      */
 
   }, {
@@ -227,7 +225,7 @@ var Service = /*#__PURE__*/function () {
       for (var oldKey in intent) {
         var newKey = _constants.OPERATIONS[opcode].mapping[oldKey];
 
-        if (opcode === _constants.C2B_PAYMENT && oldKey === 'from' || opcode === _constants.B2C_PAYMENT && oldKey == 'to') {
+        if (opcode === _constants.C2B_PAYMENT && oldKey === "from" || opcode === _constants.B2C_PAYMENT && oldKey == "to") {
           body[newKey] = this.normalizePhoneNumber(intent[oldKey]);
         } else {
           body[newKey] = intent[oldKey];
@@ -238,8 +236,8 @@ var Service = /*#__PURE__*/function () {
     }
     /**
      * Generates HTTP headers required to perform the request
-     * @param {string} opcode 
-     * @param {Object.<string,string>} intent 
+     * @param {string} opcode
+     * @param {Object.<string,string>} intent
      */
 
   }, {
@@ -291,7 +289,7 @@ var Service = /*#__PURE__*/function () {
     }
     /**
      * Formats the result
-     * @param {*} result 
+     * @param {*} result
      */
 
   }, {

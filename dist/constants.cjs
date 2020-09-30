@@ -141,8 +141,8 @@ var OPERATIONS = (_OPERATIONS = {}, _defineProperty(_OPERATIONS, C2B_PAYMENT, ne
     securityCredential: PATTERNS.WORD,
     initiatorIdentifier: PATTERNS.WORD
   },
-  required: ['to', 'amount', 'reference', 'transaction', 'securityCredential', 'initiatorIdentifier'],
-  optional: ['to', 'securityCredential', 'initiatorIdentifier']
+  required: ["to", "amount", "reference", "transaction", "securityCredential", "initiatorIdentifier"],
+  optional: ["to", "securityCredential", "initiatorIdentifier"]
 })), _defineProperty(_OPERATIONS, QUERY_TRANSACTION_STATUS, new _operation.Operation({
   method: HTTP.METHOD.GET,
   port: "18353",
@@ -157,8 +157,8 @@ var OPERATIONS = (_OPERATIONS = {}, _defineProperty(_OPERATIONS, C2B_PAYMENT, ne
     subject: PATTERNS.WORD,
     reference: PATTERNS.WORD
   },
-  required: ['from', 'subject', 'reference'],
-  optional: ['from']
+  required: ["from", "subject", "reference"],
+  optional: ["from"]
 })), _OPERATIONS);
 exports.OPERATIONS = OPERATIONS;
 var ERRORS = {
