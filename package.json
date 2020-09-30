@@ -28,7 +28,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run-script build"
+      "pre-commit": "npm run-script prettier && npm run-script build && git add dist/"
     }
   },
   "homepage": "https://github.com/paymentsds/mpesa-js-sdk#readme",

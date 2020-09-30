@@ -40,8 +40,8 @@ var MissingPropertiesError = /*#__PURE__*/function (_Error) {
     _classCallCheck(this, MissingPropertiesError);
 
     _this = _super.call(this);
-    _this.name = name || 'MissingPropertiesError';
-    _this.message = message || 'There are attributes missing to complete the transaction';
+    _this.name = name || "MissingPropertiesError";
+    _this.message = message || "There are attributes missing to complete the transaction";
     return _this;
   }
 
@@ -61,8 +61,8 @@ var AuthenticationError = /*#__PURE__*/function (_Error2) {
     _classCallCheck(this, AuthenticationError);
 
     _this2 = _super2.call(this);
-    _this2.name = name || 'AuthenticationError';
-    _this2.message = message || 'There is not a public key and API key or access token set';
+    _this2.name = name || "AuthenticationError";
+    _this2.message = message || "There is not a public key and API key or access token set";
     return _this2;
   }
 
@@ -82,8 +82,8 @@ var InvalidReceiverError = /*#__PURE__*/function (_Error3) {
     _classCallCheck(this, InvalidReceiverError);
 
     _this3 = _super3.call(this);
-    _this3.name = name || 'InvalidReceiverError';
-    _this3.message = message || 'The receiver does not look like a valid phone number nor a valid service provider code';
+    _this3.name = name || "InvalidReceiverError";
+    _this3.message = message || "The receiver does not look like a valid phone number nor a valid service provider code";
     return _this3;
   }
 
@@ -103,8 +103,8 @@ var ValidationError = /*#__PURE__*/function (_Error4) {
     _classCallCheck(this, ValidationError);
 
     _this4 = _super4.call(this);
-    _this4.name = name || 'ValidationError';
-    _this4.message = message || 'The data provider is not valid';
+    _this4.name = name || "ValidationError";
+    _this4.message = message || "The data provider is not valid";
     return _this4;
   }
 
@@ -124,8 +124,8 @@ var InvalidHostError = /*#__PURE__*/function (_Error5) {
     _classCallCheck(this, InvalidHostError);
 
     _this5 = _super5.call(this);
-    _this5.name = name || 'InvalidHostError';
-    _this5.message = message || 'The provider host is not valid';
+    _this5.name = name || "InvalidHostError";
+    _this5.message = message || "The provider host is not valid";
     return _this5;
   }
 
@@ -145,8 +145,8 @@ var TimeoutError = /*#__PURE__*/function (_Error6) {
     _classCallCheck(this, TimeoutError);
 
     _this6 = _super6.call(this);
-    _this6.name = name || 'TimeoutError';
-    _this6.message = message || 'The request has taken more time than allowed';
+    _this6.name = name || "TimeoutError";
+    _this6.message = message || "The request has taken more time than allowed";
     return _this6;
   }
 

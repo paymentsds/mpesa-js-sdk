@@ -21,7 +21,7 @@ var Client = /*#__PURE__*/function () {
   }
   /**
    * Sends money to mobile or business wallet
-   * @param {Object.<string, string>} data 
+   * @param {Object.<string, string>} data
    */
 
 
@@ -32,7 +32,7 @@ var Client = /*#__PURE__*/function () {
     }
     /**
      * Receives money from a mobile wallet
-     * @param {Object.<string, string>} data 
+     * @param {Object.<string, string>} data
      */
 
   }, {
@@ -42,7 +42,7 @@ var Client = /*#__PURE__*/function () {
     }
     /**
      * Reverts a successful transaction
-     * @param {Object.<string, string>} data 
+     * @param {Object.<string, string>} data
      */
 
   }, {
@@ -52,7 +52,7 @@ var Client = /*#__PURE__*/function () {
     }
     /**
      * Queries the status of a given transaction
-     * @param {Object.<string, string>} data 
+     * @param {Object.<string, string>} data
      */
 
   }, {
