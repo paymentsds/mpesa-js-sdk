@@ -37,10 +37,7 @@ class Configuration {
     const hasKeys =
       Object.prototype.hasOwnProperty.call(this, "apiKey") &&
       Object.prototype.hasOwnProperty.call(this, "publicKey");
-    const hasAccessToken = Object.prototype.hasOwnProperty.call(
-      this,
-      "accessToken"
-    );
+    const hasAccessToken = Object.prototype.hasOwnProperty.call(this, "accessToken");
 
     if (hasKeys) {
       const publicKey = formatPublicKey(this.publicKey);

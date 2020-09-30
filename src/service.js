@@ -1,15 +1,15 @@
 import axios from "axios";
 
 import { Configuration } from "./configuration.js";
-import { Response } from "./response.js";
-import { 
+// import { Response } from "./response.js";
+import {
   ValidationError,
   AuthenticationError,
   InvalidReceiverError,
   MissingPropertiesError,
   InvalidHostError,
-  TimeoutError
-}  from './errors.js';
+  // TimeoutError
+} from "./errors.js";
 
 import {
   OPERATIONS,
@@ -19,7 +19,7 @@ import {
   B2B_PAYMENT,
   REVERSAL,
   QUERY_TRANSACTION_STATUS,
-  ERRORS,
+  // ERRORS,
   HTTP,
 } from "./constants.js";
 
@@ -30,15 +30,15 @@ export class Service {
 
   /**
    * Initializes default configurations
-   * @param {Object} args 
+   * @param {Object} args
    */
   initDefaultConfigs(args) {
     this.config = new Configuration(args);
   }
 
   /**
-   * 
-   * @param {Object} intent 
+   *
+   * @param {Object} intent
    */
   handleSend(intent) {
     const opcode = this.detectOperation(intent);
@@ -60,8 +60,8 @@ export class Service {
 
   /**
    * Validates transaction data and performs performs the needed HTTP request
-   * @param {string} opcode 
-   * @param {Object.<string, string>} intent 
+   * @param {string} opcode
+   * @param {Object.<string, string>} intent
    */
   handleRequest(opcode, intent) {
     const data = this.fillOptionalProperties(opcode, intent);
@@ -82,7 +82,7 @@ export class Service {
 
   /**
    * Detects the operation from the transaction data
-   * @param {Object.<string, string>} intent 
+   * @param {Object.<string, string>} intent
    */
   detectOperation(intent) {
     if (Object.prototype.hasOwnProperty.call(intent, "to")) {
@@ -100,8 +100,8 @@ export class Service {
 
   /**
    * Detect validation errors from thransaction data
-   * @param {string} opcode 
-   * @param {Object.<string, string>} intent 
+   * @param {string} opcode
+   * @param {Object.<string, string>} intent
    */
   detectErrors(opcode, intent) {
     const operations = OPERATIONS[opcode];
@@ -116,11 +116,11 @@ export class Service {
 
   /**
    * Detects missing properties from transaction data
-   * @param {string} opcode 
-   * @param {Object.<string, string>} data 
+   * @param {string} opcode
+   * @param {Object.<string, string>} data
    */
   detectMissingProperties(opcode, data) {
-    const required = OPERATIONS[opcode].required;
+    const { required } = OPERATIONS[opcode];
 
     const missing = required.filter((e) => {
       return !Object.prototype.hasOwnProperty.call(data, e);
@@ -130,9 +130,9 @@ export class Service {
   }
 
   /**
-   * Complete transaction data from configuration data if it is not already provided  
-   * @param {string} opcode 
-   * @param {Object.<string,string>} intent 
+   * Complete transaction data from configuration data if it is not already provided
+   * @param {string} opcode
+   * @param {Object.<string,string>} intent
    */
   fillOptionalProperties(opcode, intent) {
     const self = this;
@@ -176,14 +176,17 @@ export class Service {
 
   /**
    * Formats transaction data to the format required by M-Pesa API
-   * @param {string} opcode 
-   * @param {Object.<string,string>} intent 
+   * @param {string} opcode
+   * @param {Object.<string,string>} intent
    */
   buildRequestBody(opcode, intent) {
     const body = {};
     for (const oldKey in intent) {
       const newKey = OPERATIONS[opcode].mapping[oldKey];
-      if ((opcode === C2B_PAYMENT) && (oldKey === 'from') || (opcode === B2C_PAYMENT) && (oldKey == 'to')) {
+      if (
+        (opcode === C2B_PAYMENT && oldKey === "from") ||
+        (opcode === B2C_PAYMENT && oldKey == "to")
+      ) {
         body[newKey] = this.normalizePhoneNumber(intent[oldKey]);
       } else {
         body[newKey] = intent[oldKey];
@@ -195,8 +198,8 @@ export class Service {
 
   /**
    * Generates HTTP headers required to perform the request
-   * @param {string} opcode 
-   * @param {Object.<string,string>} intent 
+   * @param {string} opcode
+   * @param {Object.<string,string>} intent
    */
   buildRequestHeaders(opcode, intent) {
     const headers = {
@@ -223,9 +226,9 @@ export class Service {
           url: operation.path,
           method: operation.method,
           path: operation.path,
-          headers: headers,
+          headers,
           timeout: this.config.timeout * 1000,
-	  maxRedirects: 0,
+          maxRedirects: 0,
         };
 
         if (operation.method === HTTP.METHOD.GET) {
@@ -237,7 +240,7 @@ export class Service {
         const self = this;
         return axios(requestData)
           .then((r) => {
-	    return Promise.resolve(self.buildResponse(r));
+            return Promise.resolve(self.buildResponse(r));
           })
           .catch((e) => {
             return Promise.reject(self.buildResponse(e));
@@ -252,9 +255,9 @@ export class Service {
 
   /**
    * Formats the result
-   * @param {*} result 
+   * @param {*} result
    */
-  buildResponse(result) {  
+  buildResponse(result) {
     if (result.status >= 200 && result.status < 300) {
       return {
         response: {
@@ -271,9 +274,9 @@ export class Service {
       response: {
         status: result.response.status,
         statusText: result.response.statusText,
-        outputError: result.response.data.output_error
-      }
-    }
+        outputError: result.response.data.output_error,
+      },
+    };
   }
 
   /**
@@ -284,7 +287,7 @@ export class Service {
   }
 
   normalizePhoneNumber(phoneNumber) {
-    const phoneNumberCountryCode = /^((?<prefix>(00?|\+)?258)?)(?<localNumber>8[54][0-9]{7})$/;   
+    const phoneNumberCountryCode = /^((?<prefix>(00?|\+)?258)?)(?<localNumber>8[54][0-9]{7})$/;
 
     return `258${phoneNumber.match(phoneNumberCountryCode).groups.localNumber}`;
   }

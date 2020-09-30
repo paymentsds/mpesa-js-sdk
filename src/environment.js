@@ -15,7 +15,7 @@ class Environment {
 
   /**
    * Creates environment object from a given URL
-   * @param {string} url 
+   * @param {string} url
    */
   static fromURL(url) {
     let parts;

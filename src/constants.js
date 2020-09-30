@@ -120,7 +120,7 @@ const OPERATIONS = {
       reference: "input_ThirdPartyReference",
       transaction: "input_TransactionID",
       securityCredential: "input_SecurityCredential",
-      initiatorIdentifier: "input_InitiatorIdentifier"
+      initiatorIdentifier: "input_InitiatorIdentifier",
     },
     validation: {
       to: PATTERNS.SERVICE_PROVIDER_CODE,
@@ -131,18 +131,14 @@ const OPERATIONS = {
       initiatorIdentifier: PATTERNS.WORD,
     },
     required: [
-      'to',
-      'amount',
-      'reference',
-      'transaction',
-      'securityCredential',
-      'initiatorIdentifier' 
+      "to",
+      "amount",
+      "reference",
+      "transaction",
+      "securityCredential",
+      "initiatorIdentifier",
     ],
-    optional: [
-      'to',
-      'securityCredential',
-      'initiatorIdentifier' 
-    ],
+    optional: ["to", "securityCredential", "initiatorIdentifier"],
   }),
 
   [QUERY_TRANSACTION_STATUS]: new Operation({
@@ -159,14 +155,8 @@ const OPERATIONS = {
       subject: PATTERNS.WORD,
       reference: PATTERNS.WORD,
     },
-    required: [
-      'from',
-      'subject',
-      'reference',
-    ],
-    optional: [
-      'from'
-    ],
+    required: ["from", "subject", "reference"],
+    optional: ["from"],
   }),
 };
 

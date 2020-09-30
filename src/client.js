@@ -7,7 +7,7 @@ export class Client {
 
   /**
    * Sends money to mobile or business wallet
-   * @param {Object.<string, string>} data 
+   * @param {Object.<string, string>} data
    */
   send(data) {
     return this.service.handleSend(data);
@@ -15,7 +15,7 @@ export class Client {
 
   /**
    * Receives money from a mobile wallet
-   * @param {Object.<string, string>} data 
+   * @param {Object.<string, string>} data
    */
   receive(data) {
     return this.service.handleReceive(data);
@@ -23,7 +23,7 @@ export class Client {
 
   /**
    * Reverts a successful transaction
-   * @param {Object.<string, string>} data 
+   * @param {Object.<string, string>} data
    */
   revert(data) {
     return this.service.handleRevert(data);
@@ -31,7 +31,7 @@ export class Client {
 
   /**
    * Queries the status of a given transaction
-   * @param {Object.<string, string>} data 
+   * @param {Object.<string, string>} data
    */
   query(data) {
     return this.service.handleQuery(data);
