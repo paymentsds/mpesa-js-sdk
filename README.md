@@ -301,7 +301,7 @@ client.query(reversionData).then(function(r) {
 
 ## Prerequisites <a name="prerequisites"></a>
 
-- [Node.JS 12+](https://nodejs.org) for production and lastest version for development 
+- [Node.JS 12+](https://nodejs.org) for production and latest version for development 
 - [NPM](https://www.npmjs.com) or [Yarn](https://yarnpkg.com)
 
 ## Installation <a name="installation"></a>
