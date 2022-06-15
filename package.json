@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/paymentsds/mpesa-js-sdk#readme",
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.22.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
