@@ -10,7 +10,7 @@ class Configuration {
     this.timeout = 0;
     this.debugging = true;
     this.origin = "*";
-    this.userAgent = `${USER_AGENT}/${VERSION}`;
+    this.userAgent = `${USER_AGENT}/${VERSION.toString()}`;
 
     if (args !== null && args !== undefined) {
       for (const key of Configuration.PARAMS) {

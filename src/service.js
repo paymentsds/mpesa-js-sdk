@@ -223,6 +223,7 @@ export class Service {
 
         const requestData = {
           baseURL: `${this.config.environment.scheme}://${this.config.environment.domain}:${operation.port}`,
+          insecureHTTPParser: true,
           url: operation.path,
           method: operation.method,
           path: operation.path,

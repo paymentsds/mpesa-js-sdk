@@ -9,7 +9,7 @@
     "require": "./dist/index.cjs"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "mocha -g Receive",
     "lint": "eslint --fix src/*.js",
     "prettier": "prettier -w src/*",
     "build": "rm dist/* && babel src -d dist --out-file-extension .cjs && find ./dist -type f -exec sed -i -e 's/\\.js/\\.cjs/g' {} \\;"
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/paymentsds/mpesa-js-sdk#readme",
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.27.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -50,6 +50,7 @@
     "eslint-plugin-react": "^7.21.2",
     "eslint-plugin-react-hooks": "^4.0.0",
     "husky": "^4.2.5",
+    "mocha": "^10.0.0",
     "prettier": "^2.1.2",
     "sinon": "^9.0.2"
   }
