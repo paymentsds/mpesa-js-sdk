@@ -263,10 +263,8 @@ var Service = /*#__PURE__*/function () {
 
           var self = this;
           return (0, _axios["default"])(requestData).then(function (r) {
-            console.log("RESPONSE", r);
             return Promise.resolve(self.buildResponse(r));
           })["catch"](function (e) {
-            console.log("ERROR", e);
             return Promise.reject(self.buildResponse(e));
           });
         }
@@ -284,8 +282,6 @@ var Service = /*#__PURE__*/function () {
   }, {
     key: "buildResponse",
     value: function buildResponse(result) {
-      console.log("Result", result);
-
       if (result.status >= 200 && result.status < 300) {
         return {
           response: {
