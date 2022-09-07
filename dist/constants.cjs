@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.HTTP = exports.USER_AGENT = exports.VERSION = exports.SANDBOX = exports.PRODUCTION = exports.OPERATIONS = exports.QUERY_TRANSACTION_STATUS = exports.REVERSAL = exports.B2C_PAYMENT = exports.B2B_PAYMENT = exports.C2B_PAYMENT = exports.PATTERNS = exports.ERRORS = void 0;
+exports.VERSION = exports.USER_AGENT = exports.SANDBOX = exports.REVERSAL = exports.QUERY_TRANSACTION_STATUS = exports.PRODUCTION = exports.PATTERNS = exports.OPERATIONS = exports.HTTP = exports.ERRORS = exports.C2B_PAYMENT = exports.B2C_PAYMENT = exports.B2B_PAYMENT = void 0;
 
 var _operation = require("./operation.cjs");
 
