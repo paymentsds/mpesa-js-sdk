@@ -3,6 +3,18 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+Object.defineProperty(exports, "Client", {
+  enumerable: true,
+  get: function get() {
+    return _client.Client;
+  }
+});
+Object.defineProperty(exports, "Configuration", {
+  enumerable: true,
+  get: function get() {
+    return _configuration.Configuration;
+  }
+});
 Object.defineProperty(exports, "Environment", {
   enumerable: true,
   get: function get() {
@@ -13,18 +25,6 @@ Object.defineProperty(exports, "Operation", {
   enumerable: true,
   get: function get() {
     return _operation.Operation;
-  }
-});
-Object.defineProperty(exports, "Configuration", {
-  enumerable: true,
-  get: function get() {
-    return _configuration.Configuration;
-  }
-});
-Object.defineProperty(exports, "Client", {
-  enumerable: true,
-  get: function get() {
-    return _client.Client;
   }
 });
 Object.defineProperty(exports, "Service", {
