@@ -12,7 +12,9 @@
     "test": "mocha",
     "lint": "eslint --fix src/*.js",
     "prettier": "prettier -w src/*",
-    "build": "rm dist/* && babel src -d dist --out-file-extension .cjs && find ./dist -type f -exec sed -i 's/.js/.cjs/g' {} \\;"
+    "build": "rm dist/* && babel src -d dist --out-file-extension .cjs && find ./dist -type f -exec sed -i 's/.js/.cjs/g' {} \\;",
+    "pre-commit": "npm run prettier && npm run build && npm run change-file-imports && git add dist/",
+    "change-file-imports": "find ./dist -type f -exec sed -i 's/.js/.cjs/g' {} \\;"
   },
   "repository": {
     "type": "git",
@@ -25,11 +27,6 @@
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/paymentsds/mpesa-js-sdk/issues"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run-script prettier && npm run-script build && git add dist/"
-    }
   },
   "homepage": "https://github.com/paymentsds/mpesa-js-sdk#readme",
   "dependencies": {
