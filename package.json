@@ -26,11 +26,6 @@
   "bugs": {
     "url": "https://github.com/paymentsds/mpesa-js-sdk/issues"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run-script prettier && npm run-script build && git add dist/"
-    }
-  },
   "homepage": "https://github.com/paymentsds/mpesa-js-sdk#readme",
   "dependencies": {
     "axios": "^0.27.2"
