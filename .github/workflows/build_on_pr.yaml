@@ -2,6 +2,8 @@ name: Build package on PR opening
 
 on:
   pull_request:
+    types:
+      - opened
     branches:
       - develop
       - master
