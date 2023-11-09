@@ -32,7 +32,7 @@ const SANDBOX = new Environment({
 
 const PRODUCTION = new Environment({
   scheme: "https",
-  domain: "api.mpesa.vm.co.mz",
+  domain: "api.vm.co.mz",
 });
 
 const PATTERNS = {
